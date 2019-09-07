@@ -1,0 +1,17 @@
+*.png
+*.ase
+*.aseprite
+*.ttf
+*.mp3
+*.wav
+*.ogg
+
+.import
+.vscode
+addons
+_.gd
+
+old
+new
+
+!*.png.import

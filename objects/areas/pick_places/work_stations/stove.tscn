@@ -1,0 +1,47 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://objects/areas/pick_places/work_station.tscn" type="PackedScene" id=1]
+[ext_resource path="res://objects/areas/pick_places/work_stations/stove.gd" type="Script" id=2]
+[ext_resource path="res://sprites/tileset.png" type="Texture" id=3]
+
+[sub_resource type="AtlasTexture" id=1]
+atlas = ExtResource( 3 )
+region = Rect2( 128, 48, 16, 16 )
+
+[sub_resource type="Animation" id=2]
+resource_name = "fire_alert"
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("TextureRect:modulate")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.5, 0.8 ),
+"transitions": PoolRealArray( 0.482968, 2.46229, 0.329877 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ), Color( 1, 0, 0, 0.184314 ), Color( 1, 1, 1, 1 ) ]
+}
+
+[node name="Stove" instance=ExtResource( 1 )]
+script = ExtResource( 2 )
+pan = "res://objects/pickable_objects/frying_pan.tscn"
+
+[node name="Sprite" parent="." index="1"]
+texture = ExtResource( 3 )
+region_enabled = true
+region_rect = Rect2( 128, 32, 16, 16 )
+
+[node name="TextureRect" type="TextureRect" parent="ProgressBar" index="2"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -8.0
+margin_top = 6.0
+margin_right = 8.0
+margin_bottom = 22.0
+texture = SubResource( 1 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="ProgressBar" index="3"]
+anims/fire_alert = SubResource( 2 )

@@ -1,0 +1,190 @@
+[gd_scene load_steps=11 format=2]
+
+[ext_resource path="res://objects/resources/tilesets/general.tres" type="TileSet" id=1]
+[ext_resource path="res://objects/areas/pick_place.tscn" type="PackedScene" id=2]
+[ext_resource path="res://objects/areas/pick_places/box.tscn" type="PackedScene" id=3]
+[ext_resource path="res://old/cut_place.tscn" type="PackedScene" id=4]
+[ext_resource path="res://old/stove.tscn" type="PackedScene" id=5]
+[ext_resource path="res://objects/pickable_objects/frying_pan.tscn" type="PackedScene" id=6]
+[ext_resource path="res://old/sink.tscn" type="PackedScene" id=7]
+[ext_resource path="res://objects/areas/pick_places/treadmill.tscn" type="PackedScene" id=8]
+[ext_resource path="res://objects/areas/pick_places/dirt_plates_table.tscn" type="PackedScene" id=9]
+[ext_resource path="res://old/top_down_player.tscn" type="PackedScene" id=10]
+
+
+
+
+
+[node name="Level" type="Node2D"]
+
+[node name="TileMap" type="TileMap" parent="."]
+light_mask = 0
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 16, 16 )
+format = 1
+tile_data = PoolIntArray( 1, 3, 0, 2, -1610612725, 0, 3, -1610612725, 0, 4, -1610612725, 0, 5, -1610612725, 0, 6, -1610612725, 0, 7, -1610612725, 0, 8, -1610612725, 0, 9, -1610612725, 0, 10, -1610612725, 0, 11, -1610612725, 0, 12, -1610612725, 0, 13, -1610612725, 0, 14, -1610612733, 0, 65537, 11, 0, 65538, 14, 0, 65539, 14, 0, 65540, 14, 0, 65541, 14, 0, 65542, 14, 0, 65543, 14, 0, 65544, 14, 0, 65545, 14, 0, 65546, 14, 0, 65547, 14, 0, 65548, 14, 0, 65549, 14, 0, 65550, 1610612747, 0, 131073, 11, 0, 131074, 14, 0, 131075, 14, 0, 131076, 14, 0, 131077, 14, 0, 131078, 14, 0, 131079, 14, 0, 131080, 14, 0, 131081, 14, 0, 131082, 14, 0, 131083, 14, 0, 131084, 14, 0, 131085, 14, 0, 131086, 1610612747, 0, 196609, 11, 0, 196610, 14, 0, 196611, 14, 0, 196612, 14, 0, 196613, 14, 0, 196614, 14, 0, 196615, 14, 0, 196616, 14, 0, 196617, 14, 0, 196618, 14, 0, 196619, 14, 0, 196620, 14, 0, 196621, 14, 0, 196622, 1610612747, 0, 262145, 11, 0, 262146, 14, 0, 262147, 14, 0, 262148, 14, 0, 262149, 14, 0, 262150, 14, 0, 262151, 14, 0, 262152, 14, 0, 262153, 14, 0, 262154, 14, 0, 262155, 14, 0, 262156, 14, 0, 262157, 14, 0, 262158, 1610612747, 0, 327681, 11, 0, 327682, 14, 0, 327683, 14, 0, 327684, 14, 0, 327685, 14, 0, 327686, 14, 0, 327687, 14, 0, 327688, 14, 0, 327689, 14, 0, 327690, 14, 0, 327691, 14, 0, 327692, 14, 0, 327693, 14, 0, 327694, 1610612747, 0, 393217, 11, 0, 393218, 14, 0, 393219, 14, 0, 393220, 14, 0, 393221, 14, 0, 393222, 14, 0, 393223, 14, 0, 393224, 14, 0, 393225, 14, 0, 393226, 14, 0, 393227, 14, 0, 393228, 14, 0, 393229, 14, 0, 393230, 1610612747, 0, 458753, 11, 0, 458754, 14, 0, 458755, 14, 0, 458756, 14, 0, 458757, 14, 0, 458758, 14, 0, 458759, 14, 0, 458760, 14, 0, 458761, 14, 0, 458762, 14, 0, 458763, 14, 0, 458764, 14, 0, 458765, 14, 0, 458766, 1610612747, 0, 524289, -1073741821, 0, 524290, -1073741813, 0, 524291, -1073741813, 0, 524292, -1073741813, 0, 524293, -1073741813, 0, 524294, -1073741813, 0, 524295, -1073741813, 0, 524296, -1073741813, 0, 524297, -1073741813, 0, 524298, -1073741813, 0, 524299, -1073741813, 0, 524300, -1073741813, 0, 524301, -1073741813, 0, 524302, 1610612739, 0 )
+
+[node name="TileMap2" type="TileMap" parent="."]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 16, 16 )
+format = 1
+tile_data = PoolIntArray( 65538, 2, 0, 65539, 2, 0, 65540, 2, 0, 65541, 2, 0, 65542, 2, 0, 65543, 2, 0, 65544, 2, 0, 65545, 2, 0, 65546, 2, 0, 65547, 2, 0, 65548, 2, 0, 65549, 2, 0, 262146, 5, 0, 262147, 2, 0, 262148, 2, 0, 262149, 2, 0, 262150, 2, 0, 262151, 2, 0, 262152, 2, 0, 262153, 2, 0, 262154, 2, 0, 262155, 4, 0, 327682, -1073741822, 0, 393218, -1073741822, 0, 458754, -1073741819, 0, 458755, 1610612738, 0, 458756, 1610612738, 0, 458757, 1610612738, 0, 458758, 1610612738, 0, 458759, 1610612738, 0, 458760, 1610612738, 0, 458761, 1610612738, 0, 458762, 1610612738, 0, 458763, 1610612738, 0, 458764, 1610612738, 0, 458765, 1610612738, 0 )
+
+[node name="Tabbles" type="Node" parent="."]
+editor/display_folded = true
+
+[node name="PickPlace22" parent="Tabbles" instance=ExtResource( 2 )]
+position = Vector2( 56, 120 )
+
+[node name="PickPlace7" parent="Tabbles" instance=ExtResource( 2 )]
+position = Vector2( 168, 24 )
+
+[node name="PickPlace23" parent="Tabbles" instance=ExtResource( 2 )]
+position = Vector2( 168, 120 )
+
+[node name="PickPlace16" parent="Tabbles" instance=ExtResource( 2 )]
+position = Vector2( 56, 72 )
+
+[node name="PickPlace5" parent="Tabbles" instance=ExtResource( 2 )]
+position = Vector2( 120, 24 )
+
+[node name="PickPlace21" parent="Tabbles" instance=ExtResource( 2 )]
+position = Vector2( 120, 120 )
+
+[node name="PickPlace15" parent="Tabbles" instance=ExtResource( 2 )]
+position = Vector2( 120, 72 )
+
+[node name="PickPlace3" parent="Tabbles" instance=ExtResource( 2 )]
+position = Vector2( 88, 24 )
+
+[node name="PickPlace17" parent="Tabbles" instance=ExtResource( 2 )]
+position = Vector2( 88, 72 )
+
+[node name="PickPlace8" parent="Tabbles" instance=ExtResource( 2 )]
+position = Vector2( 152, 24 )
+
+[node name="PickPlace18" parent="Tabbles" instance=ExtResource( 2 )]
+position = Vector2( 152, 72 )
+
+[node name="PickPlace2" parent="Tabbles" instance=ExtResource( 2 )]
+position = Vector2( 56, 24 )
+
+[node name="PickPlace24" parent="Tabbles" instance=ExtResource( 2 )]
+position = Vector2( 72, 120 )
+
+[node name="PickPlace11" parent="Tabbles" instance=ExtResource( 2 )]
+position = Vector2( 72, 72 )
+
+[node name="PickPlace19" parent="Tabbles" instance=ExtResource( 2 )]
+position = Vector2( 136, 120 )
+
+[node name="PickPlace10" parent="Tabbles" instance=ExtResource( 2 )]
+position = Vector2( 136, 72 )
+
+[node name="PickPlace4" parent="Tabbles" instance=ExtResource( 2 )]
+position = Vector2( 104, 24 )
+
+[node name="PickPlace12" parent="Tabbles" instance=ExtResource( 2 )]
+position = Vector2( 104, 72 )
+
+[node name="PickPlace25" parent="Tabbles" instance=ExtResource( 2 )]
+position = Vector2( 104, 120 )
+
+[node name="PickPlace26" parent="Tabbles" instance=ExtResource( 2 )]
+position = Vector2( 184, 72 )
+
+[node name="PickPlace27" parent="Tabbles" instance=ExtResource( 2 )]
+position = Vector2( 184, 120 )
+
+[node name="PickPlace13" parent="Tabbles" instance=ExtResource( 2 )]
+position = Vector2( 168, 72 )
+
+[node name="PickPlace9" parent="Tabbles" instance=ExtResource( 2 )]
+position = Vector2( 40, 24 )
+
+[node name="PickPlace14" parent="Tabbles" instance=ExtResource( 2 )]
+position = Vector2( 40, 72 )
+
+[node name="PickPlace20" parent="Tabbles" instance=ExtResource( 2 )]
+position = Vector2( 40, 120 )
+
+[node name="Boxes" type="Node" parent="."]
+editor/display_folded = true
+
+[node name="Box" parent="Boxes" instance=ExtResource( 3 )]
+position = Vector2( 184, 24 )
+
+[node name="Box3" parent="Boxes" instance=ExtResource( 3 )]
+position = Vector2( 200, 24 )
+igridient_id = 1
+
+[node name="Box2" parent="Boxes" instance=ExtResource( 3 )]
+position = Vector2( 216, 24 )
+igridient_id = 2
+
+[node name="Cutters" type="Node" parent="."]
+editor/display_folded = true
+
+[node name="CutPlace" parent="Cutters" instance=ExtResource( 4 )]
+editor/display_folded = true
+position = Vector2( 152, 120 )
+rotation = 3.14159
+
+[node name="CutPlace2" parent="Cutters" instance=ExtResource( 4 )]
+editor/display_folded = true
+position = Vector2( 88, 120 )
+rotation = 3.14159
+
+[node name="Stoves" type="Node" parent="."]
+editor/display_folded = true
+
+[node name="CutPlace" parent="Stoves" instance=ExtResource( 5 )]
+position = Vector2( 72, 24 )
+
+[node name="CutPlace2" parent="Stoves" instance=ExtResource( 5 )]
+position = Vector2( 136, 24 )
+
+[node name="Pans" type="Node" parent="."]
+editor/display_folded = true
+
+[node name="FryingPan" parent="Pans" instance=ExtResource( 6 )]
+position = Vector2( 72, 24 )
+
+[node name="FryingPan2" parent="Pans" instance=ExtResource( 6 )]
+position = Vector2( 136, 24 )
+
+[node name="Sink" parent="." instance=ExtResource( 7 )]
+position = Vector2( 208, 120 )
+rotation = 3.14159
+
+[node name="Treadmill" parent="." instance=ExtResource( 8 )]
+position = Vector2( 40, 88 )
+rotation = -1.5708
+
+[node name="DirtPlatesTable" parent="." instance=ExtResource( 9 )]
+position = Vector2( 40, 104 )
+rotation = -1.5708
+
+[node name="Players" type="YSort" parent="."]
+z_index = 1
+
+[node name="Player" parent="Players" instance=ExtResource( 10 )]
+position = Vector2( 88, 48 )
+scale = Vector2( 0.4, 0.4 )
+
+[node name="Player2" parent="Players" instance=ExtResource( 10 )]
+modulate = Color( 0.780392, 0.494118, 1, 1 )
+position = Vector2( 88, 96 )
+scale = Vector2( 0.4, 0.4 )
+controller_index = 2
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2( 0, -3 )
+anchor_mode = 0
+current = true
+zoom = Vector2( 0.25, 0.25 )
+limit_left = 0
+limit_top = -3
+limit_right = 256
+limit_bottom = 150
+editor_draw_limits = true

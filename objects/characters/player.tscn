@@ -1,0 +1,147 @@
+[gd_scene load_steps=13 format=2]
+
+[ext_resource path="res://objects/top_down_body.tscn" type="PackedScene" id=1]
+[ext_resource path="res://objects/characters/player.gd" type="Script" id=2]
+[ext_resource path="res://sprites/animation.png" type="Texture" id=3]
+[ext_resource path="res://sprites/blinking.png" type="Texture" id=4]
+[ext_resource path="res://objects/characters/props/pickable_object_sprite_circle.gd" type="Script" id=5]
+[ext_resource path="res://tmp/Zom.tscn" type="PackedScene" id=6]
+
+[sub_resource type="CapsuleShape2D" id=1]
+radius = 11.0
+height = 6.0
+
+[sub_resource type="Animation" id=2]
+resource_name = "idle"
+length = 10.0
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite/Expressions:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 7, 7.1, 7.2, 7.3, 7.4, 7.5, 7.6, 7.7, 7.8, 7.9, 8 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 0, 1, 2, 3, 4, 5, 4, 3, 2, 1, 0 ]
+}
+
+[sub_resource type="Animation" id=3]
+resource_name = "walk_down"
+length = 0.4
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 0, 1, 2, 1 ]
+}
+
+[sub_resource type="Animation" id=4]
+resource_name = "walk_left"
+length = 0.4
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 3, 4, 5, 4 ]
+}
+
+[sub_resource type="Animation" id=5]
+resource_name = "walk_right"
+length = 0.4
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 6, 7, 8, 7 ]
+}
+
+[sub_resource type="Animation" id=6]
+length = 0.4
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 9, 10, 11, 10 ]
+}
+
+[node name="Player" index="2" instance=ExtResource( 1 )]
+z_index = 1
+script = ExtResource( 2 )
+max_speed = 100.0
+acceleration = 10.0
+
+[node name="Sprite" parent="." index="0"]
+position = Vector2( 0, -8 )
+texture = ExtResource( 3 )
+vframes = 4
+hframes = 3
+frame = 1
+
+[node name="Expressions" type="Sprite" parent="Sprite" index="0"]
+texture = ExtResource( 4 )
+hframes = 6
+
+[node name="CollisionShape2D" parent="." index="1"]
+shape = SubResource( 1 )
+
+[node name="PickableObjectSprite" type="Sprite" parent="." index="2"]
+
+[node name="Circle" type="Node2D" parent="PickableObjectSprite" index="0"]
+show_behind_parent = true
+script = ExtResource( 5 )
+radius = 7.5
+color = Color( 0.85, 0.8, 1, 1 )
+
+[node name="RayCast2D" type="RayCast2D" parent="." index="3"]
+enabled = true
+cast_to = Vector2( 0, 18 )
+collision_mask = 2
+collide_with_areas = true
+collide_with_bodies = false
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." index="4"]
+autoplay = "idle"
+anims/idle = SubResource( 2 )
+anims/walk_down = SubResource( 3 )
+anims/walk_left = SubResource( 4 )
+anims/walk_right = SubResource( 5 )
+anims/walk_up = SubResource( 6 )
+
+[node name="Zom" parent="." index="5" instance=ExtResource( 6 )]
+position = Vector2( 0, -56 )
+rotation = 0.0
+scale = Vector2( 0.6, 0.6 )
+[connection signal="body_movement_stopped" from="." to="." method="_on_Player_body_movement_stopped"]
+[connection signal="direction_changed" from="." to="." method="_on_Player_direction_changed"]
+[connection signal="texture_changed" from="PickableObjectSprite" to="PickableObjectSprite/Circle" method="_on_PickableObjectSprite_texture_changed"]
