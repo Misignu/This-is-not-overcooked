@@ -1,17 +1,21 @@
+# image
 *.png
 *.ase
 *.aseprite
+# fonts
 *.ttf
+*.otf
+# sounds
 *.mp3
 *.wav
 *.ogg
+
 
 .import
 .vscode
 addons
 _.gd
 
-old
-new
+.old
 
 !*.png.import

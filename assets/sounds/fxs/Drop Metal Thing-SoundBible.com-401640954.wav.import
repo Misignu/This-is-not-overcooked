@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/Drop Metal Thing-SoundBible.com-401640954.wav-ba4d8c17946df9e54525420d8972f597.sample"
+
+[deps]
+
+source_file="res://assets/sounds/fxs/Drop Metal Thing-SoundBible.com-401640954.wav"
+dest_files=[ "res://.import/Drop Metal Thing-SoundBible.com-401640954.wav-ba4d8c17946df9e54525420d8972f597.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=true
+edit/normalize=true
+edit/loop=false
+compress/mode=0

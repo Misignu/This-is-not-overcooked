@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/Reception Bell Chime Sound Effect.wav-27ece55eb8cbdbc4c5510416c3eed7d0.sample"
+
+[deps]
+
+source_file="res://assets/sounds/fxs/Reception Bell Chime Sound Effect.wav"
+dest_files=[ "res://.import/Reception Bell Chime Sound Effect.wav-27ece55eb8cbdbc4c5510416c3eed7d0.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=true
+edit/normalize=true
+edit/loop=false
+compress/mode=0

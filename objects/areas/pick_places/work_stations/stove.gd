@@ -33,6 +33,7 @@ func insert_object(object: PickableObject) -> bool:
 		object.visible = false
 	
 	if can_insert:
+		
 		_start_cooking()
 #		_fry_ingridient(current_object.current_ingredient)
 	

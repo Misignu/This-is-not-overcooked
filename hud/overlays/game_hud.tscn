@@ -1,0 +1,198 @@
+[gd_scene load_steps=17 format=2]
+
+[ext_resource path="res://hud/overlays/game_hud.gd" type="Script" id=1]
+[ext_resource path="res://assets/fonts/8-Bit Madness.ttf" type="DynamicFontData" id=2]
+[ext_resource path="res://assets/sprites/tileset.png" type="Texture" id=3]
+[ext_resource path="res://assets/sounds/fxs/Drop Metal Thing-SoundBible.com-401640954.wav" type="AudioStream" id=4]
+
+[sub_resource type="DynamicFont" id=1]
+size = 32
+font_data = ExtResource( 2 )
+
+[sub_resource type="AtlasTexture" id=2]
+atlas = ExtResource( 3 )
+region = Rect2( 144, 32, 16, 16 )
+
+[sub_resource type="AtlasTexture" id=3]
+atlas = ExtResource( 3 )
+region = Rect2( 144, 80, 16, 16 )
+
+[sub_resource type="AtlasTexture" id=4]
+atlas = ExtResource( 3 )
+region = Rect2( 144, 64, 16, 16 )
+
+[sub_resource type="AtlasTexture" id=5]
+atlas = ExtResource( 3 )
+region = Rect2( 144, 96, 16, 16 )
+
+[sub_resource type="AtlasTexture" id=6]
+atlas = ExtResource( 3 )
+region = Rect2( 144, 112, 16, 16 )
+
+[sub_resource type="AtlasTexture" id=7]
+atlas = ExtResource( 3 )
+region = Rect2( 144, 128, 16, 16 )
+
+[sub_resource type="AtlasTexture" id=8]
+atlas = ExtResource( 3 )
+region = Rect2( 144, 144, 16, 16 )
+
+[sub_resource type="AtlasTexture" id=9]
+atlas = ExtResource( 3 )
+region = Rect2( 144, 160, 16, 16 )
+
+[sub_resource type="AtlasTexture" id=10]
+atlas = ExtResource( 3 )
+region = Rect2( 144, 176, 16, 16 )
+
+[sub_resource type="Animation" id=11]
+length = 4.0
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.5, 1, 1.5, 2, 2.5, 3, 3.5 ),
+"transitions": PoolRealArray( 1, 1, 2, 2, 2, 2, 2, 2 ),
+"update": 1,
+"values": [ SubResource( 4 ), SubResource( 3 ), SubResource( 5 ), SubResource( 6 ), SubResource( 7 ), SubResource( 8 ), SubResource( 9 ), SubResource( 10 ) ]
+}
+
+[sub_resource type="Animation" id=12]
+tracks/0/type = "value"
+tracks/0/path = NodePath("MarginContainer/HBoxContainer/OrderPad:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.5, 1 ),
+"transitions": PoolRealArray( 0.297302, 1, 2.92817 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ), Color( 0.686275, 0.266667, 0.266667, 0.827451 ), Color( 1, 1, 1, 1 ) ]
+}
+
+[node name="HUD" type="CanvasLayer"]
+script = ExtResource( 1 )
+clients_min_wait_time = 10
+order_min_frequency = 15
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+anchor_right = 1.0
+margin_bottom = 141.0
+custom_constants/margin_right = 25
+custom_constants/margin_top = 25
+custom_constants/margin_left = 40
+custom_constants/margin_bottom = 25
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer"]
+margin_left = 40.0
+margin_top = 25.0
+margin_right = 999.0
+margin_bottom = 116.0
+
+[node name="OrderPad" type="HBoxContainer" parent="MarginContainer/HBoxContainer"]
+modulate = Color( 0.686275, 0.266667, 0.266667, 0.827451 )
+margin_right = 855.0
+margin_bottom = 91.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="CenterContainer" type="CenterContainer" parent="MarginContainer/HBoxContainer"]
+editor/display_folded = true
+margin_left = 859.0
+margin_right = 959.0
+margin_bottom = 91.0
+rect_min_size = Vector2( 100, 0 )
+
+[node name="Coins" type="HBoxContainer" parent="MarginContainer/HBoxContainer/CenterContainer"]
+margin_right = 100.0
+margin_bottom = 91.0
+rect_min_size = Vector2( 100, 91 )
+
+[node name="Label" type="Label" parent="MarginContainer/HBoxContainer/CenterContainer/Coins"]
+margin_top = 25.0
+margin_right = 58.0
+margin_bottom = 65.0
+rect_min_size = Vector2( 58, 40 )
+custom_fonts/font = SubResource( 1 )
+custom_colors/font_color = Color( 0.996078, 0.905882, 0.380392, 1 )
+text = "5"
+align = 2
+valign = 1
+
+[node name="TextureRect" type="TextureRect" parent="MarginContainer/HBoxContainer/CenterContainer/Coins"]
+margin_left = 62.0
+margin_right = 100.0
+margin_bottom = 91.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture = SubResource( 2 )
+expand = true
+stretch_mode = 6
+
+[node name="CenterContainer" type="CenterContainer" parent="."]
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -136.0
+margin_top = -91.0
+margin_right = -1.0
+
+[node name="MarginContainer" type="MarginContainer" parent="CenterContainer"]
+margin_right = 135.0
+margin_bottom = 91.0
+custom_constants/margin_right = 35
+custom_constants/margin_top = 0
+
+[node name="Countdown" type="HBoxContainer" parent="CenterContainer/MarginContainer"]
+margin_right = 100.0
+margin_bottom = 91.0
+rect_min_size = Vector2( 100, 91 )
+
+[node name="Label" type="Label" parent="CenterContainer/MarginContainer/Countdown"]
+margin_top = 25.0
+margin_right = 58.0
+margin_bottom = 65.0
+rect_min_size = Vector2( 58, 40 )
+custom_fonts/font = SubResource( 1 )
+custom_colors/font_color = Color( 0.458824, 0.54902, 0.721569, 1 )
+text = "0"
+align = 2
+valign = 1
+
+[node name="TextureRect" type="TextureRect" parent="CenterContainer/MarginContainer/Countdown"]
+editor/display_folded = true
+margin_left = 62.0
+margin_right = 100.0
+margin_bottom = 91.0
+hint_tooltip = "This is just a placeholder"
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture = SubResource( 3 )
+expand = true
+stretch_mode = 6
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="CenterContainer/MarginContainer/Countdown/TextureRect"]
+autoplay = "clock"
+anims/clock = SubResource( 11 )
+
+[node name="Timer" type="Timer" parent="."]
+one_shot = true
+autostart = true
+
+[node name="LimitTimer" type="Timer" parent="."]
+one_shot = true
+autostart = true
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 4 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/wrong_recipe = SubResource( 12 )
+[connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]
+[connection signal="timeout" from="LimitTimer" to="." method="_on_LimitTimer_timeout"]

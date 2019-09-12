@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/goof.wav-f7c64e18d573d84ca2124dc0e67491fe.sample"
+
+[deps]
+
+source_file="res://assets/sounds/fxs/goof.wav"
+dest_files=[ "res://.import/goof.wav-f7c64e18d573d84ca2124dc0e67491fe.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=true
+edit/normalize=true
+edit/loop=false
+compress/mode=0

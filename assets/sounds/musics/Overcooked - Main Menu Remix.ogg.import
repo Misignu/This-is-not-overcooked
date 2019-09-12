@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/Overcooked - Main Menu Remix.ogg-b715122a37984790f19a7c10cae3de5d.oggstr"
+
+[deps]
+
+source_file="res://assets/sounds/musics/Overcooked - Main Menu Remix.ogg"
+dest_files=[ "res://.import/Overcooked - Main Menu Remix.ogg-b715122a37984790f19a7c10cae3de5d.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

@@ -1,7 +1,10 @@
 [gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://objects/areas/pick_place.tscn" type="PackedScene" id=1]
-[ext_resource path="res://lock_pick.gd" type="Script" id=2]
+[ext_resource path="res://objects/areas/pick_places/lock_pick.gd" type="Script" id=2]
+
+
+
 
 [sub_resource type="SegmentShape2D" id=1]
 b = Vector2( 0, 100 )

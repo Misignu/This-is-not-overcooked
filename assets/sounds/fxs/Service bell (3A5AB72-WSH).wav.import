@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/Service bell (3A5AB72-WSH).wav-c9549d845e00e21691aa62f24d8da7cb.sample"
+
+[deps]
+
+source_file="res://assets/sounds/fxs/Service bell (3A5AB72-WSH).wav"
+dest_files=[ "res://.import/Service bell (3A5AB72-WSH).wav-c9549d845e00e21691aa62f24d8da7cb.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=true
+edit/normalize=true
+edit/loop=false
+compress/mode=0

@@ -1,0 +1,30 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://ingredient.tscn" type="PackedScene" id=1]
+[ext_resource path="res://assets/sprites/tileset.png" type="Texture" id=2]
+
+[sub_resource type="AtlasTexture" id=1]
+atlas = ExtResource( 2 )
+region = Rect2( 32, 64, 16, 16 )
+
+[sub_resource type="AtlasTexture" id=2]
+atlas = ExtResource( 2 )
+region = Rect2( 32, 80, 16, 16 )
+
+[sub_resource type="AtlasTexture" id=3]
+atlas = ExtResource( 2 )
+region = Rect2( 16, 96, 48, 16 )
+
+[sub_resource type="AtlasTexture" id=4]
+atlas = ExtResource( 2 )
+region = Rect2( 32, 48, 16, 16 )
+
+[node name="Meat" index="0" instance=ExtResource( 1 )]
+preparation_type = 3
+preparation_time = 10.0
+ingredient_label = SubResource( 1 )
+cutted_sprite = SubResource( 2 )
+fried_frames = SubResource( 3 )
+
+[node name="Sprite" parent="." index="1"]
+texture = SubResource( 4 )
