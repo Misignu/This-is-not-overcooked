@@ -10,7 +10,7 @@
 *.wav
 *.ogg
 
-
+.bin
 .import
 .vscode
 addons

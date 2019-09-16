@@ -19,7 +19,7 @@ region = Rect2( 16, 96, 48, 16 )
 atlas = ExtResource( 2 )
 region = Rect2( 32, 48, 16, 16 )
 
-[node name="Meat" index="0" instance=ExtResource( 1 )]
+[node name="Meat" instance=ExtResource( 1 )]
 preparation_type = 3
 preparation_time = 10.0
 ingredient_label = SubResource( 1 )

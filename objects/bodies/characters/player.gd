@@ -7,7 +7,6 @@ Script que recebe inputs que movimentam o personagem e o permitem interagir com 
 
 export(int, 1, 4) var controller_index = 1 # Um setget pode ser usado para alterar o controle in-game após o objeto ter sido instanciado
 
-var interacting: bool = false
 var current_object: PickableObject = null setget set_current_object
 
 onready var up: String = str("player", controller_index, "_move_up")
@@ -19,17 +18,17 @@ onready var secoundary_action: String = str("player", controller_index, "_secoun
 
 func _physics_process(_delta) -> void:
 	
-	if not interacting:
-		var axis = _get_input_axis()
-		
-		_move(axis)
-		
-		_walk_animation_play(axis)
+	var axis = _get_input_axis()
+	
+	_move(axis)
+	
+	_walk_animation_play(axis)
 #
 #	else:
 #
 #		apply_friction(acceleration)
 	if $RayCast2D.is_colliding():
+		
 		_interact($RayCast2D.get_collider()) # WATCH
 		
 	elif Input.is_action_just_pressed(primary_action) and current_object != null:
@@ -139,14 +138,16 @@ func _interact(area: Area2D) -> void:
 func _grab(area: Area2D) -> void:
 	
 	if area.has_method("remove_object"):
+		
 		set_current_object(area.remove_object()) # WATCH
 		
 	elif area.has_method("grab"):
+		
 		set_current_object(area.grab())
 
 func _drop(area: Area2D) -> void:
 	
-	if "Pan" in current_object.name and "PickPlace" in area.name and area.current_object != null and "Plate" in area.current_object.name: # TODO REFACTOR -> Código gambiarroso
+	if ("Pan" in current_object.name) and ("PickPlace" in area.name) and (area.current_object != null) and ("Plate" in area.current_object.name): # TODO REFACTOR -> Código gambiarroso
 		
 		current_object.transfer_ingredient(area)
 		
@@ -154,7 +155,6 @@ func _drop(area: Area2D) -> void:
 		
 		if area.insert_object(current_object): # WATCH
 			set_current_object(null)
-		
 		
 	elif area.has_method("insert_ingredient") and current_object is Ingredient:
 		
@@ -166,15 +166,13 @@ func _fire_action(area: Area2D):
 	if area.has_method("cut_ingridient"):
 		
 		if area.cut_ingridient(): # WATCH
-			interacting = true
+			print("cutting ok")
 
 func _stop_action(target):
 	
 	if target.has_method("stop_cutting"):
 		
 		target.stop_cutting()
-	
-	interacting = false
 
 # @setters
 func set_current_object(object: PickableObject) -> void:
@@ -187,5 +185,6 @@ func set_current_object(object: PickableObject) -> void:
 		
 		object.visible = false
 		$PickableObjectSprite.texture = object.get_node('Sprite').texture
+		object.get_node("CollisionShape2D").disabled = true
 	
 	current_object = object

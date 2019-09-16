@@ -1,48 +1,49 @@
-[gd_scene load_steps=17 format=2]
+[gd_scene load_steps=18 format=2]
 
 [ext_resource path="res://hud/overlays/game_hud.gd" type="Script" id=1]
-[ext_resource path="res://assets/fonts/8-Bit Madness.ttf" type="DynamicFontData" id=2]
-[ext_resource path="res://assets/sprites/tileset.png" type="Texture" id=3]
-[ext_resource path="res://assets/sounds/fxs/Drop Metal Thing-SoundBible.com-401640954.wav" type="AudioStream" id=4]
+[ext_resource path="res://assets/sounds/fxs/Morphine - Loose Strings.wav" type="AudioStream" id=2]
+[ext_resource path="res://assets/fonts/8-Bit Madness.ttf" type="DynamicFontData" id=3]
+[ext_resource path="res://assets/sprites/tileset.png" type="Texture" id=4]
+[ext_resource path="res://assets/sounds/fxs/Drop Metal Thing-SoundBible.com-401640954.wav" type="AudioStream" id=5]
 
 [sub_resource type="DynamicFont" id=1]
 size = 32
-font_data = ExtResource( 2 )
+font_data = ExtResource( 3 )
 
 [sub_resource type="AtlasTexture" id=2]
-atlas = ExtResource( 3 )
+atlas = ExtResource( 4 )
 region = Rect2( 144, 32, 16, 16 )
 
 [sub_resource type="AtlasTexture" id=3]
-atlas = ExtResource( 3 )
+atlas = ExtResource( 4 )
 region = Rect2( 144, 80, 16, 16 )
 
 [sub_resource type="AtlasTexture" id=4]
-atlas = ExtResource( 3 )
+atlas = ExtResource( 4 )
 region = Rect2( 144, 64, 16, 16 )
 
 [sub_resource type="AtlasTexture" id=5]
-atlas = ExtResource( 3 )
+atlas = ExtResource( 4 )
 region = Rect2( 144, 96, 16, 16 )
 
 [sub_resource type="AtlasTexture" id=6]
-atlas = ExtResource( 3 )
+atlas = ExtResource( 4 )
 region = Rect2( 144, 112, 16, 16 )
 
 [sub_resource type="AtlasTexture" id=7]
-atlas = ExtResource( 3 )
+atlas = ExtResource( 4 )
 region = Rect2( 144, 128, 16, 16 )
 
 [sub_resource type="AtlasTexture" id=8]
-atlas = ExtResource( 3 )
+atlas = ExtResource( 4 )
 region = Rect2( 144, 144, 16, 16 )
 
 [sub_resource type="AtlasTexture" id=9]
-atlas = ExtResource( 3 )
+atlas = ExtResource( 4 )
 region = Rect2( 144, 160, 16, 16 )
 
 [sub_resource type="AtlasTexture" id=10]
-atlas = ExtResource( 3 )
+atlas = ExtResource( 4 )
 region = Rect2( 144, 176, 16, 16 )
 
 [sub_resource type="Animation" id=11]
@@ -74,6 +75,18 @@ tracks/0/keys = {
 "update": 0,
 "values": [ Color( 1, 1, 1, 1 ), Color( 0.686275, 0.266667, 0.266667, 0.827451 ), Color( 1, 1, 1, 1 ) ]
 }
+tracks/1/type = "value"
+tracks/1/path = NodePath("MarginContainer/HBoxContainer/OrderPad/AudioStreamPlayer:playing")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ true ]
+}
 
 [node name="HUD" type="CanvasLayer"]
 script = ExtResource( 1 )
@@ -95,11 +108,14 @@ margin_right = 999.0
 margin_bottom = 116.0
 
 [node name="OrderPad" type="HBoxContainer" parent="MarginContainer/HBoxContainer"]
-modulate = Color( 0.686275, 0.266667, 0.266667, 0.827451 )
+modulate = Color( 0.74902, 0.413334, 0.413334, 0.861961 )
 margin_right = 855.0
 margin_bottom = 91.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="MarginContainer/HBoxContainer/OrderPad"]
+stream = ExtResource( 2 )
 
 [node name="CenterContainer" type="CenterContainer" parent="MarginContainer/HBoxContainer"]
 editor/display_folded = true
@@ -190,7 +206,7 @@ one_shot = true
 autostart = true
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
-stream = ExtResource( 4 )
+stream = ExtResource( 5 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 anims/wrong_recipe = SubResource( 12 )

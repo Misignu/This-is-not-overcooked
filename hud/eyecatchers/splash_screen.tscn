@@ -44,6 +44,7 @@ tracks/2/keys = {
 }
 
 [node name="SplashScreen" type="ColorRect"]
+editor/display_folded = true
 anchor_right = 1.0
 anchor_bottom = 1.0
 color = Color( 0.329412, 0.12549, 0.580392, 1 )

@@ -6,7 +6,7 @@ func add_ingredient(ingredient: Ingredient) -> bool: # TODO REFACTOR -> Código 
 	var current_frame = frame
 	
 	if frame == 0:
-		print('bread to sandwish')
+		print('try to add [ ', ingredient.name, "] to bread")
 		
 		if "Meat" in ingredient.name:
 			frame = 1
@@ -15,13 +15,13 @@ func add_ingredient(ingredient: Ingredient) -> bool: # TODO REFACTOR -> Código 
 			frame = 2
 		
 	elif frame == 1:
-		print('bread-meat add lettuce')
+		print('try to add [', ingredient.name, "] to sandwish")
 		
 		if "Lettuce" in ingredient.name:
 			frame = 3
 		
 	elif frame == 2:
-		print('bread-lettuce add meat')
+		print('try to add [', ingredient.name, "] to vegan sandwish")
 		
 		if "Meat" in ingredient.name:
 			frame = 3

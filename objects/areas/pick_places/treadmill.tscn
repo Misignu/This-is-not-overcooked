@@ -5,7 +5,7 @@
 [ext_resource path="res://assets/sprites/tileset.png" type="Texture" id=3]
 [ext_resource path="res://assets/sounds/fxs/Reception Bell Chime Sound Effect.wav" type="AudioStream" id=4]
 
-[node name="Treadmill" instance=ExtResource( 1 )]
+[node name="Treadmill" index="0" instance=ExtResource( 1 )]
 script = ExtResource( 2 )
 
 [node name="Sprite" type="Sprite" parent="." index="1"]

@@ -95,7 +95,7 @@ tracks/0/keys = {
 "values": [ 9, 10, 11, 10 ]
 }
 
-[node name="Player" instance=ExtResource( 1 )]
+[node name="Player" index="0" instance=ExtResource( 1 )]
 z_index = 1
 script = ExtResource( 2 )
 max_speed = 100.0

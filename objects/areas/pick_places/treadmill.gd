@@ -1,5 +1,7 @@
 extends "res://objects/areas/pick_place.gd"
 
+signal recipe_finished
+
 export(int, 0, 60) var return_time = 3
 var plates_output: Area2D setget set_plates_output
 
@@ -14,6 +16,7 @@ func _on_Tween_tween_completed(object, _key):
 
 func _on_Timer_timeout(timer: Timer):
 	print("The timer timeout: ", timer)
+	
 	if plates_output != null:
 		
 		plates_output.drop_dirt_plate()
@@ -38,6 +41,7 @@ func insert_object(object: PickableObject) -> bool: # TODO REFACTOR -> Código g
 				$Tween.interpolate_property(object, "modulate", Color(1, 1, 1, 1), Color(1, 1, 1, 0), 2, Tween.TRANS_CUBIC, Tween.EASE_IN_OUT)
 				$AudioStreamPlayer.play()
 				$Tween.start()
+				emit_signal("recipe_finished")
 	
 	return can_insert
 

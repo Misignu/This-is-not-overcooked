@@ -30,12 +30,12 @@ func _on_Timer_timeout():
 	_add_new_order()
 
 func _on_LimitTimer_timeout():
-	assert(get_tree().change_scene("res://hud/victory.tscn") == OK)
+	assert(get_tree().change_scene("res://hud/eyecatchers/victory.tscn") == OK)
 
 func _add_new_order():
 	var new_order = order.instance()
 	
-	new_order.id = orders.front().id + 1 if orders.size() > 0 else 0
+	new_order.id = orders.front().id + 1 if orders.size() > 0 else 0 # TODO REFACTOR AND DEBUG
 	new_order.get_node("Timer").wait_time = rand_range(clients_min_wait_time, clients_max_wait_time)
 	$Timer.start(rand_range(order_min_frequency, order_max_frequency))
 	$MarginContainer/HBoxContainer/OrderPad.add_child(new_order)
@@ -43,7 +43,7 @@ func _add_new_order():
 
 func _order_complete(recipe: String):
 	var completed := false
-#	if recipe == "Hamburger":
+	print("order complete: ", recipe)
 	for current_order in orders:
 		
 		if recipe in current_order.name:
@@ -63,3 +63,6 @@ func _on_Game_coins_changed(value: int, loss: float):
 		$AudioStreamPlayer.play()
 	
 	$MarginContainer/HBoxContainer/CenterContainer/Coins/Label.text = str(value)
+
+func _on_Treadmill_recipe_finished():
+	_order_complete("Hamburger")

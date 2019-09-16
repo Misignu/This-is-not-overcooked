@@ -295,11 +295,9 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="Title" type="Label" parent="MainMenu/HBoxContainer/VBoxContainer"]
-modulate = Color( 0.557077, 0.590549, 0.409451, 1 )
 margin_right = 770.0
 margin_bottom = 74.0
 rect_min_size = Vector2( 770, 74 )
-rect_pivot_offset = Vector2( 571.634, 37 )
 size_flags_horizontal = 0
 size_flags_vertical = 0
 custom_fonts/font = SubResource( 1 )
@@ -382,6 +380,7 @@ stream = ExtResource( 10 )
 autoplay = true
 
 [node name="OptionsPopup" type="WindowDialog" parent="."]
+editor/display_folded = true
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
@@ -390,7 +389,7 @@ margin_left = -75.0
 margin_top = -25.0
 margin_right = 75.0
 margin_bottom = 25.0
-rect_min_size = Vector2( 150, 50 )
+rect_min_size = Vector2( 158, 74 )
 window_title = "Options"
 
 [node name="MarginContainer" type="MarginContainer" parent="OptionsPopup"]
@@ -406,17 +405,39 @@ custom_constants/margin_bottom = 15
 [node name="VBoxContainer" type="VBoxContainer" parent="OptionsPopup/MarginContainer"]
 margin_left = 15.0
 margin_top = 15.0
-margin_right = 135.0
-margin_bottom = 39.0
+margin_right = 143.0
+margin_bottom = 59.0
 
 [node name="CheckBox" type="CheckBox" parent="OptionsPopup/MarginContainer/VBoxContainer"]
-margin_right = 120.0
+margin_right = 128.0
 margin_bottom = 24.0
 hint_tooltip = "Press F11 to Toggle Fullscreen"
 focus_mode = 1
 enabled_focus_mode = 1
 text = "Fullscreen"
 flat = true
+
+[node name="HBoxContainer" type="HBoxContainer" parent="OptionsPopup/MarginContainer/VBoxContainer"]
+margin_top = 28.0
+margin_right = 128.0
+margin_bottom = 44.0
+
+[node name="Label" type="Label" parent="OptionsPopup/MarginContainer/VBoxContainer/HBoxContainer"]
+margin_top = 1.0
+margin_right = 49.0
+margin_bottom = 15.0
+text = "Volume"
+
+[node name="HSlider" type="HSlider" parent="OptionsPopup/MarginContainer/VBoxContainer/HBoxContainer"]
+margin_left = 53.0
+margin_right = 128.0
+margin_bottom = 16.0
+rect_min_size = Vector2( 75, 0 )
+hint_tooltip = "Volume can be decreased with F2 and increased with F3"
+min_value = -80.0
+max_value = 0.0
+tick_count = 10
+ticks_on_borders = true
 [connection signal="focus_entered" from="MainMenu/HBoxContainer/VBoxContainer/MenuOptions/NewGame" to="MainMenu" method="_on_NewGame_focus_entered"]
 [connection signal="focus_exited" from="MainMenu/HBoxContainer/VBoxContainer/MenuOptions/NewGame" to="MainMenu" method="_on_NewGame_focus_exited"]
 [connection signal="mouse_entered" from="MainMenu/HBoxContainer/VBoxContainer/MenuOptions/NewGame" to="MainMenu" method="_on_NewGame_mouse_entered"]
@@ -431,3 +452,4 @@ flat = true
 [connection signal="pressed" from="MainMenu/HBoxContainer/VBoxContainer/MenuOptions/Options" to="MainMenu" method="_on_Options_pressed"]
 [connection signal="animation_finished" from="MainMenu/Transition" to="MainMenu" method="_on_Transition_animation_finished"]
 [connection signal="pressed" from="OptionsPopup/MarginContainer/VBoxContainer/CheckBox" to="MainMenu" method="_on_CheckBox_pressed"]
+[connection signal="value_changed" from="OptionsPopup/MarginContainer/VBoxContainer/HBoxContainer/HSlider" to="MainMenu" method="_on_HSlider_value_changed"]

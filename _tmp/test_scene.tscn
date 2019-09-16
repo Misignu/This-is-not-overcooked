@@ -1,0 +1,60 @@
+[gd_scene load_steps=10 format=2]
+
+[ext_resource path="res://assets/tilesets/general.tres" type="TileSet" id=1]
+[ext_resource path="res://objects/bodies/characters/player.tscn" type="PackedScene" id=2]
+[ext_resource path="res://objects/areas/pick_places/work_stations/cut_place.tscn" type="PackedScene" id=3]
+[ext_resource path="res://objects/areas/pick_places/box.tscn" type="PackedScene" id=4]
+[ext_resource path="res://objects/areas/pick_places/work_stations/stove.tscn" type="PackedScene" id=5]
+[ext_resource path="res://objects/areas/pickable_objects/plate.tscn" type="PackedScene" id=6]
+[ext_resource path="res://objects/areas/pick_places/treadmill.tscn" type="PackedScene" id=7]
+[ext_resource path="res://objects/areas/pick_places/dirt_plates_table.tscn" type="PackedScene" id=8]
+[ext_resource path="res://objects/areas/pick_place.tscn" type="PackedScene" id=9]
+
+[node name="Node2D" type="Node2D"]
+
+[node name="TileMap" type="TileMap" parent="."]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 16, 16 )
+format = 1
+tile_data = PoolIntArray( -65538, 5, 0, -65537, 2, 0, -131072, 2, 0, -131071, -1610612731, 0, -2, -1073741822, 0, -65535, -1610612734, 0, 65534, -1073741822, 0, 1, -1610612734, 0, 131070, -1073741822, 0, 65537, -1610612734, 0 )
+
+[node name="Player" parent="." instance=ExtResource( 2 )]
+scale = Vector2( 0.5, 0.5 )
+
+[node name="CutPlace" parent="." instance=ExtResource( 3 )]
+position = Vector2( 0, -24 )
+
+[node name="Camera2D" type="Camera2D" parent="."]
+current = true
+zoom = Vector2( 0.15, 0.15 )
+
+[node name="Box" parent="." instance=ExtResource( 4 )]
+position = Vector2( -24, -10 )
+rotation = -1.5708
+
+[node name="Box2" parent="." instance=ExtResource( 4 )]
+position = Vector2( -24, 4 )
+rotation = -1.5708
+igridient_id = 1
+
+[node name="Box3" parent="." instance=ExtResource( 4 )]
+position = Vector2( -24, 18 )
+rotation = -1.5708
+igridient_id = 2
+
+[node name="Stove" parent="." instance=ExtResource( 5 )]
+position = Vector2( 24, 4 )
+rotation = 1.5708
+
+[node name="Plate" parent="." instance=ExtResource( 6 )]
+position = Vector2( 24, 20 )
+
+[node name="Treadmill" parent="." instance=ExtResource( 7 )]
+position = Vector2( -8, 40 )
+rotation = 3.14159
+
+[node name="DirtPlatesTable" parent="Treadmill" instance=ExtResource( 8 )]
+position = Vector2( -16, 0 )
+
+[node name="PickPlace" parent="." instance=ExtResource( 9 )]
+position = Vector2( 24, -12 )

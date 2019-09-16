@@ -21,7 +21,7 @@ func _on_AnimationPlayer_animation_finished(_animation):
 	$CenterContainer/TristeFim/Desafiado/Options/Yep.grab_focus()
 
 func _on_Yep_pressed():
-	assert(get_tree().change_scene("res://hud/main_menu.tscn") == OK)
+	assert(get_tree().change_scene("res://hud/menus/main_menu.tscn") == OK)
 
 func _on_Nope_pressed():
 	assert(get_tree().change_scene("res://scenarios/level0.tscn") == OK)

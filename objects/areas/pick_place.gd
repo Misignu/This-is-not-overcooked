@@ -28,7 +28,6 @@ func remove_object() -> PickableObject:
 	if current_object != null:
 		
 		object.visible = false
-		current_object.get_node('CollisionShape2D').disabled = false
 	
 	current_object = null
 	$Zom/Label.text = str(current_object.name) if current_object != null else ""
