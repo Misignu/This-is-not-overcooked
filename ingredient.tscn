@@ -5,3 +5,8 @@
 
 [node name="Ingredient" instance=ExtResource( 1 )]
 script = ExtResource( 2 )
+
+[node name="BurnTimer" type="Timer" parent="." index="2"]
+wait_time = 3.0
+one_shot = true
+[connection signal="timeout" from="BurnTimer" to="." method="_on_BurnTimer_timeout"]

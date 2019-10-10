@@ -22,7 +22,6 @@ func cut_ingridient() -> bool:
 			current_object.CUT_TIME,
 			current_object.preparation_timer_wait_time
 		)
-		is_working = true
 	
 	return is_working
 

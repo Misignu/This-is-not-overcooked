@@ -20,6 +20,7 @@ gain = -5.0
 attack_us = 24.0
 
 [resource]
+bus/0/volume_db = -0.1
 bus/1/name = "Ambiencefxs"
 bus/1/solo = false
 bus/1/mute = false

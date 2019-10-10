@@ -9,6 +9,8 @@
 *.mp3
 *.wav
 *.ogg
+# video
+*.webm
 
 .bin
 .import

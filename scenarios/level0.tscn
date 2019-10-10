@@ -29,19 +29,29 @@ noise = SubResource( 1 )
 [node name="Level" type="Node2D"]
 pause_mode = 1
 
-[node name="TileMap" type="TileMap" parent="."]
+[node name="TileMap" type="Node" parent="."]
+editor/display_folded = true
+
+[node name="BG" type="ColorRect" parent="TileMap"]
+margin_top = -3.0
+margin_right = 256.0
+margin_bottom = 152.0
+color = Color( 0.227451, 0.223529, 0.298039, 1 )
+
+[node name="Floor" type="TileMap" parent="TileMap"]
 tile_set = ExtResource( 1 )
 cell_size = Vector2( 16, 16 )
 format = 1
 tile_data = PoolIntArray( 1, 3, 0, 2, -1610612725, 0, 3, -1610612725, 0, 4, -1610612725, 0, 5, -1610612725, 0, 6, -1610612725, 0, 7, -1610612725, 0, 8, -1610612725, 0, 9, -1610612725, 0, 10, -1610612725, 0, 11, -1610612725, 0, 12, -1610612725, 0, 13, -1610612725, 0, 14, -1610612733, 0, 65537, 11, 0, 65538, 14, 0, 65539, 14, 0, 65540, 14, 0, 65541, 14, 0, 65542, 14, 0, 65543, 14, 0, 65544, 14, 0, 65545, 14, 0, 65546, 14, 0, 65547, 14, 0, 65548, 14, 0, 65549, 14, 0, 65550, 1610612747, 0, 131073, 11, 0, 131074, 14, 0, 131075, 14, 0, 131076, 14, 0, 131077, 14, 0, 131078, 14, 0, 131079, 14, 0, 131080, 14, 0, 131081, 14, 0, 131082, 14, 0, 131083, 14, 0, 131084, 14, 0, 131085, 14, 0, 131086, 1610612747, 0, 196609, 11, 0, 196610, 14, 0, 196611, 14, 0, 196612, 14, 0, 196613, 14, 0, 196614, 14, 0, 196615, 14, 0, 196616, 14, 0, 196617, 14, 0, 196618, 14, 0, 196619, 14, 0, 196620, 14, 0, 196621, 14, 0, 196622, 1610612747, 0, 262145, 11, 0, 262146, 14, 0, 262147, 14, 0, 262148, 14, 0, 262149, 14, 0, 262150, 14, 0, 262151, 14, 0, 262152, 14, 0, 262153, 14, 0, 262154, 14, 0, 262155, 14, 0, 262156, 14, 0, 262157, 14, 0, 262158, 1610612747, 0, 327681, 11, 0, 327682, 14, 0, 327683, 14, 0, 327684, 14, 0, 327685, 14, 0, 327686, 14, 0, 327687, 14, 0, 327688, 14, 0, 327689, 14, 0, 327690, 14, 0, 327691, 14, 0, 327692, 14, 0, 327693, 14, 0, 327694, 1610612747, 0, 393217, 11, 0, 393218, 14, 0, 393219, 14, 0, 393220, 14, 0, 393221, 14, 0, 393222, 14, 0, 393223, 14, 0, 393224, 14, 0, 393225, 14, 0, 393226, 14, 0, 393227, 14, 0, 393228, 14, 0, 393229, 14, 0, 393230, 1610612747, 0, 458753, 11, 0, 458754, 14, 0, 458755, 14, 0, 458756, 14, 0, 458757, 14, 0, 458758, 14, 0, 458759, 14, 0, 458760, 14, 0, 458761, 14, 0, 458762, 14, 0, 458763, 14, 0, 458764, 14, 0, 458765, 14, 0, 458766, 1610612747, 0, 524289, -1073741821, 0, 524290, -1073741813, 0, 524291, -1073741813, 0, 524292, -1073741813, 0, 524293, -1073741813, 0, 524294, -1073741813, 0, 524295, -1073741813, 0, 524296, -1073741813, 0, 524297, -1073741813, 0, 524298, -1073741813, 0, 524299, -1073741813, 0, 524300, -1073741813, 0, 524301, -1073741813, 0, 524302, 1610612739, 0 )
 
-[node name="TileMap2" type="TileMap" parent="."]
+[node name="FG" type="TileMap" parent="TileMap"]
 tile_set = ExtResource( 1 )
 cell_size = Vector2( 16, 16 )
 format = 1
 tile_data = PoolIntArray( 65538, 2, 0, 65539, 2, 0, 65540, 2, 0, 65541, 2, 0, 65542, 2, 0, 65543, 2, 0, 65544, 2, 0, 65545, 2, 0, 65546, 2, 0, 65547, 2, 0, 65548, 2, 0, 65549, 2, 0, 262146, 5, 0, 262147, 2, 0, 262148, 2, 0, 262149, 2, 0, 262150, 2, 0, 262151, 2, 0, 262152, 2, 0, 262153, 2, 0, 262154, 2, 0, 262155, 4, 0, 327682, -1073741822, 0, 393218, -1073741822, 0, 458754, -1073741819, 0, 458755, 1610612738, 0, 458756, 1610612738, 0, 458757, 1610612738, 0, 458758, 1610612738, 0, 458759, 1610612738, 0, 458760, 1610612738, 0, 458761, 1610612738, 0, 458762, 1610612738, 0, 458763, 1610612738, 0, 458764, 1610612738, 0, 458765, 1610612738, 0 )
 
 [node name="SceneObjects" type="Node" parent="."]
+editor/display_folded = true
 
 [node name="Tabbles" type="Node" parent="SceneObjects"]
 editor/display_folded = true
@@ -126,6 +136,7 @@ editor/display_folded = true
 
 [node name="Box" parent="SceneObjects/Boxes" instance=ExtResource( 4 )]
 position = Vector2( 184, 24 )
+igridient_id = 0
 
 [node name="Box3" parent="SceneObjects/Boxes" instance=ExtResource( 4 )]
 position = Vector2( 200, 24 )
@@ -168,7 +179,6 @@ position = Vector2( 104, 72 )
 position = Vector2( 168, 72 )
 
 [node name="Treadmill" parent="SceneObjects" instance=ExtResource( 8 )]
-editor/display_folded = true
 position = Vector2( 40, 88 )
 rotation = -1.5708
 
@@ -180,6 +190,7 @@ position = Vector2( 208, 120 )
 rotation = 3.14159
 
 [node name="Players" type="YSort" parent="."]
+editor/display_folded = true
 z_index = 1
 
 [node name="Player" parent="Players" instance=ExtResource( 11 )]
@@ -211,6 +222,7 @@ limit_bottom = 150
 editor_draw_limits = true
 
 [node name="Light2D" type="Light2D" parent="."]
+visible = false
 position = Vector2( 128, 72 )
 texture = SubResource( 2 )
 texture_scale = 0.5
@@ -223,15 +235,15 @@ shadow_color = Color( 0.0666667, 0, 0, 0 )
 
 [node name="HUD" parent="." instance=ExtResource( 12 )]
 layer = 2
+order_max_frequency = 45
 clients_min_wait_time = 30
 clients_max_wait_time = 90
-order_max_frequency = 45
 limit_time = 240
 level_coins = 100
 
 [node name="PauseBreak" parent="." instance=ExtResource( 13 )]
 
-[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+[node name="Music" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 14 )
 autoplay = true
-[connection signal="recipe_finished" from="SceneObjects/Treadmill" to="HUD" method="_on_Treadmill_recipe_finished"]
+[connection signal="recipe_delived" from="SceneObjects/Treadmill" to="HUD" method="_on_Treadmill_recipe_delived"]

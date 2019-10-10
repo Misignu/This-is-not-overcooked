@@ -1,7 +1,8 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://hud/eyecatchers/splash_screen.gd" type="Script" id=1]
 [ext_resource path="res://assets/sprites/ludart-logo_2-generation_v.0.png" type="Texture" id=2]
+[ext_resource path="res://assets/video/hello_world_1080p.webm" type="VideoStream" id=3]
 
 [sub_resource type="Animation" id=1]
 resource_name = "show"
@@ -31,34 +32,57 @@ tracks/1/keys = {
 "values": [ 0.0, -4.0 ]
 }
 tracks/2/type = "value"
-tracks/2/path = NodePath("..:modulate")
+tracks/2/path = NodePath(".:modulate")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/imported = false
 tracks/2/enabled = true
 tracks/2/keys = {
-"times": PoolRealArray( 0, 3, 4 ),
-"transitions": PoolRealArray( 1, 1, 1 ),
+"times": PoolRealArray( 0, 1, 3, 4 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
 "update": 0,
-"values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
+"values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("..:color")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0, 1, 3, 4 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 0.329412, 0.12549, 0.580392, 1 ), Color( 0.329412, 0.12549, 0.580392, 1 ), Color( 0.329412, 0.12549, 0.580392, 1 ), Color( 0.27451, 0.113725, 0.490196, 0.72549 ) ]
 }
 
 [node name="SplashScreen" type="ColorRect"]
-editor/display_folded = true
 anchor_right = 1.0
 anchor_bottom = 1.0
 color = Color( 0.329412, 0.12549, 0.580392, 1 )
 script = ExtResource( 1 )
 
 [node name="LudartLogo" type="TextureRect" parent="."]
-margin_left = 200.0
-margin_top = -1000.0
-margin_right = 840.001
-margin_bottom = -360.0
-rect_rotation = -0.685714
+margin_left = 235.714
+margin_top = -607.143
+margin_right = 875.715
+margin_bottom = 32.8576
+rect_rotation = -1.82857
 texture = ExtResource( 2 )
 
 [node name="Anim" type="AnimationPlayer" parent="LudartLogo"]
 autoplay = "show"
 anims/show = SubResource( 1 )
+
+[node name="VideoPlayer" type="VideoPlayer" parent="."]
+show_behind_parent = true
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -88.0
+margin_right = 808.0
+margin_bottom = 360.0
+rect_scale = Vector2( 0.63, 0.63 )
+stream = ExtResource( 3 )
+autoplay = true
+expand = false
 [connection signal="animation_finished" from="LudartLogo/Anim" to="." method="_on_Anim_animation_finished"]

@@ -21,15 +21,20 @@ func _input(event): # TODO REFACTOR
 
 # @signals
 func _on_Game_fullscreen_mode_changed():
+	
 	get_parent().get_node("OptionsPopup/MarginContainer/VBoxContainer/CheckBox").pressed = OS.window_fullscreen
+	get_tree().get_root().set_transparent_background(!OS.window_fullscreen)
+	OS.window_per_pixel_transparency_enabled = !OS.window_fullscreen
 
 func _on_Transition_animation_finished(anim_name):
 	
 	if anim_name == "out":
+		Game.set_transparency_mode()
 		assert(get_tree().change_scene("res://scenarios/level0.tscn") == OK)
-
+	
 func _on_Game_volume_changed(value):
 	get_parent().get_node("OptionsPopup/MarginContainer/VBoxContainer/HBoxContainer/HSlider").value = value
+
 
 func _on_NewGame_focus_entered():
 	
@@ -50,6 +55,7 @@ func _on_Options_focus_entered():
 	$HBoxContainer/VBoxContainer/MenuOptions/Options/AnimationPlayer.play("rainbow")
 	select()
 	current_focused = 2
+
 
 func _on_NewGame_focus_exited():
 	$HBoxContainer/VBoxContainer/MenuOptions/NewGame/AnimationPlayer.play("idle")
@@ -82,6 +88,7 @@ func _on_Continue_pressed():
 	aviso()
 
 func _on_Options_pressed():
+	
 	get_parent().get_node("OptionsPopup").popup()
 	get_parent().get_node("OptionsPopup/MarginContainer/VBoxContainer/CheckBox").pressed = OS.window_fullscreen
 	get_parent().get_node("OptionsPopup/MarginContainer/VBoxContainer/CheckBox").grab_focus()
@@ -91,6 +98,7 @@ func _on_HSlider_value_changed(value):
 
 # @main
 func aviso():
+	
 	print("Not implemented!\nThis is just for learning basic stuff folk XD")
 	OS.window_minimized = true
 	$NotImplementedSFX.play()

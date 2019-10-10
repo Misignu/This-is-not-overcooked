@@ -4,8 +4,6 @@
 [ext_resource path="res://objects/areas/pick_places/work_stations/sink.gd" type="Script" id=2]
 [ext_resource path="res://assets/sprites/tileset.png" type="Texture" id=3]
 
-
-
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 16, 8 )
 

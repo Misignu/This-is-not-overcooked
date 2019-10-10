@@ -43,8 +43,7 @@ gradient = SubResource( 8 )
 texture = SubResource( 9 )
 region_rect = Rect2( 0, 0, 2048, 1 )
 
-[sub_resource type="Animation" id=11]
-resource_name = "alert"
+[sub_resource type="Animation" id=16]
 step = 0.05
 tracks/0/type = "value"
 tracks/0/path = NodePath(".:modulate")
@@ -59,7 +58,7 @@ tracks/0/keys = {
 "values": [ Color( 1, 1, 1, 1 ), Color( 0.792157, 0.317647, 0.376471, 1 ), Color( 1, 1, 1, 1 ) ]
 }
 
-[sub_resource type="Animation" id=12]
+[sub_resource type="Animation" id=17]
 tracks/0/type = "value"
 tracks/0/path = NodePath(".:rect_position")
 tracks/0/interp = 1
@@ -99,10 +98,10 @@ tracks/2/keys = {
 } ]
 }
 
-[sub_resource type="Animation" id=13]
+[sub_resource type="Animation" id=14]
 length = 1.5
 tracks/0/type = "value"
-tracks/0/path = NodePath("..:rect_position")
+tracks/0/path = NodePath(".:rect_position")
 tracks/0/interp = 2
 tracks/0/loop_wrap = true
 tracks/0/imported = false
@@ -111,10 +110,10 @@ tracks/0/keys = {
 "times": PoolRealArray( 0, 1.5 ),
 "transitions": PoolRealArray( 0.225313, 1 ),
 "update": 0,
-"values": [ Vector2( 1020, 0 ), Vector2( 40, 25 ) ]
+"values": [ Vector2( 1020, 0 ), Vector2( 0, 0 ) ]
 }
 tracks/1/type = "value"
-tracks/1/path = NodePath("..:modulate")
+tracks/1/path = NodePath(".:modulate")
 tracks/1/interp = 2
 tracks/1/loop_wrap = true
 tracks/1/imported = false
@@ -135,6 +134,7 @@ region_rect = Rect2( 160, 96, 32, 32 )
 script = ExtResource( 2 )
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
+editor/display_folded = true
 anchor_right = 1.0
 anchor_bottom = 1.0
 custom_constants/margin_right = 0
@@ -143,7 +143,6 @@ custom_constants/margin_left = 0
 custom_constants/margin_bottom = 7
 
 [node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
-editor/display_folded = true
 margin_top = 10.0
 margin_right = 100.0
 margin_bottom = 84.0
@@ -236,14 +235,14 @@ percent_visible = false
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 autoplay = "entry"
-anims/alert = SubResource( 11 )
-anims/done = SubResource( 12 )
-anims/entry = SubResource( 13 )
+anims/alert = SubResource( 16 )
+anims/done = SubResource( 17 )
+anims/entry = SubResource( 14 )
 
 [node name="Tween" type="Tween" parent="."]
 
-[node name="Timer" type="Timer" parent="."]
+[node name="LimitTimer" type="Timer" parent="."]
 one_shot = true
 autostart = true
 [connection signal="tween_completed" from="Tween" to="." method="_on_Tween_tween_completed"]
-[connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]
+[connection signal="timeout" from="LimitTimer" to="." method="_on_Timer_timeout"]

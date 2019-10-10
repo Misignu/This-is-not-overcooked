@@ -7,6 +7,7 @@ Script que recebe inputs que movimentam o personagem e o permitem interagir com 
 
 export(int, 1, 4) var controller_index = 1 # Um setget pode ser usado para alterar o controle in-game após o objeto ter sido instanciado
 
+var is_interacting := false
 var current_object: PickableObject = null setget set_current_object
 
 onready var up: String = str("player", controller_index, "_move_up")
@@ -20,13 +21,11 @@ func _physics_process(_delta) -> void:
 	
 	var axis = _get_input_axis()
 	
-	_move(axis)
+	if not is_interacting:
+		
+		_move(axis)
+		_walk_animation_play(axis)
 	
-	_walk_animation_play(axis)
-#
-#	else:
-#
-#		apply_friction(acceleration)
 	if $RayCast2D.is_colliding():
 		
 		_interact($RayCast2D.get_collider()) # WATCH
@@ -122,18 +121,16 @@ func _interact(area: Area2D) -> void:
 		if Input.is_action_just_pressed(primary_action):
 			_grab(area) # WATCH
 		
-		if Input.is_action_just_pressed(secoundary_action):
+		if Input.is_action_just_pressed(secoundary_action) and not is_interacting:
 			_fire_action(area) # WATCH
 		
-		if Input.is_action_just_released(secoundary_action):
+		if Input.is_action_just_released(secoundary_action) and is_interacting:
 			_stop_action(area)
 		
 	else:
 		
 		if Input.is_action_just_pressed(primary_action):
 			_drop(area) # WATCH
-	
-	$Zom/Label.text = current_object.name if current_object != null else ""
 
 func _grab(area: Area2D) -> void:
 	
@@ -166,13 +163,30 @@ func _fire_action(area: Area2D):
 	if area.has_method("cut_ingridient"):
 		
 		if area.cut_ingridient(): # WATCH
-			print("cutting ok")
-
-func _stop_action(target):
+			is_interacting = true
 	
-	if target.has_method("stop_cutting"):
+	if area.has_method("wash_plate"):
 		
-		target.stop_cutting()
+		area.wash_plate()
+		is_interacting = true
+	
+	if is_interacting:
+		assert(area.get_node("Timer").connect("timeout", self, "_stop_interaction", [area.get_node("Timer")]) == OK)
+
+func _stop_action(area: Area2D):
+	
+	if area.has_method("stop_cutting"):
+		area.stop_cutting()
+	
+	if area.has_method("stop_washing"):
+		area.stop_washing()
+	
+	_stop_interaction(area.get_node("Timer"))
+
+func _stop_interaction(timer: Timer):
+	
+	is_interacting = false
+	timer.disconnect("timeout", self, "_stop_interaction")
 
 # @setters
 func set_current_object(object: PickableObject) -> void:

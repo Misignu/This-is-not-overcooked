@@ -29,6 +29,7 @@ export(Texture) var cutted_sprite: Texture setget, get_cutted_sprite
 export(Texture) var fried_frames: Texture setget, get_fried_frames
 export(Texture) var cooked_sprite: Texture setget, get_cooked_sprite
 
+var is_burned: bool = false
 var preparation_state: int setget set_preparation_state
 
 onready var fry_time = preparation_time * .5
@@ -79,6 +80,9 @@ func _change_ingridient_sprite(type: String) -> void:
 		
 		push_warning(str("None texture defined to ", type, " in ", name))
 
+func _on_BurnTimer_timeout():
+	is_burned = true
+
 # @setters
 func set_preparation_state(type: int = preparation_type) -> void:
 	
@@ -117,3 +121,4 @@ func get_fried_frames() -> Texture:
 
 func get_cooked_sprite() -> Texture:
 	return cooked_sprite
+

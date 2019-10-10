@@ -2,8 +2,12 @@ extends "res://objects/areas/pickable_objects/kitchenware.gd"
 
 func _on_fry_finished(timer: Timer):
 	
-	$Sprite/IngredientSprite.frame = 2
+	$Sprite/IngredientSprite.frame = 1
 	timer.disconnect("timeout", self, "_on_fry_finished")
+
+func _on_ingredient_burned():
+	
+	$Sprite/IngredientSprite.frame = 2
 
 # @main
 func insert_ingredient(ingredient: Ingredient) -> bool:
@@ -46,3 +50,13 @@ func fry_ingridient(timer: Timer) -> bool:
 func stop(timer: Timer):
 	
 	current_ingredient.stop("fry", timer)
+
+func burn_ingredient():
+	
+	assert(current_ingredient.get_node("BurnTimer").connect("timeout", self, "_on_ingredient_burned") == OK)
+	current_ingredient.get_node("BurnTimer").start()
+
+func stop_burning():
+	
+	current_ingredient.get_node("BurnTimer").stop()
+	current_ingredient.get_node("BurnTimer").disconnect("timeout", self, "_on_ingredient_burned")

@@ -5,9 +5,6 @@ signal coins_changed
 signal fullscreen_mode_changed
 signal volume_changed
 
-func _ready():
-	pause_mode = Node.PAUSE_MODE_PROCESS
-
 enum ingredients_ids {
 	BREAD = 0,
 	MEAT = 1,
@@ -21,6 +18,13 @@ const ingredients = {
 }
 
 var coins: int = 50 setget set_coins
+
+func _ready():
+	
+#	if OS.is_debug_build(): # Esse código somente será executado em uma edição de debugging
+	
+	pause_mode = Node.PAUSE_MODE_PROCESS
+	get_tree().get_root().set_transparent_background(true)
 
 func _input(event) -> void:
 	
@@ -36,6 +40,12 @@ func _input(event) -> void:
 			increase_master_volume()
 
 # @main
+func set_transparency_mode(value := false):
+	
+	get_tree().get_root().set_transparent_background(false)
+	OS.window_per_pixel_transparency_enabled = value
+	OS.window_borderless = value
+
 func decreade_master_volume(value: float = 10):
 	var new_volume =  AudioServer.get_bus_volume_db(AudioServer.get_bus_index("Master"))  - value
 	

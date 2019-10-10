@@ -31,6 +31,7 @@ zoom = Vector2( 0.15, 0.15 )
 [node name="Box" parent="." instance=ExtResource( 4 )]
 position = Vector2( -24, -10 )
 rotation = -1.5708
+igridient_id = 0
 
 [node name="Box2" parent="." instance=ExtResource( 4 )]
 position = Vector2( -24, 4 )
@@ -48,6 +49,8 @@ rotation = 1.5708
 
 [node name="Plate" parent="." instance=ExtResource( 6 )]
 position = Vector2( 24, 20 )
+use_pick_place = false
+dirt_texture = null
 
 [node name="Treadmill" parent="." instance=ExtResource( 7 )]
 position = Vector2( -8, 40 )

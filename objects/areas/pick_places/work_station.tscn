@@ -4,7 +4,6 @@
 [ext_resource path="res://objects/areas/pick_places/work_station.gd" type="Script" id=2]
 [ext_resource path="res://assets/sprites/progress_bar.png" type="Texture" id=3]
 
-
 [sub_resource type="AtlasTexture" id=1]
 atlas = ExtResource( 3 )
 region = Rect2( 0, 0, 16, 6 )
@@ -17,7 +16,7 @@ region = Rect2( 0, 6, 16, 6 )
 atlas = ExtResource( 3 )
 region = Rect2( 0, 12, 16, 6 )
 
-[node name="WorkStation" index="0" instance=ExtResource( 1 )]
+[node name="WorkStation" instance=ExtResource( 1 )]
 script = ExtResource( 2 )
 
 [node name="Sprite" type="Sprite" parent="." index="1"]

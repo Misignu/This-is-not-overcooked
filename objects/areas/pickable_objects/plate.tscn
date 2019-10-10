@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://objects/areas/pickable_objects/kitchenware.tscn" type="PackedScene" id=1]
 [ext_resource path="res://objects/areas/pickable_objects/plate.gd" type="Script" id=2]
@@ -6,11 +6,19 @@
 
 [sub_resource type="AtlasTexture" id=1]
 atlas = ExtResource( 3 )
+region = Rect2( 0, 64, 16, 16 )
+
+[sub_resource type="AtlasTexture" id=2]
+atlas = ExtResource( 3 )
 region = Rect2( 0, 48, 16, 16 )
 
 [node name="Plate" instance=ExtResource( 1 )]
 script = ExtResource( 2 )
 use_pick_place = true
+dirt_texture = SubResource( 1 )
 
 [node name="Sprite" parent="." index="1"]
-texture = SubResource( 1 )
+texture = SubResource( 2 )
+
+[node name="Tween" type="Tween" parent="." index="2"]
+[connection signal="tween_completed" from="Tween" to="." method="_on_Tween_tween_completed"]

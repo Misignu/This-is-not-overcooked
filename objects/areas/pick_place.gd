@@ -18,8 +18,6 @@ func insert_object(object: PickableObject) -> bool: # WATCH -> Aparentemente res
 		
 		can_insert = current_object.insert_ingredient(object)
 	
-	$Zom/Label.text = str(current_object) if current_object != null else "" # WATCH -> test line
-	
 	return can_insert
 
 func remove_object() -> PickableObject:
@@ -30,7 +28,5 @@ func remove_object() -> PickableObject:
 		object.visible = false
 	
 	current_object = null
-	$Zom/Label.text = str(current_object.name) if current_object != null else ""
+	
 	return object
-
-

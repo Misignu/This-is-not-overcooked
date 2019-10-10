@@ -3,16 +3,29 @@ extends NinePatchRect
 export var shake_amplitude: float = 5.0 # distance in pixels
 export var shake_lenght: float = 1.0 # duration in secounds
 
-var id: int setget set_id
+var stack_id: int setget set_stack_id
+onready var progress_bar := $MarginContainer/VBoxContainer/ElapsedTime/ProgressBar
 
 func _ready():
 	
-	$MarginContainer/VBoxContainer/ElapsedTime/ProgressBar.max_value = $Timer.wait_time
+	progress_bar.max_value = $LimitTimer.wait_time
 
 func _process(_delta):
 	
-	$MarginContainer/VBoxContainer/ElapsedTime/ProgressBar.value = $Timer.time_left
+	progress_bar.value = $LimitTimer.time_left
 
+# @signals
+func _on_Tween_tween_completed(_object, _key):
+	
+	$AnimationPlayer.play("done")
+	Game.coins -= 10
+
+func _on_Timer_timeout():
+	
+	$AnimationPlayer.play("alert")
+	shake()
+
+# @main
 func complete():
 	
 	$AnimationPlayer.play("done")
@@ -29,15 +42,6 @@ func move(target_position):
 	rand.y = rand_range(-target_position.y, target_position.y)
 	rect_position = rand
 
-func _on_Timer_timeout():
-	
-	$AnimationPlayer.play("alert")
-	shake()
+func set_stack_id(value: int):
+	stack_id = value
 
-func _on_Tween_tween_completed(_object, _key):
-	
-	$AnimationPlayer.play("done")
-	Game.coins -= 10
-
-func set_id(value: int):
-	id = value

@@ -11,3 +11,7 @@ script = ExtResource( 2 )
 texture = ExtResource( 3 )
 region_enabled = true
 region_rect = Rect2( 48, 32, 16, 16 )
+
+[node name="Timer" type="Timer" parent="." index="2"]
+one_shot = true
+[connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]
