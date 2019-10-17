@@ -1,15 +1,80 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://objects/areas/pick_place.gd" type="Script" id=1]
+[ext_resource path="res://objects/fire_particles.tscn" type="PackedScene" id=2]
+[ext_resource path="res://assets/sounds/fxs/fire.wav" type="AudioStream" id=3]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 8, 8 )
+
+[sub_resource type="GDScript" id=2]
+script/source = "extends RayCast2D
+
+var checked: int = 0
+
+func _ready():
+	set_physics_process(false)
+
+func _physics_process(_delta):
+	
+	if is_colliding():
+		
+		_burn()
+	
+	match checked:
+		0:
+			cast_to = Vector2.RIGHT * 10
+			
+		1:
+			cast_to = Vector2.UP * 10
+			
+		2:
+			cast_to = Vector2.LEFT * 10
+			
+		3:
+			cast_to = Vector2.DOWN * 10
+	
+	checked += 1
+	
+	if checked >= 4:
+		
+		enabled = false
+		set_physics_process(false)
+
+func _burn():
+	var collider = get_collider()
+	
+	if collider.has_method(\"set_is_burning\"):
+		collider.set_is_burning(true)
+"
 
 [node name="PickPlace" type="Area2D"]
 collision_layer = 2
 collision_mask = 2
 script = ExtResource( 1 )
+__meta__ = {
+"_editor_description_": "Area where the player  can interact with to add or remove objects in the right spot."
+}
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 modulate = Color( 1, 1, 1, 0.392157 )
 shape = SubResource( 1 )
+
+[node name="FireParticles" parent="." instance=ExtResource( 2 )]
+emitting = false
+
+[node name="Scan" type="RayCast2D" parent="."]
+cast_to = Vector2( 0, 10 )
+collision_mask = 2
+collide_with_areas = true
+collide_with_bodies = false
+script = SubResource( 2 )
+
+[node name="FireBSFX2D" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 3 )
+bus = "BSFXS"
+
+[node name="FireTimer" type="Timer" parent="."]
+wait_time = 3.0
+one_shot = true
+[connection signal="timeout" from="FireTimer" to="." method="_on_FireTimer_timeout"]

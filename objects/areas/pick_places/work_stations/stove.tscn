@@ -1,8 +1,9 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://objects/areas/pick_places/work_station.tscn" type="PackedScene" id=1]
 [ext_resource path="res://objects/areas/pick_places/work_stations/stove.gd" type="Script" id=2]
 [ext_resource path="res://assets/sprites/tileset.png" type="Texture" id=3]
+[ext_resource path="res://assets/sounds/fxs/beep_short.wav" type="AudioStream" id=4]
 
 [sub_resource type="AtlasTexture" id=1]
 atlas = ExtResource( 3 )
@@ -10,7 +11,8 @@ region = Rect2( 128, 48, 16, 16 )
 
 [sub_resource type="Animation" id=2]
 resource_name = "fire_alert"
-loop = true
+length = 3.0
+step = 0.025
 tracks/0/type = "value"
 tracks/0/path = NodePath("TextureRect:modulate")
 tracks/0/interp = 2
@@ -18,15 +20,26 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 0.5, 0.8 ),
-"transitions": PoolRealArray( 0.482968, 2.46229, 0.329877 ),
+"times": PoolRealArray( 0, 0.5, 0.9, 1.2, 1.4, 1.6, 1.7, 1.9, 2, 2.1, 2.15, 2.225, 2.25, 2.3, 2.325, 2.35, 2.375, 2.4, 2.425, 2.45, 2.475, 2.5, 2.525, 2.55, 2.575, 2.6, 2.625, 2.65, 2.675, 2.7, 2.725, 2.75, 2.775, 2.8, 2.825, 2.85, 2.875, 2.9, 2.925, 2.95, 2.975, 3 ),
+"transitions": PoolRealArray( 0.482968, 2.46229, 0.482968, 2.46229, 0.482968, 2.46229, 0.482968, 2.46229, 0.482968, 2.46229, 0.482968, 2.46229, 0.482968, 2.46229, 0.482968, 2.46229, 0.482968, 2.46229, 0.482968, 2.46229, 0.482968, 2.46229, 0.482968, 2.46229, 0.482968, 2.46229, 0.482968, 2.46229, 0.482968, 2.46229, 0.482968, 2.46229, 0.482968, 2.46229, 0.482968, 2.46229, 0.482968, 2.46229, 0.482968, 2.46229, 0.482968, 2.46229 ),
 "update": 0,
-"values": [ Color( 1, 1, 1, 1 ), Color( 1, 0, 0, 0.184314 ), Color( 1, 1, 1, 1 ) ]
+"values": [ Color( 1, 1, 1, 1 ), Color( 1, 0, 0, 0.184314 ), Color( 1, 1, 1, 1 ), Color( 1, 0, 0, 0.184314 ), Color( 1, 1, 1, 1 ), Color( 1, 0, 0, 0.184314 ), Color( 1, 1, 1, 1 ), Color( 1, 0, 0, 0.184314 ), Color( 1, 1, 1, 1 ), Color( 1, 0, 0, 0.184314 ), Color( 1, 1, 1, 1 ), Color( 1, 0, 0, 0.184314 ), Color( 1, 1, 1, 1 ), Color( 1, 0, 0, 0.184314 ), Color( 1, 1, 1, 1 ), Color( 1, 0, 0, 0.184314 ), Color( 1, 1, 1, 1 ), Color( 1, 0, 0, 0.184314 ), Color( 1, 1, 1, 1 ), Color( 1, 0, 0, 0.184314 ), Color( 1, 1, 1, 1 ), Color( 1, 0, 0, 0.184314 ), Color( 1, 1, 1, 1 ), Color( 1, 0, 0, 0.184314 ), Color( 1, 1, 1, 1 ), Color( 1, 0, 0, 0.184314 ), Color( 1, 1, 1, 1 ), Color( 1, 0, 0, 0.184314 ), Color( 1, 1, 1, 1 ), Color( 1, 0, 0, 0.184314 ), Color( 1, 1, 1, 1 ), Color( 1, 0, 0, 0.184314 ), Color( 1, 1, 1, 1 ), Color( 1, 0, 0, 0.184314 ), Color( 1, 1, 1, 1 ), Color( 1, 0, 0, 0.184314 ), Color( 1, 1, 1, 1 ), Color( 1, 0, 0, 0.184314 ), Color( 1, 1, 1, 1 ), Color( 1, 0, 0, 0.184314 ), Color( 1, 1, 1, 1 ), Color( 0, 0, 0, 0 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("BeepSFX:playing")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.9, 1.4, 1.7, 2, 2.15, 2.25, 2.325, 2.375, 2.425, 2.475, 2.525, 2.575, 2.625, 2.675, 2.725, 2.775, 2.825, 2.875, 2.925, 2.975 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true ]
 }
 
 [node name="Stove" index="0" instance=ExtResource( 1 )]
 script = ExtResource( 2 )
-pan = "res://objects/areas/pickable_objects/frying_pan.tscn"
 
 [node name="Sprite" parent="." index="1"]
 texture = ExtResource( 3 )
@@ -37,7 +50,10 @@ region_rect = Rect2( 128, 32, 16, 16 )
 margin_top = -16.0
 margin_bottom = -10.0
 
-[node name="TextureRect" type="TextureRect" parent="ProgressBar" index="2"]
+[node name="FireAlert" type="Node2D" parent="." index="5"]
+z_index = 3
+
+[node name="TextureRect" type="TextureRect" parent="FireAlert" index="0"]
 visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -46,6 +62,16 @@ margin_top = -24.0
 margin_right = 8.0
 margin_bottom = -8.0
 texture = SubResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="ProgressBar" index="3"]
+[node name="BeepSFX" type="AudioStreamPlayer" parent="FireAlert" index="1"]
+stream = ExtResource( 4 )
+bus = "SFXS"
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="FireAlert" index="2"]
 anims/fire_alert = SubResource( 2 )
+
+[node name="FireBSFX2D" parent="." index="6"]
+volume_db = 10.0

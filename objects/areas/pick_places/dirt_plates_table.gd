@@ -2,26 +2,16 @@ extends "res://objects/areas/pick_place.gd"
 
 var cached_plates := Array()
 
-func _ready():
-	
-	if "Treadmill" in get_parent().name:
-		
-		get_parent().set_plates_output(self)
-
 # @signals
-func _on_Timer_timeout():
-	var plate: PickableObject = cached_plates.back()
+func _on_Treadmill_plate_returned(plate: PickableObject):
 	
-	plate.current_recipe = null
+	cached_plates.append(plate)
 	
 	if current_object == null:
 		
-		plate.position = global_position
-		plate.modulate = Color(1, 1, 1, 1)
-		current_object = plate
-		cached_plates.pop_back()
+		assert(.insert_object(_popget_cached_plates_back()))
 
-# @main
+# @override
 func remove_object() -> PickableObject:
 	var dirt_plate: PickableObject
 	
@@ -30,15 +20,20 @@ func remove_object() -> PickableObject:
 		
 	else:
 		
-		dirt_plate = cached_plates.back()
-		cached_plates.pop_back()
+		dirt_plate = _popget_cached_plates_back()
 	
 	return dirt_plate
 
 func insert_object(_object: PickableObject) -> bool:
 	return false
 
-func cache_plate(plate: PickableObject):
+# @main
+func _popget_cached_plates_back() -> PickableObject:
+	var plate: PickableObject = cached_plates.back()
 	
-	cached_plates.append(plate)
-	$Timer.start()
+	plate.global_position = global_position
+	plate.modulate = Color(1, 1, 1, 1)
+	cached_plates.pop_back()
+	
+	return plate
+

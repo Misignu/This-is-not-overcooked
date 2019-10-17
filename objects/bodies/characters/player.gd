@@ -9,6 +9,7 @@ export(int, 1, 4) var controller_index = 1 # Um setget pode ser usado para alter
 
 var is_interacting := false
 var current_object: PickableObject = null setget set_current_object
+var current_active: PickableObject = null # DEBUG -> Adding new Feature
 
 onready var up: String = str("player", controller_index, "_move_up")
 onready var down: String = str("player", controller_index, "_move_down")
@@ -30,10 +31,15 @@ func _physics_process(_delta) -> void:
 		
 		_interact($RayCast2D.get_collider()) # WATCH
 		
-	elif Input.is_action_just_pressed(primary_action) and current_object != null:
+	elif Input.is_action_just_pressed(primary_action):
 		
-		current_object.drop(global_position + (_last_direction * 10))
-		set_current_object(null)
+		if current_object != null:
+			
+			current_object.drop(global_position + (_last_direction * 10)) 
+			set_current_object(null)
+			
+		elif current_active != null: # WATCH -> Testing new feature
+			current_active.drop(global_position + (_last_direction * 10))
 
 # @signals
 func _on_Player_direction_changed(direction: Vector2):
@@ -131,16 +137,47 @@ func _interact(area: Area2D) -> void:
 		
 		if Input.is_action_just_pressed(primary_action):
 			_drop(area) # WATCH
+	
+	if Input.is_action_just_pressed(primary_action): # WATCH -> Testando nova feature
+		
+		if current_active == null:
+			
+			if "FireExtintor" in area.name:
+				_grab_active(area)
+			
+		else:
+			
+			if Input.is_action_just_pressed(primary_action):
+				_drop_active(area)
 
 func _grab(area: Area2D) -> void:
 	
 	if area.has_method("remove_object"):
 		
-		set_current_object(area.remove_object()) # WATCH
+		if not area.is_burning:
+			set_current_object(area.remove_object()) # WATCH
 		
 	elif area.has_method("grab"):
 		
 		set_current_object(area.grab())
+
+
+func _grab_active(area: PickableObject):
+	
+	$Node2D.add_child(area.grab())
+	current_active = $Node2D.get_child(0)
+	pass
+
+func _drop_active(area: Area2D):
+	var out = $Node2D.get_child(0)
+	
+	$Node2D.remove_child(out)
+	
+	if area.insert_object(out):
+		current_active = null
+		
+	else:
+		$Node2D.add_child(out)
 
 func _drop(area: Area2D) -> void:
 	
@@ -164,14 +201,14 @@ func _fire_action(area: Area2D):
 		
 		if area.cut_ingridient(): # WATCH
 			is_interacting = true
-	
-	if area.has_method("wash_plate"):
+		
+	elif area.has_method("wash_plate"):
 		
 		area.wash_plate()
 		is_interacting = true
 	
 	if is_interacting:
-		assert(area.get_node("Timer").connect("timeout", self, "_stop_interaction", [area.get_node("Timer")]) == OK)
+		assert(area.get_node("WorkTimer").connect("timeout", self, "_stop_interaction", [area.get_node("WorkTimer")]) == OK) # REFACTOR
 
 func _stop_action(area: Area2D):
 	
@@ -181,7 +218,7 @@ func _stop_action(area: Area2D):
 	if area.has_method("stop_washing"):
 		area.stop_washing()
 	
-	_stop_interaction(area.get_node("Timer"))
+	_stop_interaction(area.get_node("WorkTimer"))
 
 func _stop_interaction(timer: Timer):
 	

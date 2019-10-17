@@ -1,14 +1,33 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://assets/tilesets/general.tres" type="TileSet" id=1]
-[ext_resource path="res://objects/bodies/characters/player.tscn" type="PackedScene" id=2]
-[ext_resource path="res://objects/areas/pick_places/work_stations/cut_place.tscn" type="PackedScene" id=3]
-[ext_resource path="res://objects/areas/pick_places/box.tscn" type="PackedScene" id=4]
-[ext_resource path="res://objects/areas/pick_places/work_stations/stove.tscn" type="PackedScene" id=5]
-[ext_resource path="res://objects/areas/pickable_objects/plate.tscn" type="PackedScene" id=6]
+[ext_resource path="res://objects/areas/pick_places/box.tscn" type="PackedScene" id=2]
+[ext_resource path="res://objects/areas/pick_places/work_stations/sink.tscn" type="PackedScene" id=3]
+[ext_resource path="res://objects/areas/pick_places/work_stations/stove.tscn" type="PackedScene" id=4]
+[ext_resource path="res://objects/areas/pick_places/work_stations/cut_place.tscn" type="PackedScene" id=5]
+[ext_resource path="res://objects/bodies/characters/player.tscn" type="PackedScene" id=6]
 [ext_resource path="res://objects/areas/pick_places/treadmill.tscn" type="PackedScene" id=7]
 [ext_resource path="res://objects/areas/pick_places/dirt_plates_table.tscn" type="PackedScene" id=8]
-[ext_resource path="res://objects/areas/pick_place.tscn" type="PackedScene" id=9]
+[ext_resource path="res://objects/areas/pickable_objects/ingredients/meat.tscn" type="PackedScene" id=9]
+[ext_resource path="res://objects/areas/pickable_objects/plate.tscn" type="PackedScene" id=10]
+[ext_resource path="res://objects/areas/pickable_objects/ingredients/lettuce.tscn" type="PackedScene" id=11]
+
+[sub_resource type="GDScript" id=1]
+script/source = "extends \"res://objects/areas/pickable_objects/plate.gd\"
+
+# Declare member variables here. Examples:
+# var a = 2
+# var b = \"text\"
+
+# Called when the node enters the scene tree for the first time.
+func _ready():
+	call_deferred(\"set_is_clean\", false)
+	pass # Replace with function body.
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+#func _process(delta):
+#	pass
+"
 
 [node name="Node2D" type="Node2D"]
 
@@ -16,48 +35,62 @@
 tile_set = ExtResource( 1 )
 cell_size = Vector2( 16, 16 )
 format = 1
-tile_data = PoolIntArray( -65538, 5, 0, -65537, 2, 0, -131072, 2, 0, -131071, -1610612731, 0, -2, -1073741822, 0, -65535, -1610612734, 0, 65534, -1073741822, 0, 1, -1610612734, 0, 131070, -1073741822, 0, 65537, -1610612734, 0 )
+tile_data = PoolIntArray( -65538, 5, 0, -65537, 2, 0, -131072, 2, 0, -131071, -1610612731, 0, -2, -1073741822, 0, -65535, -1610612734, 0, 65534, -1073741822, 0, 1, -1610612734, 0, 131070, -1073741822, 0, 65537, -1610612734, 0, 196606, -1073741819, 0, 196607, 1610612738, 0, 131072, 1610612738, 0, 131073, 1610612741, 0 )
 
-[node name="Player" parent="." instance=ExtResource( 2 )]
-scale = Vector2( 0.5, 0.5 )
+[node name="SceneObjects" type="Node2D" parent="."]
 
-[node name="CutPlace" parent="." instance=ExtResource( 3 )]
-position = Vector2( 0, -24 )
+[node name="Boxes" type="Node2D" parent="SceneObjects"]
+
+[node name="Box" parent="SceneObjects/Boxes" instance=ExtResource( 2 )]
+position = Vector2( -25, -8 )
+rotation = -1.5708
+
+[node name="Box2" parent="SceneObjects/Boxes" instance=ExtResource( 2 )]
+position = Vector2( -25, 8 )
+rotation = -1.5708
+igridient_id = 1
+
+[node name="Box3" parent="SceneObjects/Boxes" instance=ExtResource( 2 )]
+position = Vector2( -25, 24 )
+rotation = -1.5708
+igridient_id = 2
+
+[node name="WorkStations" type="Node2D" parent="SceneObjects"]
+
+[node name="CutPlace" parent="SceneObjects/WorkStations" instance=ExtResource( 5 )]
+position = Vector2( 8, -24 )
+
+[node name="Sink" parent="SceneObjects/WorkStations" instance=ExtResource( 3 )]
+position = Vector2( 24, -16 )
+rotation = 1.5708
+
+[node name="Stove" parent="SceneObjects/WorkStations" instance=ExtResource( 4 )]
+position = Vector2( 24, 24 )
+rotation = 1.5708
+
+[node name="Treadmill" parent="SceneObjects" instance=ExtResource( 7 )]
+position = Vector2( -8, 40 )
+rotation = 3.14159
+
+[node name="DirtPlatesTable" parent="SceneObjects/Treadmill" instance=ExtResource( 8 )]
+position = Vector2( -16, 0 )
+
+[node name="Plate" parent="SceneObjects" instance=ExtResource( 10 )]
+position = Vector2( 24, 8 )
+script = SubResource( 1 )
+
+[node name="Lettuce" parent="SceneObjects" instance=ExtResource( 11 )]
+position = Vector2( -24, -24 )
+
+[node name="Meat" parent="SceneObjects" instance=ExtResource( 9 )]
+position = Vector2( -8, -24 )
+z_index = 1
+collision_layer = 2
+collision_mask = 2
 
 [node name="Camera2D" type="Camera2D" parent="."]
 current = true
 zoom = Vector2( 0.15, 0.15 )
 
-[node name="Box" parent="." instance=ExtResource( 4 )]
-position = Vector2( -24, -10 )
-rotation = -1.5708
-igridient_id = 0
-
-[node name="Box2" parent="." instance=ExtResource( 4 )]
-position = Vector2( -24, 4 )
-rotation = -1.5708
-igridient_id = 1
-
-[node name="Box3" parent="." instance=ExtResource( 4 )]
-position = Vector2( -24, 18 )
-rotation = -1.5708
-igridient_id = 2
-
-[node name="Stove" parent="." instance=ExtResource( 5 )]
-position = Vector2( 24, 4 )
-rotation = 1.5708
-
-[node name="Plate" parent="." instance=ExtResource( 6 )]
-position = Vector2( 24, 20 )
-use_pick_place = false
-dirt_texture = null
-
-[node name="Treadmill" parent="." instance=ExtResource( 7 )]
-position = Vector2( -8, 40 )
-rotation = 3.14159
-
-[node name="DirtPlatesTable" parent="Treadmill" instance=ExtResource( 8 )]
-position = Vector2( -16, 0 )
-
-[node name="PickPlace" parent="." instance=ExtResource( 9 )]
-position = Vector2( 24, -12 )
+[node name="Player" parent="." instance=ExtResource( 6 )]
+scale = Vector2( 0.5, 0.5 )

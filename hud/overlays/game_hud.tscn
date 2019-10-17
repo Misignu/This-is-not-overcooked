@@ -84,7 +84,7 @@ tracks/0/keys = {
 "values": [ Color( 1, 1, 1, 1 ), Color( 0.686275, 0.266667, 0.266667, 0.827451 ), Color( 1, 1, 1, 1 ) ]
 }
 tracks/1/type = "value"
-tracks/1/path = NodePath("AudioStreamPlayer2:playing")
+tracks/1/path = NodePath("WrongRecipeSFX:playing")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/imported = false
@@ -98,6 +98,9 @@ tracks/1/keys = {
 
 [node name="HUD" type="CanvasLayer"]
 script = ExtResource( 1 )
+__meta__ = {
+"_editor_description_": "Shows up the level's available coins, time to finish and orders to be delivered."
+}
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 anchor_right = 1.0
@@ -106,6 +109,9 @@ custom_constants/margin_right = 25
 custom_constants/margin_top = 25
 custom_constants/margin_left = 40
 custom_constants/margin_bottom = 25
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer"]
 margin_left = 40.0
@@ -114,7 +120,6 @@ margin_right = 1000.0
 margin_bottom = 116.0
 
 [node name="OrderPad" type="HBoxContainer" parent="MarginContainer/HBoxContainer"]
-modulate = Color( 1, 1, 1, 0.784314 )
 margin_right = 856.0
 margin_bottom = 91.0
 size_flags_horizontal = 3
@@ -122,10 +127,15 @@ size_flags_vertical = 3
 custom_constants/separation = 8
 
 [node name="CenterContainer1" type="CenterContainer" parent="MarginContainer/HBoxContainer/OrderPad"]
-editor/display_folded = true
 margin_right = 100.0
 margin_bottom = 91.0
 rect_min_size = Vector2( 100, 91 )
+
+[node name="ReferenceRect" type="ReferenceRect" parent="MarginContainer/HBoxContainer/OrderPad/CenterContainer1"]
+margin_right = 100.0
+margin_bottom = 91.0
+rect_min_size = Vector2( 100, 91 )
+border_color = Color( 1, 0, 0, 0.392157 )
 
 [node name="Reference" type="Node2D" parent="MarginContainer/HBoxContainer/OrderPad/CenterContainer1"]
 
@@ -135,17 +145,17 @@ script = SubResource( 1 )
 
 [node name="Tween" type="Tween" parent="MarginContainer/HBoxContainer/OrderPad/CenterContainer1/Reference"]
 
-[node name="ReferenceRect" type="ReferenceRect" parent="MarginContainer/HBoxContainer/OrderPad/CenterContainer1"]
-margin_right = 100.0
-margin_bottom = 91.0
-rect_min_size = Vector2( 100, 91 )
-
 [node name="CenterContainer2" type="CenterContainer" parent="MarginContainer/HBoxContainer/OrderPad"]
-editor/display_folded = true
 margin_left = 108.0
 margin_right = 208.0
 margin_bottom = 91.0
 rect_min_size = Vector2( 100, 91 )
+
+[node name="ReferenceRect" type="ReferenceRect" parent="MarginContainer/HBoxContainer/OrderPad/CenterContainer2"]
+margin_right = 100.0
+margin_bottom = 91.0
+rect_min_size = Vector2( 100, 91 )
+border_color = Color( 1, 0, 0, 0.392157 )
 
 [node name="Reference" type="Node2D" parent="MarginContainer/HBoxContainer/OrderPad/CenterContainer2"]
 
@@ -155,17 +165,17 @@ script = SubResource( 1 )
 
 [node name="Tween" type="Tween" parent="MarginContainer/HBoxContainer/OrderPad/CenterContainer2/Reference"]
 
-[node name="ReferenceRect" type="ReferenceRect" parent="MarginContainer/HBoxContainer/OrderPad/CenterContainer2"]
-margin_right = 100.0
-margin_bottom = 91.0
-rect_min_size = Vector2( 100, 91 )
-
 [node name="CenterContainer3" type="CenterContainer" parent="MarginContainer/HBoxContainer/OrderPad"]
-editor/display_folded = true
 margin_left = 216.0
 margin_right = 316.0
 margin_bottom = 91.0
 rect_min_size = Vector2( 100, 91 )
+
+[node name="ReferenceRect" type="ReferenceRect" parent="MarginContainer/HBoxContainer/OrderPad/CenterContainer3"]
+margin_right = 100.0
+margin_bottom = 91.0
+rect_min_size = Vector2( 100, 91 )
+border_color = Color( 1, 0, 0, 0.392157 )
 
 [node name="Reference" type="Node2D" parent="MarginContainer/HBoxContainer/OrderPad/CenterContainer3"]
 
@@ -175,17 +185,17 @@ script = SubResource( 1 )
 
 [node name="Tween" type="Tween" parent="MarginContainer/HBoxContainer/OrderPad/CenterContainer3/Reference"]
 
-[node name="ReferenceRect" type="ReferenceRect" parent="MarginContainer/HBoxContainer/OrderPad/CenterContainer3"]
-margin_right = 100.0
-margin_bottom = 91.0
-rect_min_size = Vector2( 100, 91 )
-
 [node name="CenterContainer4" type="CenterContainer" parent="MarginContainer/HBoxContainer/OrderPad"]
-editor/display_folded = true
 margin_left = 324.0
 margin_right = 424.0
 margin_bottom = 91.0
 rect_min_size = Vector2( 100, 91 )
+
+[node name="ReferenceRect" type="ReferenceRect" parent="MarginContainer/HBoxContainer/OrderPad/CenterContainer4"]
+margin_right = 100.0
+margin_bottom = 91.0
+rect_min_size = Vector2( 100, 91 )
+border_color = Color( 1, 0, 0, 0.392157 )
 
 [node name="Reference" type="Node2D" parent="MarginContainer/HBoxContainer/OrderPad/CenterContainer4"]
 
@@ -195,17 +205,17 @@ script = SubResource( 1 )
 
 [node name="Tween" type="Tween" parent="MarginContainer/HBoxContainer/OrderPad/CenterContainer4/Reference"]
 
-[node name="ReferenceRect" type="ReferenceRect" parent="MarginContainer/HBoxContainer/OrderPad/CenterContainer4"]
-margin_right = 100.0
-margin_bottom = 91.0
-rect_min_size = Vector2( 100, 91 )
-
 [node name="CenterContainer5" type="CenterContainer" parent="MarginContainer/HBoxContainer/OrderPad"]
-editor/display_folded = true
 margin_left = 432.0
 margin_right = 532.0
 margin_bottom = 91.0
 rect_min_size = Vector2( 100, 91 )
+
+[node name="ReferenceRect" type="ReferenceRect" parent="MarginContainer/HBoxContainer/OrderPad/CenterContainer5"]
+margin_right = 100.0
+margin_bottom = 91.0
+rect_min_size = Vector2( 100, 91 )
+border_color = Color( 1, 0, 0, 0.392157 )
 
 [node name="Reference" type="Node2D" parent="MarginContainer/HBoxContainer/OrderPad/CenterContainer5"]
 
@@ -215,17 +225,17 @@ script = SubResource( 1 )
 
 [node name="Tween" type="Tween" parent="MarginContainer/HBoxContainer/OrderPad/CenterContainer5/Reference"]
 
-[node name="ReferenceRect" type="ReferenceRect" parent="MarginContainer/HBoxContainer/OrderPad/CenterContainer5"]
-margin_right = 100.0
-margin_bottom = 91.0
-rect_min_size = Vector2( 100, 91 )
-
 [node name="CenterContainer6" type="CenterContainer" parent="MarginContainer/HBoxContainer/OrderPad"]
-editor/display_folded = true
 margin_left = 540.0
 margin_right = 640.0
 margin_bottom = 91.0
 rect_min_size = Vector2( 100, 91 )
+
+[node name="ReferenceRect" type="ReferenceRect" parent="MarginContainer/HBoxContainer/OrderPad/CenterContainer6"]
+margin_right = 100.0
+margin_bottom = 91.0
+rect_min_size = Vector2( 100, 91 )
+border_color = Color( 1, 0, 0, 0.392157 )
 
 [node name="Reference" type="Node2D" parent="MarginContainer/HBoxContainer/OrderPad/CenterContainer6"]
 
@@ -235,17 +245,17 @@ script = SubResource( 1 )
 
 [node name="Tween" type="Tween" parent="MarginContainer/HBoxContainer/OrderPad/CenterContainer6/Reference"]
 
-[node name="ReferenceRect" type="ReferenceRect" parent="MarginContainer/HBoxContainer/OrderPad/CenterContainer6"]
-margin_right = 100.0
-margin_bottom = 91.0
-rect_min_size = Vector2( 100, 91 )
-
 [node name="CenterContainer7" type="CenterContainer" parent="MarginContainer/HBoxContainer/OrderPad"]
-editor/display_folded = true
 margin_left = 648.0
 margin_right = 748.0
 margin_bottom = 91.0
 rect_min_size = Vector2( 100, 91 )
+
+[node name="ReferenceRect" type="ReferenceRect" parent="MarginContainer/HBoxContainer/OrderPad/CenterContainer7"]
+margin_right = 100.0
+margin_bottom = 91.0
+rect_min_size = Vector2( 100, 91 )
+border_color = Color( 1, 0, 0, 0.392157 )
 
 [node name="Reference" type="Node2D" parent="MarginContainer/HBoxContainer/OrderPad/CenterContainer7"]
 
@@ -255,17 +265,17 @@ script = SubResource( 1 )
 
 [node name="Tween" type="Tween" parent="MarginContainer/HBoxContainer/OrderPad/CenterContainer7/Reference"]
 
-[node name="ReferenceRect" type="ReferenceRect" parent="MarginContainer/HBoxContainer/OrderPad/CenterContainer7"]
-margin_right = 100.0
-margin_bottom = 91.0
-rect_min_size = Vector2( 100, 91 )
-
 [node name="CenterContainer8" type="CenterContainer" parent="MarginContainer/HBoxContainer/OrderPad"]
-editor/display_folded = true
 margin_left = 756.0
 margin_right = 856.0
 margin_bottom = 91.0
 rect_min_size = Vector2( 100, 91 )
+
+[node name="ReferenceRect" type="ReferenceRect" parent="MarginContainer/HBoxContainer/OrderPad/CenterContainer8"]
+margin_right = 100.0
+margin_bottom = 91.0
+rect_min_size = Vector2( 100, 91 )
+border_color = Color( 1, 0, 0, 0.392157 )
 
 [node name="Reference" type="Node2D" parent="MarginContainer/HBoxContainer/OrderPad/CenterContainer8"]
 
@@ -275,13 +285,7 @@ script = SubResource( 1 )
 
 [node name="Tween" type="Tween" parent="MarginContainer/HBoxContainer/OrderPad/CenterContainer8/Reference"]
 
-[node name="ReferenceRect" type="ReferenceRect" parent="MarginContainer/HBoxContainer/OrderPad/CenterContainer8"]
-margin_right = 100.0
-margin_bottom = 91.0
-rect_min_size = Vector2( 100, 91 )
-
 [node name="CenterContainer" type="CenterContainer" parent="MarginContainer/HBoxContainer"]
-editor/display_folded = true
 margin_left = 860.0
 margin_right = 960.0
 margin_bottom = 91.0
@@ -299,7 +303,7 @@ margin_bottom = 65.0
 rect_min_size = Vector2( 58, 40 )
 custom_fonts/font = SubResource( 2 )
 custom_colors/font_color = Color( 0.996078, 0.905882, 0.380392, 1 )
-text = "5"
+text = "0"
 align = 2
 valign = 1
 
@@ -314,7 +318,6 @@ expand = true
 stretch_mode = 6
 
 [node name="CenterContainer" type="CenterContainer" parent="."]
-editor/display_folded = true
 anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
@@ -322,6 +325,9 @@ anchor_bottom = 1.0
 margin_left = -136.0
 margin_top = -91.0
 margin_right = -1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="MarginContainer" type="MarginContainer" parent="CenterContainer"]
 margin_right = 135.0
@@ -346,7 +352,6 @@ align = 2
 valign = 1
 
 [node name="TextureRect" type="TextureRect" parent="CenterContainer/MarginContainer/Countdown"]
-editor/display_folded = true
 margin_left = 62.0
 margin_right = 100.0
 margin_bottom = 91.0
@@ -361,11 +366,13 @@ stretch_mode = 6
 autoplay = "clock"
 anims/clock = SubResource( 12 )
 
-[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+[node name="CoinsLossSFX" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 4 )
+bus = "SFXS"
 
-[node name="AudioStreamPlayer2" type="AudioStreamPlayer" parent="."]
+[node name="WrongRecipeSFX" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 5 )
+bus = "SFXS"
 
 [node name="SlideTimer" type="Timer" parent="."]
 one_shot = true
@@ -378,9 +385,6 @@ one_shot = true
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 anims/wrong_recipe = SubResource( 13 )
-
-[node name="Node2D" type="Node2D" parent="."]
-position = Vector2( 148, 25 )
 [connection signal="timeout" from="SlideTimer" to="." method="_on_SlideTimer_timeout"]
 [connection signal="timeout" from="NewOrderTimer" to="." method="_on_NewOrderTimer_timeout"]
 [connection signal="timeout" from="LimitTimer" to="." method="_on_LimitTimer_timeout"]

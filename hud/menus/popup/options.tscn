@@ -1,0 +1,188 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://hud/menus/popup/options.gd" type="Script" id=1]
+
+[sub_resource type="GDScript" id=1]
+script/source = "extends Control
+
+export var spacing = 10
+
+func _draw():
+
+    var last_end_achor = Vector2.ZERO
+    for child in get_children():
+        child.rect_position = last_end_achor
+        last_end_achor.y = child.rect_position.y + child.rect_size.y 
+        last_end_achor.y += spacing
+
+    rect_min_size.y = last_end_achor.y #to work with ScrollContainer
+"
+
+[sub_resource type="GDScript" id=2]
+script/source = "extends Panel
+
+var is_expanded = false
+
+
+func _ready():
+    $VBoxContainer/show.connect(\"pressed\",self,\"expand\")
+
+
+func expand():
+    is_expanded = !is_expanded
+
+
+var last_rect_size = Vector2.ZERO
+func _process(delta):
+
+    #snap to end
+    if abs(rect_size.y-rect_min_size.y) < 1:
+        rect_size.y = rect_min_size.y
+
+    #resize to target size
+    if is_expanded:
+        rect_size.y = lerp(rect_size.y, 70, 0.1)
+    else:
+        rect_size.y = lerp(rect_size.y, rect_min_size.y, 0.1)
+
+    #update layout
+    if last_rect_size != rect_size:
+        get_parent().update()
+        last_rect_size = rect_size
+"
+
+[node name="Options" type="WindowDialog"]
+anchor_right = 0.182
+anchor_bottom = 0.137
+margin_right = -0.36763
+margin_bottom = -0.199806
+rect_min_size = Vector2( 186, 82 )
+window_title = "Options"
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_constants/margin_right = 15
+custom_constants/margin_top = 15
+custom_constants/margin_left = 15
+custom_constants/margin_bottom = 15
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="List" type="VBoxContainer" parent="MarginContainer"]
+margin_left = 15.0
+margin_top = 15.0
+margin_right = 171.0
+margin_bottom = 67.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="FullScreen" type="CheckBox" parent="MarginContainer/List"]
+margin_right = 156.0
+margin_bottom = 24.0
+hint_tooltip = "Press F11 to Toggle Fullscreen"
+focus_mode = 1
+enabled_focus_mode = 1
+text = "Fullscreen"
+flat = true
+
+[node name="Volume" type="HBoxContainer" parent="MarginContainer/List"]
+margin_top = 28.0
+margin_right = 156.0
+margin_bottom = 52.0
+
+[node name="Mute" type="CheckBox" parent="MarginContainer/List/Volume"]
+margin_right = 77.0
+margin_bottom = 24.0
+text = "Volume"
+
+[node name="HSlider" type="HSlider" parent="MarginContainer/List/Volume"]
+margin_left = 81.0
+margin_right = 156.0
+margin_bottom = 24.0
+rect_min_size = Vector2( 75, 24 )
+hint_tooltip = "Volume can be decreased with F2 and increased with F3"
+min_value = -80.0
+max_value = 0.0
+tick_count = 10
+ticks_on_borders = true
+
+[node name="Control" type="Control" parent="MarginContainer/List"]
+visible = false
+margin_top = 56.0
+margin_right = 156.0
+margin_bottom = 56.0
+script = SubResource( 1 )
+
+[node name="Panel" type="Panel" parent="MarginContainer/List/Control"]
+anchor_right = 1.0
+margin_bottom = 24.0
+rect_min_size = Vector2( 156, 24 )
+rect_clip_content = true
+script = SubResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/List/Control/Panel"]
+margin_right = 40.0
+margin_bottom = 40.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="show" type="Button" parent="MarginContainer/List/Control/Panel/VBoxContainer"]
+margin_right = 156.0
+margin_bottom = 20.0
+
+[node name="List2" type="VBoxContainer" parent="MarginContainer/List/Control/Panel/VBoxContainer"]
+margin_top = 24.0
+margin_right = 156.0
+margin_bottom = 76.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="FullScreen" type="CheckBox" parent="MarginContainer/List/Control/Panel/VBoxContainer/List2"]
+margin_right = 156.0
+margin_bottom = 24.0
+hint_tooltip = "Press F11 to Toggle Fullscreen"
+focus_mode = 1
+enabled_focus_mode = 1
+text = "Fullscreen"
+flat = true
+
+[node name="Volume" type="HBoxContainer" parent="MarginContainer/List/Control/Panel/VBoxContainer/List2"]
+margin_top = 28.0
+margin_right = 156.0
+margin_bottom = 52.0
+
+[node name="Mute" type="CheckBox" parent="MarginContainer/List/Control/Panel/VBoxContainer/List2/Volume"]
+margin_right = 77.0
+margin_bottom = 24.0
+text = "Volume"
+
+[node name="HSlider" type="HSlider" parent="MarginContainer/List/Control/Panel/VBoxContainer/List2/Volume"]
+margin_left = 81.0
+margin_right = 156.0
+margin_bottom = 24.0
+rect_min_size = Vector2( 75, 24 )
+hint_tooltip = "Volume can be decreased with F2 and increased with F3"
+min_value = -80.0
+max_value = 0.0
+tick_count = 10
+ticks_on_borders = true
+[connection signal="toggled" from="MarginContainer/List/FullScreen" to="." method="_on_FullScreen_toggled"]
+[connection signal="toggled" from="MarginContainer/List/Volume/Mute" to="." method="_on_Mute_toggled"]
+[connection signal="value_changed" from="MarginContainer/List/Volume/HSlider" to="." method="_on_Volume_HSlider_value_changed"]
+[connection signal="toggled" from="MarginContainer/List/Control/Panel/VBoxContainer/List2/FullScreen" to="." method="_on_FullScreen_toggled"]
+[connection signal="toggled" from="MarginContainer/List/Control/Panel/VBoxContainer/List2/Volume/Mute" to="." method="_on_Mute_toggled"]
+[connection signal="value_changed" from="MarginContainer/List/Control/Panel/VBoxContainer/List2/Volume/HSlider" to="." method="_on_Volume_HSlider_value_changed"]

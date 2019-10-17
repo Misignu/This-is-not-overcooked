@@ -1,5 +1,4 @@
-tool
-extends "res://objects/areas/pick_place.gd"
+extends Area2D
 
 func insert_object(_object) -> bool:
 	return false

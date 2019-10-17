@@ -7,6 +7,7 @@
 
 [node name="Treadmill" instance=ExtResource( 1 )]
 script = ExtResource( 2 )
+return_time = 10.0
 
 [node name="CollisionShape2D" parent="." index="0"]
 visible = false
@@ -18,7 +19,7 @@ region_rect = Rect2( 64, 32, 16, 16 )
 
 [node name="Tween" type="Tween" parent="." index="2"]
 
-[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." index="3"]
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." index="5"]
 stream = ExtResource( 4 )
 volume_db = 5.0
 [connection signal="tween_completed" from="Tween" to="." method="_on_Tween_tween_completed"]

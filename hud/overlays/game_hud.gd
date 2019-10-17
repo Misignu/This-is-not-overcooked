@@ -34,7 +34,7 @@ func _on_Game_coins_changed(value: int, loss: float) -> void:
 	
 	if loss:
 		
-		$AudioStreamPlayer.play()
+		$CoinsLossSFX.play()
 	
 	$MarginContainer/HBoxContainer/CenterContainer/Coins/Label.text = str(value)
 
@@ -57,8 +57,9 @@ func _on_new_order_AnimationPlayer_animation_finished(animation, position2d: Pos
 	if animation == "done":
 		_move_stack(position2d)
 
-func _on_Treadmill_recipe_delived():
-	_order_complete("Hamburger")
+func _on_Treadmill_recipe_delived(recipe): # WATCH -> Implement recipe class
+	
+	_order_complete(recipe.name, recipe.price)
 
 #  @main
 func _update_references():
@@ -93,22 +94,24 @@ func _add_new_order():
 	
 	$NewOrderTimer.start(rand_range(order_min_frequency, order_max_frequency))
 
-func _order_complete(recipe: String): # DEBUG
-	var completed := false
+func _order_complete(recipe: String, price: int): # DEBUG
+	
+	var was_completed := false
 	var order_reference: NinePatchRect
 	
 	for reference in references:
 		
-		if reference.has_node("Order"):
-			order_reference = reference.get_node("Order")
+		if reference.get_node("Position2D").has_node("Order"):
+			order_reference = reference.get_node("Position2D").get_node("Order")
 			
-			if recipe in order_reference.name:
+			if recipe in order_reference.recipe:
 				
 				order_reference.complete()
-				completed = true
+				Game.coins += price
+				was_completed = true
 				break
 	
-	if not completed:
+	if not was_completed:
 		$AnimationPlayer.play("wrong_recipe")
 
 func _move_stack(base_position_2d: Position2D):
@@ -121,22 +124,6 @@ func _move_stack(base_position_2d: Position2D):
 	
 	base_position_2d.stack_id += counter
 	_moving_stack()
-	
-#	var tween_reference: Tween
-##	var position2d_reference: Position2D
-#	var last_reference_position2d: Position2D
-#	var new_stack_id: int
-#
-#	for current_position2d in _get_next_orders_siblings_position2ds(base_position_2d):
-#
-#		last_reference_position2d = current_position2d
-#		tween_reference = current_position2d.get_parent().get_node("Tween")
-#		new_stack_id = current_position2d.get_node("Order").stack_id - 1
-#
-#		current_position2d.get_node("Order").stack_id = new_stack_id
-
-#
-#	base_position_2d.position = references[last_reference_position2d.get_node("Order").stack_id].global_position - base_position_2d.global_position
 
 func _moving_stack() -> void:
 	var current_position2d: Position2D
@@ -157,8 +144,6 @@ func _moving_stack() -> void:
 		
 		target_pos = stacked_reference_gpos - current_position2d.get_parent().global_position
 #		final_pos = target_pos + current_position2d.global_position
-		
-#		print(str("The [", reference.get_parent().name, "] position2d id is : ", stack_id))
 		
 		_slide_position2d(current_position2d, reference.get_node("Tween"), target_pos)
 		is_sliding = true
@@ -217,44 +202,3 @@ func _get_next_orders_siblings_position2ds(position2d: Position2D) -> Array:
 		test.append(sibling.get_parent().get_parent().name)
 	
 	return siblings
-
-#func _get_previous_order_x_position(current_global_x_position: int) -> int: # DEBUG
-#
-#	var has_changed: bool
-#	var x_position: int
-#	var current_node_x_position: int
-#	var bigger: int
-#
-#	for container in order_pad.get_children():
-#		current_node_x_position = container.get_node("Node2D").global_position.x
-#
-#		if current_node_x_position < current_global_x_position:
-#
-#			if current_node_x_position > x_position:
-#
-#				x_position = current_node_x_position
-#				has_changed = true
-#		else:
-#			bigger = current_node_x_position
-#
-#	if not has_changed:
-#		x_position = bigger
-#
-#	return x_position - current_global_x_position
-
-#func _get_previous_order_position2D(position_2d) -> Position2D:
-#
-#	var value: Position2D = references[0].get_node("Position2D")
-#	var current_reference_position2d: Position2D
-#
-#	for reference in references:
-#		current_reference_position2d = reference.get_node("Position2D")
-#
-#		if current_reference_position2d.global_position.x < position_2d.global_position.x:
-#
-#			if current_reference_position2d.global_position.x > value.global_position.x:
-#				value = current_reference_position2d
-#
-#	return value
-
-

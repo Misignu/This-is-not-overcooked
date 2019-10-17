@@ -4,6 +4,8 @@ export var shake_amplitude: float = 5.0 # distance in pixels
 export var shake_lenght: float = 1.0 # duration in secounds
 
 var stack_id: int setget set_stack_id
+var recipe := "Hamburger" setget, get_recipe
+
 onready var progress_bar := $MarginContainer/VBoxContainer/ElapsedTime/ProgressBar
 
 func _ready():
@@ -45,3 +47,5 @@ func move(target_position):
 func set_stack_id(value: int):
 	stack_id = value
 
+func get_recipe() -> String:
+	return recipe

@@ -4,25 +4,31 @@ Plate lida com a insersão de ingredientes em uma receita.
 
 # TODO REFACTOR -> Esse script está num estado wet, com diversas verificações. Ele pode ser melhorado com a implementação de um sistema de receitas. Mas como esse projeto foi criado apenas casualmente, não houve necessidade para tal
 """
+const CLEANING_TIME = 6
+
 export var dirt_texture: Texture
 
-var clean: float = true setget set_clean
+var is_clean: float = true setget set_is_clean
 var current_recipe = null setget set_current_recipe
 var hamburger = preload("res://objects/recipes/hamburger.tscn")
+var cleaning_time_left: float = CLEANING_TIME
 
-func _on_Tween_tween_completed(_object, _key):
+onready var ingredient_sprite: Sprite = $Sprite/IngredientSprite
+
+func _on_Tween_tween_completed(_object, _key) -> void:
 	
-	set_clean(true)
-	$Sprite/IngredientSprite.modulate = Color(1, 1, 1, 1)
+	set_is_clean(true)
+	ingredient_sprite.modulate = Color(1, 1, 1, 1) # WATCH -> Repeated statemant @ treadmil?
 	current_recipe = null
 	current_ingredient = null
+	cleaning_time_left = CLEANING_TIME
 
 # @main
 func insert_ingredient(ingredient: Ingredient) -> bool:
 	var can_insert := false
 #	var texture: Texture
 	
-	if ingredient != null and clean:
+	if ingredient != null and is_clean:
 		
 		if ingredient.preparation_state == 0:
 			
@@ -30,10 +36,9 @@ func insert_ingredient(ingredient: Ingredient) -> bool:
 				
 				if "Bread" in ingredient.name:
 					
-					current_recipe = hamburger.instance()
-					current_recipe.name = $Sprite/IngredientSprite.name
-					$Sprite/IngredientSprite.replace_by(current_recipe)
-#					texture = current_recipe.texture
+					current_recipe = hamburger.instance() # WATCH -> Is this the beste way to do it?
+					ingredient_sprite.replace_by(current_recipe)
+					ingredient_sprite = current_recipe
 					
 					can_insert = true
 				
@@ -52,7 +57,6 @@ func insert_ingredient(ingredient: Ingredient) -> bool:
 			if can_insert:
 				
 				current_ingredient = ingredient
-#				$Sprite/IngredientSprite.texture = texture
 	
 	return can_insert
 
@@ -60,34 +64,36 @@ func set_current_recipe(value) -> void:
 	
 	if value == null:
 		
-		$Sprite/IngredientSprite.texture = null
-		set_clean(false)
+		ingredient_sprite.texture = null
+		set_is_clean(false)
 	
 	current_recipe = value
 
-func start_cleaning(cleaning_time: float, cleaning_time_left: float) -> void:
+func start_cleaning() -> void:
 	
 	$Tween.interpolate_property(
-		$Sprite/IngredientSprite, "modulate", 
-		Color(1, 1, 1, cleaning_time_left / cleaning_time), 
+		ingredient_sprite, "modulate",
+		Color(1, 1, 1, cleaning_time_left / CLEANING_TIME), 
 		Color(1, 1, 1, 0), 
 		cleaning_time_left, 
 		Tween.TRANS_LINEAR, Tween.EASE_IN_OUT
 	)
 	$Tween.start()
 
-func stop_cleaning() -> void:
-	$Tween.stop($Sprite/IngredientSprite)
+func stop_cleaning(time_left: float) -> void:
+	
+	$Tween.stop(ingredient_sprite)
+	cleaning_time_left = time_left
 
-func set_clean(value) -> void:
+# @setters
+func set_is_clean(value) -> void:
 	
 	if value:
-		$Sprite/IngredientSprite.texture = null
+		ingredient_sprite.texture = null
 	else:
-		$Sprite/IngredientSprite.texture = dirt_texture
-		$Sprite/IngredientSprite.vframes = 1
-		$Sprite/IngredientSprite.hframes = 1
-		$Sprite/IngredientSprite.frame = 0
+		ingredient_sprite.texture = dirt_texture
+		ingredient_sprite.vframes = 1
+		ingredient_sprite.hframes = 1
+		ingredient_sprite.frame = 0
 	
-	clean = value
-
+	is_clean = value

@@ -16,9 +16,14 @@ Igredients possuem uma série de tipos de preparo. Seus métodos reduzem esses t
 	O tempo de fritura será o tempo de preparo vezes um modificador (FRY_TIME_MODIFIER).
 	O tempo de cozimento é igual ao tempo de preparo (preparation_time) sem modificações.
 """
+
+signal burning_started
+
 const CUTTABLE = 1
 const FRIABLE = 2
 const COOKABLE = 4
+const ACTIONS = {CUTTABLE: "cut", FRIABLE: "fry"}
+
 export(int, FLAGS, "cuttable", "friable", "cookable") var preparation_type  # TODO op -> Implementar cook. Como esse é um protótipo não há necessidade
 
 const CUT_TIME = 3.0
@@ -41,13 +46,21 @@ func _ready():
 func prepare(action: String, timer: Timer) -> void:
 	
 	assert(timer.connect("timeout", self, str("_on_PreparationTimer_", action, "_timeout"), [timer]) == OK)
-	timer.start(preparation_timer_wait_time)
 
 func stop(action, timer: Timer) -> void:
 	
 	preparation_timer_wait_time = timer.time_left
 	timer.disconnect("timeout", self, str("_on_PreparationTimer_", action, "_timeout"))
-	timer.stop()
+
+func start_burning():
+	
+	print("Burning started")
+	emit_signal("burning_started", is_burned)
+	$BurnTimer.start()
+
+func stop_burning():
+	
+	$BurnTimer.stop()
 
 # @signals
 func _on_PreparationTimer_cut_timeout(timer: Timer) -> void:
@@ -62,7 +75,9 @@ func _on_PreparationTimer_fry_timeout(timer: Timer) -> void:
 	preparation_type -= FRIABLE
 	set_preparation_state()
 	_change_ingridient_sprite("fried_frames")
+	print("Call once")
 	timer.disconnect("timeout", self, "_on_PreparationTimer_fry_timeout")
+	
 
 func _change_ingridient_sprite(type: String) -> void:
 	
@@ -81,7 +96,10 @@ func _change_ingridient_sprite(type: String) -> void:
 		push_warning(str("None texture defined to ", type, " in ", name))
 
 func _on_BurnTimer_timeout():
+	
+	print("Fire started")
 	is_burned = true
+	emit_signal("burning_started", is_burned)
 
 # @setters
 func set_preparation_state(type: int = preparation_type) -> void:
@@ -121,4 +139,3 @@ func get_fried_frames() -> Texture:
 
 func get_cooked_sprite() -> Texture:
 	return cooked_sprite
-

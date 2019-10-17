@@ -2,7 +2,7 @@
 
 [ext_resource path="res://hud/eyecatchers/splash_screen.gd" type="Script" id=1]
 [ext_resource path="res://assets/sprites/ludart-logo_2-generation_v.0.png" type="Texture" id=2]
-[ext_resource path="res://assets/video/hello_world_1080p.webm" type="VideoStream" id=3]
+[ext_resource path="res://assets/videos/hello_world_1080p.webm" type="VideoStream" id=3]
 
 [sub_resource type="Animation" id=1]
 resource_name = "show"
@@ -61,14 +61,22 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 color = Color( 0.329412, 0.12549, 0.580392, 1 )
 script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false,
+"_editor_description_": "Displays the Ludart Intro"
+}
 
 [node name="LudartLogo" type="TextureRect" parent="."]
 margin_left = 235.714
 margin_top = -607.143
 margin_right = 875.715
-margin_bottom = 32.8576
+margin_bottom = 32.8582
 rect_rotation = -1.82857
 texture = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false,
+"_editor_description_": ""
+}
 
 [node name="Anim" type="AnimationPlayer" parent="LudartLogo"]
 autoplay = "show"
@@ -85,4 +93,9 @@ rect_scale = Vector2( 0.63, 0.63 )
 stream = ExtResource( 3 )
 autoplay = true
 expand = false
+bus = "Music"
+__meta__ = {
+"_edit_use_anchors_": false,
+"_editor_description_": "Some cute footage to the main menu"
+}
 [connection signal="animation_finished" from="LudartLogo/Anim" to="." method="_on_Anim_animation_finished"]

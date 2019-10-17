@@ -55,9 +55,9 @@ func apply_friction(amount):
 		
 		motion = Vector2.ZERO
 
-func apply_movement(acceleration: Vector2) -> void:
+func apply_movement(motion_acceleration: Vector2) -> void:
 	
-	motion += acceleration
+	motion += motion_acceleration
 #	if motion.length() > max_speed:
 #		motion = motion.normalized() * max_speed
 	# clever way to the the same as above

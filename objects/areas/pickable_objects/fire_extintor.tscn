@@ -1,0 +1,138 @@
+[gd_scene load_steps=23 format=2]
+
+[ext_resource path="res://objects/areas/pickable_object.tscn" type="PackedScene" id=1]
+[ext_resource path="res://assets/sprites/tileset.png" type="Texture" id=2]
+[ext_resource path="res://objects/areas/pickable_objects/fire_extintor.gd" type="Script" id=3]
+[ext_resource path="res://assets/sprites/particle.png" type="Texture" id=4]
+
+[sub_resource type="AtlasTexture" id=1]
+atlas = ExtResource( 2 )
+region = Rect2( 128, 48, 16, 16 )
+
+[sub_resource type="ConvexPolygonShape2D" id=2]
+points = PoolVector2Array( 0, 0, -40, 48, 40, 48 )
+
+[sub_resource type="Gradient" id=3]
+colors = PoolColorArray( 0.819608, 0.996078, 1, 0.392157, 1, 1, 1, 0.588235 )
+
+[sub_resource type="GradientTexture" id=4]
+gradient = SubResource( 3 )
+
+[sub_resource type="Curve" id=5]
+max_value = 100.0
+_data = [ Vector2( 0, 1 ), 0.0, 0.0, 0, 0, Vector2( 1, 100 ), 0.0, 0.0, 0, 0 ]
+
+[sub_resource type="CurveTexture" id=6]
+curve = SubResource( 5 )
+
+[sub_resource type="Curve" id=7]
+min_value = 0.9
+max_value = 1.1
+_data = [ Vector2( 0, 0 ), 0.0, 0.0, 0, 0, Vector2( 0, 0.97052 ), 0.188071, 0.188071, 0, 0, Vector2( 1, 1.00396 ), 0.0988704, 0.0, 0, 0 ]
+
+[sub_resource type="CurveTexture" id=8]
+curve = SubResource( 7 )
+
+[sub_resource type="Curve" id=9]
+min_value = -0.5
+max_value = 0.5
+_data = [ Vector2( 0, 0 ), 0.0, 0.0, 0, 1, Vector2( 1, 0 ), 0.0, 0.0, 1, 0 ]
+
+[sub_resource type="CurveTexture" id=10]
+curve = SubResource( 9 )
+
+[sub_resource type="Curve" id=11]
+_data = [ Vector2( 0, 0 ), 0.0, 0.0, 0, 0, Vector2( 1, 0.7211 ), 0.0, 0.0, 0, 0 ]
+
+[sub_resource type="CurveTexture" id=12]
+curve = SubResource( 11 )
+
+[sub_resource type="ParticlesMaterial" id=13]
+flag_disable_z = true
+direction = Vector3( 0, 1, 0 )
+spread = 0.0
+gravity = Vector3( 0, 98, 0 )
+initial_velocity = 10.0
+orbit_velocity = -0.05
+orbit_velocity_random = 0.0
+orbit_velocity_curve = SubResource( 10 )
+radial_accel = 90.0
+radial_accel_random = 0.5
+tangential_accel = -45.0
+tangential_accel_random = 1.0
+damping = 24.8
+damping_curve = SubResource( 6 )
+scale_curve = SubResource( 12 )
+color_ramp = SubResource( 4 )
+hue_variation_curve = SubResource( 8 )
+
+[sub_resource type="Curve" id=14]
+min_value = -0.5
+max_value = 0.5
+_data = [ Vector2( 0, 0.00549996 ), 0.0, -3.77467, 0, 0, Vector2( 0.495079, 0.2706 ), 0.53547, -0.511798, 1, 1, Vector2( 0.993713, 0.0154 ), 3.95992, 0.0, 0, 0 ]
+
+[sub_resource type="Curve" id=15]
+min_value = -0.5
+max_value = 0.5
+_data = [ Vector2( 0, 0.00549996 ), 0.0, -7.62059, 0, 0, Vector2( 0.50164, 0.5 ), 0.985766, -0.974597, 1, 1, Vector2( 1, 0.0143 ), 7.81596, 0.0, 0, 0 ]
+
+[sub_resource type="Curve" id=16]
+min_value = -0.5
+max_value = 0.5
+_data = [ Vector2( 0, 0.00549996 ), 0.0, 3.87084, 0, 0, Vector2( 0.50164, -0.2442 ), -0.497767, 0.518702, 1, 1, Vector2( 1, 0.0143 ), -3.02656, 0.0, 0, 0 ]
+
+[sub_resource type="Curve" id=17]
+min_value = -0.5
+max_value = 0.5
+_data = [ Vector2( 0, 0.00549996 ), 0.0, 7.71472, 0, 0, Vector2( 0.49781, -0.5 ), -1.01545, 1.02411, 1, 1, Vector2( 1, 0.0143 ), -7.55593, 0.0, 0, 0 ]
+
+[sub_resource type="Animation" id=18]
+resource_name = "gas_jet"
+loop = true
+step = 0.05
+tracks/0/type = "value"
+tracks/0/path = NodePath("Particles2D:process_material:gravity")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.25, 0.5, 0.75 ),
+"transitions": PoolRealArray( 0.5, 2, 0.5, 2 ),
+"update": 0,
+"values": [ Vector3( 0, 98, 0 ), Vector3( -90, 98, 0 ), Vector3( 0, 98, 0 ), Vector3( 90, 98, 0 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Particles2D:process_material:orbit_velocity_curve:curve")
+tracks/1/interp = 2
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.1, 0.25, 0.4, 0.5, 0.6, 0.8, 0.95, 1 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ SubResource( 9 ), SubResource( 14 ), SubResource( 15 ), SubResource( 14 ), SubResource( 9 ), SubResource( 16 ), SubResource( 17 ), SubResource( 16 ), SubResource( 9 ) ]
+}
+
+[node name="FireExtintor" instance=ExtResource( 1 )]
+script = ExtResource( 3 )
+
+[node name="Sprite" parent="." index="1"]
+texture = SubResource( 1 )
+
+[node name="Area2D" type="Area2D" parent="." index="2"]
+position = Vector2( 0, 8 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" index="0"]
+shape = SubResource( 2 )
+
+[node name="Particles2D" type="Particles2D" parent="Area2D" index="1"]
+emitting = false
+amount = 40
+lifetime = 0.9
+process_material = SubResource( 13 )
+texture = ExtResource( 4 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Area2D" index="2"]
+anims/gas_jet = SubResource( 18 )

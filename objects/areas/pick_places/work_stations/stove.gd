@@ -1,10 +1,7 @@
 extends "res://objects/areas/pick_places/work_station.gd"
 
-const BURN_BUFFER_TIME = 3
-
-export(String, FILE, "*pan.tscn") var pan = ""
-var is_buffering := false
-var is_burning := false
+export(String, FILE, "*pan.tscn") var pan_path = ""
+var is_fire_danger: bool
 
 func _ready():
 	
@@ -12,77 +9,90 @@ func _ready():
 		
 		$ProgressBar/TextureProgress.fill_mode = TextureProgress.FILL_RIGHT_TO_LEFT
 	
-	if pan != "":
+	if pan_path != "":
 		
-		_add_new_pan(pan)
+		_add_new_pan(pan_path)
 
 # @signals
-func _on_fry_finished() -> void:
+func _on_Ingredient_burning_started(firing: bool) -> void:
 	
-	_stop()
-
-func _on_burn_buffer_Timer_finished():
+	if firing:
+		
+		set_is_burning(true)
+		
+	else:
+		$FireAlert/AnimationPlayer.play("fire_alert")
 	
-	$Timer.disconnect("timeout", self, "_on_burn_buffer_Timer_finished")
-	assert(current_object.current_ingredient.get_node("BurnTimer").connect("timeout", self, "_on_ingredient_burned") == OK)
-	current_object.burn_ingredient()
-	$ProgressBar/AnimationPlayer.play("fire_alert")
-	$ProgressBar/TextureRect.visible = true
-
-func _on_ingredient_burned() -> void:
-	
-	$ProgressBar/AnimationPlayer.stop()
-	$ProgressBar/TextureRect.visible = false
+	$FireAlert/TextureRect.visible = not firing
+	is_fire_danger = not firing
 
 # @main
 func insert_object(object: PickableObject) -> bool:
-	var can_insert: bool = false
+	var can_insert := false
 	
 	if current_object == null:
 		
 		if object.is_in_group("pans"):
-			
-			can_insert = .insert_object(object)
+			can_insert = _insert_pan(object)
 		
 	elif object is Ingredient:
 		
 		can_insert = current_object.insert_ingredient(object)
-		object.visible = false
-	
-	if can_insert:
 		
-		_start_cooking()
-#		_fry_ingridient(current_object.current_ingredient)
+		if can_insert:
+			
+			assert(object.connect("burning_started", self, "_on_Ingredient_burning_started") == OK)
+			_start_cooking()
 	
 	return can_insert
 
 func remove_object() -> PickableObject:
 	
 	if is_working:
-		_stop()
+		_stop_working()
 	
-	if is_buffering:
-		_stop_buffering()
-	
-	if is_burning:
-		_stop_burning()
+	if current_object != null:
+		
+		if current_object.is_buffering:
+			current_object.stop_buffering()
+		
+		if current_object.current_ingredient != null:
+			
+			if is_fire_danger:
+				
+				$FireAlert/AnimationPlayer.stop()
+				$FireAlert/TextureRect.visible = false
+				current_object.stop_burning()
+			
+			current_object.current_ingredient.disconnect("burning_started", self, "_on_Ingredient_burning_started")
+		
+		$WorkTimer.disconnect("timeout", current_object, "start_buffering")
 	
 	return .remove_object()
 
-#func _add_new_pan(value: String = pan) -> void:
 
-func _add_new_pan(value):
-	var new_pan = load(value).instance()
+func _add_new_pan(value: String):
+	var new_pan: PickableObject = load(value).instance()
 	
-	new_pan.position = position
-	current_object = new_pan
-	new_pan.get_node("CollisionShape2D").disabled = true
 	get_parent().call_deferred("add_child", new_pan)
-	update()
+	assert(_insert_pan(new_pan))
+	new_pan.position = position
+
+func _insert_pan(pan: PickableObject) -> bool:
+	var can_insert = .insert_object(pan)
+	
+	assert($WorkTimer.connect("timeout", pan, "start_buffering") == OK)
+	
+	if can_insert and pan.current_ingredient != null:
+		
+		assert(pan.current_ingredient.connect("burning_started", self, "_on_Ingredient_burning_started") == OK)
+		_start_cooking()
+	
+	return can_insert
 
 func _start_cooking():
 	
-	if current_object.fry_ingridient($Timer):
+	if current_object.prepare_ingridient($WorkTimer):
 		
 		_start_working(
 			current_object.current_ingredient.fry_time - current_object.current_ingredient.preparation_timer_wait_time,
@@ -90,20 +100,7 @@ func _start_cooking():
 			current_object.current_ingredient.preparation_timer_wait_time
 		)
 
-func _stop() -> void:
+func _stop_working() -> void:
 	
-	current_object.stop($Timer)
-	_stop_working()
-	
-	assert($Timer.connect("timeout", self, "_on_burn_buffer_Timer_finished") == OK)
-	$Timer.start(BURN_BUFFER_TIME)
-
-func _stop_buffering() -> void:
-	
-	$Timer.stop()
-	$Timer.disconnect("timeout", self, "_on_burn_buffer_Timer_finished")
-
-func _stop_burning() -> void:
-	
-	current_object.stop_burning()
-	current_object.current_ingredient.get_node("BurnTimer").disconnect("timeout", self, "_on_ingredient_burned")
+	current_object.prepare_stop($WorkTimer)
+	._stop_working()

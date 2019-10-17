@@ -5,13 +5,10 @@
 [ext_resource path="res://assets/sprites/tileset.png" type="Texture" id=3]
 
 [node name="DirtPlatesTable" instance=ExtResource( 1 )]
+z_index = -1
 script = ExtResource( 2 )
 
 [node name="Sprite" type="Sprite" parent="." index="1"]
 texture = ExtResource( 3 )
 region_enabled = true
 region_rect = Rect2( 48, 32, 16, 16 )
-
-[node name="Timer" type="Timer" parent="." index="2"]
-one_shot = true
-[connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]

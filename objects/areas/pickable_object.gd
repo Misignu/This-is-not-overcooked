@@ -18,8 +18,8 @@ func grab() -> PickableObject:
 	$CollisionShape2D.disabled = true
 	return self
 
-func drop(pos):
+func drop(pos) -> void:
 	
 	visible = true
 	$CollisionShape2D.disabled = false
-	position = pos
+	position = pos - (get_parent().global_position)
