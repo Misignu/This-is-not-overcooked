@@ -1,4 +1,5 @@
 extends CanvasLayer
+const NEXT_SCENE = "res://hud/menus/player_selection.tscn"
 
 func _ready():
 	
@@ -8,15 +9,16 @@ func _ready():
 func _on_Transition_animation_finished(anim_name):
 	
 	if anim_name == "out":
+		
 		Game.set_transparency_mode()
-		assert(get_tree().change_scene("res://scenarios/level0.tscn") == OK)
+		assert(get_tree().change_scene(NEXT_SCENE) == OK)
 
 
 func _on_NewGame_pressed():
 	
 	$MainMenu/Transition.play("out")
 	$Audio/Music.stop()
-	OS.clipboard = "Obrigado por jogar! í ½í¸"
+	OS.clipboard = "Obrigado por jogar! í ½í¸" # WATCH -> HACKER DEMAIS
 
 func _on_Continue_pressed():
 	

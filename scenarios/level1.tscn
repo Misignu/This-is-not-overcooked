@@ -1,287 +1,38 @@
-[gd_scene load_steps=37 format=2]
+[gd_scene load_steps=20 format=2]
 
 [ext_resource path="res://assets/tilesets/general.tres" type="TileSet" id=1]
 [ext_resource path="res://objects/areas/pick_place.tscn" type="PackedScene" id=2]
 [ext_resource path="res://objects/areas/pick_places/box.tscn" type="PackedScene" id=3]
 [ext_resource path="res://objects/areas/pick_places/work_stations/stove.tscn" type="PackedScene" id=4]
 [ext_resource path="res://objects/areas/pick_places/lock_pick.tscn" type="PackedScene" id=5]
-[ext_resource path="res://objects/bodies/characters/players/guy.tscn" type="PackedScene" id=6]
 [ext_resource path="res://hud/overlays/game_hud.tscn" type="PackedScene" id=7]
 [ext_resource path="res://hud/overlays/pause_break.tscn" type="PackedScene" id=8]
-[ext_resource path="res://assets/sprites/yellow_guy.png" type="Texture" id=9]
+[ext_resource path="res://objects/bodies/characters/players/guy.tscn" type="PackedScene" id=9]
 [ext_resource path="res://objects/bodies/characters/player.tscn" type="PackedScene" id=10]
 [ext_resource path="res://objects/areas/pick_places/treadmill.tscn" type="PackedScene" id=11]
 [ext_resource path="res://objects/areas/pickable_objects/plate.tscn" type="PackedScene" id=12]
 [ext_resource path="res://objects/areas/pickable_objects/fire_extintor.tscn" type="PackedScene" id=13]
 [ext_resource path="res://assets/sounds/musics/Overcooked music - Levels 1-1 to 2-4.ogg" type="AudioStream" id=14]
-[ext_resource path="res://assets/sprites/red_guy.png" type="Texture" id=15]
 [ext_resource path="res://objects/areas/pick_places/dirt_plates_table.tscn" type="PackedScene" id=16]
-[ext_resource path="res://assets/sprites/purple_guy.png" type="Texture" id=17]
 [ext_resource path="res://objects/areas/pick_places/work_stations/cut_place.tscn" type="PackedScene" id=18]
 [ext_resource path="res://objects/areas/pick_places/work_stations/sink.tscn" type="PackedScene" id=19]
+[ext_resource path="res://scenarios/level1.gd" type="Script" id=20]
 
-[sub_resource type="Animation" id=1]
-resource_name = "idle"
-length = 10.0
-loop = true
-tracks/0/type = "value"
-tracks/0/path = NodePath("Sprite/Expressions:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 7, 7.1, 7.2, 7.3, 7.4, 7.5, 7.6, 7.7, 7.8, 7.9, 8 ),
-"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
-"update": 1,
-"values": [ 0, 1, 2, 3, 4, 5, 4, 3, 2, 1, 0 ]
-}
-
-[sub_resource type="Animation" id=2]
-resource_name = "walk_down"
-length = 0.4
-loop = true
-tracks/0/type = "value"
-tracks/0/path = NodePath("Sprite:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0, 0.1, 0.2, 0.3 ),
-"transitions": PoolRealArray( 1, 1, 1, 1 ),
-"update": 1,
-"values": [ 0, 1, 2, 3 ]
-}
-
-[sub_resource type="Animation" id=3]
-resource_name = "walk_left"
-length = 0.4
-loop = true
-tracks/0/type = "value"
-tracks/0/path = NodePath("Sprite:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0, 0.1, 0.2, 0.3 ),
-"transitions": PoolRealArray( 1, 1, 1, 1 ),
-"update": 1,
-"values": [ 4, 5, 6, 7 ]
-}
-
-[sub_resource type="Animation" id=4]
-resource_name = "walk_right"
-length = 0.4
-loop = true
-tracks/0/type = "value"
-tracks/0/path = NodePath("Sprite:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0, 0.1, 0.2, 0.3 ),
-"transitions": PoolRealArray( 1, 1, 1, 1 ),
-"update": 1,
-"values": [ 8, 9, 10, 11 ]
-}
-
-[sub_resource type="Animation" id=5]
-length = 0.4
-loop = true
-tracks/0/type = "value"
-tracks/0/path = NodePath("Sprite:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0, 0.1, 0.2, 0.3 ),
-"transitions": PoolRealArray( 1, 1, 1, 1 ),
-"update": 1,
-"values": [ 12, 13, 14, 15 ]
-}
-
-[sub_resource type="Animation" id=6]
-length = 10.0
-loop = true
-tracks/0/type = "value"
-tracks/0/path = NodePath("Sprite/Expressions:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 7, 7.1, 7.2, 7.3, 7.4, 7.5, 7.6, 7.7, 7.8, 7.9, 8 ),
-"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
-"update": 1,
-"values": [ 0, 1, 2, 3, 4, 5, 4, 3, 2, 1, 0 ]
-}
-
-[sub_resource type="Animation" id=7]
-length = 0.4
-loop = true
-tracks/0/type = "value"
-tracks/0/path = NodePath("Sprite:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0, 0.1, 0.2, 0.3 ),
-"transitions": PoolRealArray( 1, 1, 1, 1 ),
-"update": 1,
-"values": [ 0, 1, 2, 3 ]
-}
-
-[sub_resource type="Animation" id=8]
-length = 0.4
-loop = true
-tracks/0/type = "value"
-tracks/0/path = NodePath("Sprite:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0, 0.1, 0.2, 0.3 ),
-"transitions": PoolRealArray( 1, 1, 1, 1 ),
-"update": 1,
-"values": [ 4, 5, 6, 7 ]
-}
-
-[sub_resource type="Animation" id=9]
-length = 0.4
-loop = true
-tracks/0/type = "value"
-tracks/0/path = NodePath("Sprite:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0, 0.1, 0.2, 0.3 ),
-"transitions": PoolRealArray( 1, 1, 1, 1 ),
-"update": 1,
-"values": [ 8, 9, 10, 11 ]
-}
-
-[sub_resource type="Animation" id=10]
-length = 0.4
-loop = true
-tracks/0/type = "value"
-tracks/0/path = NodePath("Sprite:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0, 0.1, 0.2, 0.3 ),
-"transitions": PoolRealArray( 1, 1, 1, 1 ),
-"update": 1,
-"values": [ 12, 13, 14, 15 ]
-}
-
-[sub_resource type="Animation" id=11]
-resource_name = "idle"
-length = 10.0
-loop = true
-tracks/0/type = "value"
-tracks/0/path = NodePath("Sprite/Expressions:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 7, 7.1, 7.2, 7.3, 7.4, 7.5, 7.6, 7.7, 7.8, 7.9, 8 ),
-"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
-"update": 1,
-"values": [ 0, 1, 2, 3, 4, 5, 4, 3, 2, 1, 0 ]
-}
-
-[sub_resource type="Animation" id=12]
-resource_name = "walk_down"
-length = 0.4
-loop = true
-tracks/0/type = "value"
-tracks/0/path = NodePath("Sprite:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0, 0.1, 0.2, 0.3 ),
-"transitions": PoolRealArray( 1, 1, 1, 1 ),
-"update": 1,
-"values": [ 0, 1, 2, 3 ]
-}
-
-[sub_resource type="Animation" id=13]
-resource_name = "walk_left"
-length = 0.4
-loop = true
-tracks/0/type = "value"
-tracks/0/path = NodePath("Sprite:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0, 0.1, 0.2, 0.3 ),
-"transitions": PoolRealArray( 1, 1, 1, 1 ),
-"update": 1,
-"values": [ 4, 5, 6, 7 ]
-}
-
-[sub_resource type="Animation" id=14]
-resource_name = "walk_right"
-length = 0.4
-loop = true
-tracks/0/type = "value"
-tracks/0/path = NodePath("Sprite:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0, 0.1, 0.2, 0.3 ),
-"transitions": PoolRealArray( 1, 1, 1, 1 ),
-"update": 1,
-"values": [ 8, 9, 10, 11 ]
-}
-
-[sub_resource type="Animation" id=15]
-length = 0.4
-loop = true
-tracks/0/type = "value"
-tracks/0/path = NodePath("Sprite:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0, 0.1, 0.2, 0.3 ),
-"transitions": PoolRealArray( 1, 1, 1, 1 ),
-"update": 1,
-"values": [ 12, 13, 14, 15 ]
-}
-
-[sub_resource type="OpenSimplexNoise" id=16]
+[sub_resource type="OpenSimplexNoise" id=1]
 seed = 1
 period = 117.0
 persistence = 0.323
 lacunarity = 0.1
 
-[sub_resource type="NoiseTexture" id=17]
+[sub_resource type="NoiseTexture" id=2]
 seamless = true
 bump_strength = 8.7
-noise = SubResource( 16 )
+noise = SubResource( 1 )
 
 [node name="Level" type="Node2D"]
 pause_mode = 1
 position = Vector2( 330, 280 )
+script = ExtResource( 20 )
 __meta__ = {
 "_edit_lock_": true,
 "_editor_description_": "Level prototype"
@@ -479,50 +230,20 @@ position = Vector2( 215, 73 )
 scale = Vector2( 0.5, 0.5 )
 z_index = 2
 
-[node name="Player1" parent="Players" instance=ExtResource( 6 )]
+[node name="Player1" parent="Players" instance=ExtResource( 9 )]
 position = Vector2( 144, 100 )
 
-[node name="Player2" parent="Players" instance=ExtResource( 6 )]
+[node name="Player2" parent="Players" instance=ExtResource( 9 )]
 position = Vector2( 176, 204 )
 controller_index = 2
 
-[node name="Sprite" parent="Players/Player2" index="0"]
-texture = ExtResource( 17 )
-
-[node name="AnimationPlayer" parent="Players/Player2" index="5"]
-anims/idle = SubResource( 1 )
-anims/walk_down = SubResource( 2 )
-anims/walk_left = SubResource( 3 )
-anims/walk_right = SubResource( 4 )
-anims/walk_up = SubResource( 5 )
-
-[node name="Player3" parent="Players" instance=ExtResource( 6 )]
+[node name="Player3" parent="Players" instance=ExtResource( 9 )]
 position = Vector2( 272, 100 )
-controller_index = 3
-
-[node name="Sprite" parent="Players/Player3" index="0"]
-texture = ExtResource( 9 )
-
-[node name="AnimationPlayer" parent="Players/Player3" index="5"]
-anims/idle = SubResource( 6 )
-anims/walk_down = SubResource( 7 )
-anims/walk_left = SubResource( 8 )
-anims/walk_right = SubResource( 9 )
-anims/walk_up = SubResource( 10 )
-
-[node name="Player4" parent="Players" instance=ExtResource( 6 )]
-position = Vector2( 304, 204 )
 controller_index = 4
 
-[node name="Sprite" parent="Players/Player4" index="0"]
-texture = ExtResource( 15 )
-
-[node name="AnimationPlayer" parent="Players/Player4" index="5"]
-anims/idle = SubResource( 11 )
-anims/walk_down = SubResource( 12 )
-anims/walk_left = SubResource( 13 )
-anims/walk_right = SubResource( 14 )
-anims/walk_up = SubResource( 15 )
+[node name="Player4" parent="Players" instance=ExtResource( 9 )]
+position = Vector2( 304, 204 )
+controller_index = 4
 
 [node name="Ghost" parent="Players" instance=ExtResource( 10 )]
 visible = false
@@ -544,7 +265,7 @@ __meta__ = {
 
 [node name="Light2D" type="Light2D" parent="."]
 position = Vector2( 128, 72 )
-texture = SubResource( 17 )
+texture = SubResource( 2 )
 texture_scale = 0.5
 color = Color( 0.34902, 0.32549, 0.286275, 0.0705882 )
 energy = 6.0
@@ -573,9 +294,3 @@ autoplay = true
 bus = "Music"
 [connection signal="plate_returned" from="SceneObjects/Treadmill" to="SceneObjects/DirtPlatesTable" method="_on_Treadmill_plate_returned"]
 [connection signal="recipe_delived" from="SceneObjects/Treadmill" to="HUD" method="_on_Treadmill_recipe_delived"]
-
-[editable path="Players/Player2"]
-
-[editable path="Players/Player3"]
-
-[editable path="Players/Player4"]

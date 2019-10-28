@@ -33,5 +33,6 @@ func update_ingredient_data():
 
 # @setters
 func set_ingredient_id(value: int) -> void:
+	
 	igridient_id = value
 	update_ingredient_data()

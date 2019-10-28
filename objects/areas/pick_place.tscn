@@ -49,16 +49,19 @@ func _burn():
 "
 
 [node name="PickPlace" type="Area2D"]
-collision_layer = 2
-collision_mask = 2
+collision_layer = 4098
+collision_mask = 4098
 script = ExtResource( 1 )
 __meta__ = {
-"_editor_description_": "Area where the player  can interact with to add or remove objects in the right spot."
+"_editor_description_": "Area where the player can interact with to add or remove objects in the right spot."
 }
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 modulate = Color( 1, 1, 1, 0.392157 )
 shape = SubResource( 1 )
+__meta__ = {
+"_editor_description_": ""
+}
 
 [node name="FireParticles" parent="." instance=ExtResource( 2 )]
 emitting = false

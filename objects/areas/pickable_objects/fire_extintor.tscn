@@ -121,18 +121,25 @@ script = ExtResource( 3 )
 [node name="Sprite" parent="." index="1"]
 texture = SubResource( 1 )
 
-[node name="Area2D" type="Area2D" parent="." index="2"]
+[node name="GasRange" type="Area2D" parent="." index="2"]
 position = Vector2( 0, 8 )
+collision_layer = 4096
+collision_mask = 4096
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" index="0"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="GasRange" index="0"]
 shape = SubResource( 2 )
 
-[node name="Particles2D" type="Particles2D" parent="Area2D" index="1"]
+[node name="Particles2D" type="Particles2D" parent="GasRange" index="1"]
 emitting = false
 amount = 40
 lifetime = 0.9
 process_material = SubResource( 13 )
 texture = ExtResource( 4 )
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="Area2D" index="2"]
+[node name="AnimationBuffer" type="Timer" parent="GasRange" index="2"]
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="GasRange" index="3"]
 anims/gas_jet = SubResource( 18 )
+[connection signal="area_entered" from="GasRange" to="." method="_on_GasRange_area_entered"]
+[connection signal="area_exited" from="GasRange" to="." method="_on_GasRange_area_exited"]
+[connection signal="timeout" from="GasRange/AnimationBuffer" to="." method="_on_AnimationBuffer_timeout"]

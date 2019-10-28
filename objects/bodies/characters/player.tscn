@@ -45,7 +45,6 @@ tracks/0/keys = {
 }
 
 [sub_resource type="Animation" id=4]
-resource_name = "walk_left"
 length = 0.4
 loop = true
 tracks/0/type = "value"
@@ -62,7 +61,6 @@ tracks/0/keys = {
 }
 
 [sub_resource type="Animation" id=5]
-resource_name = "walk_right"
 length = 0.4
 loop = true
 tracks/0/type = "value"
@@ -107,9 +105,9 @@ position = Vector2( 0, -8 )
 texture = ExtResource( 3 )
 vframes = 4
 hframes = 3
-frame = 1
 
 [node name="Expressions" type="Sprite" parent="Sprite" index="0"]
+visible = false
 texture = ExtResource( 4 )
 hframes = 6
 
@@ -125,6 +123,7 @@ radius = 7.5
 color = Color( 0.85, 0.8, 1, 1 )
 
 [node name="Node2D" type="Node2D" parent="." index="3"]
+position = Vector2( 0, 10 )
 
 [node name="RayCast2D" type="RayCast2D" parent="." index="4"]
 enabled = true

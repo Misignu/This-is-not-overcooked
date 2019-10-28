@@ -4,6 +4,14 @@ extends Area2D
 var current_object: PickableObject = null
 var is_burning: bool setget set_is_burning
 
+func _on_FireExtintor_extintor_started():
+	print('Extintor started in: ', name)
+	set_is_burning(false)
+
+func _on_FireExtintor_extintor_finished():
+	print('Extintor s in: ', name)	
+	pass
+
 func _on_FireTimer_timeout():
 	
 	$Scan.set_physics_process(true)
@@ -39,7 +47,13 @@ func remove_object() -> PickableObject:
 # @setters
 func set_is_burning(value := true):
 	
-	$FireTimer.start()
+	if value:
+		
+		$FireTimer.start()
+		$FireBSFX2D.play()
+		
+	else:
+		$FireBSFX2D.stop()
+	
 	$FireParticles.emitting = value
-	$FireBSFX2D.play()
 	is_burning = value
