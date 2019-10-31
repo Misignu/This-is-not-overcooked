@@ -1,8 +1,9 @@
 extends CanvasLayer
 const NEXT_SCENE = "res://hud/menus/player_selection.tscn"
 
+onready var options: WindowDialog = $Options
+
 func _ready():
-	
 	$MainMenu/VBoxContainer/MenuOptions/NewGame.grab_focus()
 
 # @signals
@@ -18,7 +19,7 @@ func _on_NewGame_pressed():
 	
 	$MainMenu/Transition.play("out")
 	$Audio/Music.stop()
-	OS.clipboard = "Obrigado por jogar! í ½í¸" # WATCH -> HACKER DEMAIS
+	OS.clipboard = "Obrigado por jogar! ðŸ˜‰" # WATCH -> HACKER DEMAIS
 
 func _on_Continue_pressed():
 	
@@ -28,5 +29,5 @@ func _on_Continue_pressed():
 
 func _on_Options_pressed():
 	
-	$Options.popup()
-	$Options.focus_first()
+	options.popup()
+	options.focus_first()

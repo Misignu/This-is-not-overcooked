@@ -3,7 +3,7 @@ extends "res://objects/areas/pick_places/work_station.gd"
 func _on_Timer_timeout():
 	stop_washing()
 
-func insert_object(object: PickableObject) -> bool: # TODO REFACTOR -> Código gambiarroso
+func insert_object(object: PickableObject) -> bool: # REFACTOR -> Código gambiarroso
 	var can_insert = false
 	
 	if "Plate" in object.name:

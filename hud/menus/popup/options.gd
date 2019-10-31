@@ -1,19 +1,26 @@
 extends WindowDialog
 
+onready var volume_slider := $MarginContainer/ScrollContainer/MarginContainer/List/Volume/HSlider
+onready var mute_checkbox := $MarginContainer/ScrollContainer/MarginContainer/List/Volume/Mute
+onready var music_mute := $MarginContainer/ScrollContainer/MarginContainer/List/SoundChannels/Panel/VBoxContainer/Channels/Music/Mute
+onready var sfx_mute := $MarginContainer/ScrollContainer/MarginContainer/List/SoundChannels/Panel/VBoxContainer/Channels/SFXS/Mute
+onready var bsfx_mute := $MarginContainer/ScrollContainer/MarginContainer/List/SoundChannels/Panel/VBoxContainer/Channels/BSFXS/Mute
+onready var full_screen_checkbox := $MarginContainer/ScrollContainer/MarginContainer/List/FullScreen
 
 func _ready():
 	
-	assert(Game.connect("volume_changed", self, "_on_Game_volume_changed") == OK)
-	assert(Game.connect("mute_toggled", self, "_on_Game_mute_toggled") == OK)
-	assert(Game.connect("fullscreen_mode_changed", self, "_on_Game_fullScreen_mode_changed") == OK)
-	$MarginContainer/List/Volume/HSlider.value = AudioServer.get_bus_volume_db(AudioServer.get_bus_index("Master"))
-	$MarginContainer/List/FullScreen.pressed = OS.window_fullscreen
-	
+	assert(
+		Game.connect("volume_changed", self, "_on_Game_volume_changed") == OK and
+		Game.connect("mute_toggled", self, "_on_Game_mute_toggled") == OK and
+		Game.connect("fullscreen_mode_changed", self, "_on_Game_fullScreen_mode_changed") == OK
+	)
+	_set_sliders()
+	full_screen_checkbox.pressed = OS.window_fullscreen
 
 # Video
 func _on_Game_fullScreen_mode_changed():
 	
-	$MarginContainer/List/FullScreen.pressed = OS.window_fullscreen
+	full_screen_checkbox.pressed = OS.window_fullscreen
 	get_tree().get_root().set_transparent_background(!OS.window_fullscreen)
 	OS.window_per_pixel_transparency_enabled = !OS.window_fullscreen
 
@@ -23,29 +30,63 @@ func _on_FullScreen_toggled(button_pressed: bool) -> void:
 		Game.set_fullscreen(button_pressed)
 
 # Audio
-func _on_Game_volume_changed(channel: int, value: float) -> void:
+func _on_Game_volume_changed(channel: int, volume: float) -> void:
+	var value = db2linear(volume)
 	
-	match AudioServer.get_bus_name(channel):
-		"Master":
-			$MarginContainer/List/Volume/HSlider.value = value
+	if AudioServer.get_bus_name(channel) == "Master" and value != volume_slider.value:
+		volume_slider.value = value
 
 func _on_Game_mute_toggled(channel: int, value: bool) -> void:
 	
 	match AudioServer.get_bus_name(channel):
+		
 		"Master":
-			$MarginContainer/List/Volume/Mute.pressed = value
+			mute_checkbox.pressed = value
+			
+		"Music":
+			music_mute.pressed = value
+			
+		"SFXS":
+			sfx_mute.pressed = value
+			
+		"BSFXS":
+			bsfx_mute.pressed = value
+		
 
 
-func _on_Volume_HSlider_value_changed(value: float) -> void:
+func _on_Mute_toggled(button_pressed: bool, channel_name: String) -> void:
 	
-	if AudioServer.get_bus_volume_db(AudioServer.get_bus_index("Master")) != value:
-		Game.set_volume(value)
+	if AudioServer.is_bus_mute(AudioServer.get_bus_index(channel_name)) != button_pressed:
+		Game.mute_toggle(AudioServer.get_bus_index(channel_name))
 
-func _on_Mute_toggled(button_pressed: bool) -> void:
+func _on_HSlider_value_changed(value: float, channel_name: String) -> void:
+	var volume = linear2db(value)
 	
-	if AudioServer.is_bus_mute(AudioServer.get_bus_index("Master")) != button_pressed:
-		Game.mute_toggle()
+	print(volume)
+	Game.set_volume(volume, AudioServer.get_bus_index(channel_name))
 
 # @main
 func focus_first():
-	$MarginContainer/List/FullScreen.grab_focus()
+	full_screen_checkbox.grab_focus()
+
+func _set_sliders():
+	
+	var music_slider := $MarginContainer/ScrollContainer/MarginContainer/List/SoundChannels/Panel/VBoxContainer/Channels/Music/HSlider
+	var sfx_slider := $MarginContainer/ScrollContainer/MarginContainer/List/SoundChannels/Panel/VBoxContainer/Channels/SFXS/HSlider
+	var bsfx_slider := $MarginContainer/ScrollContainer/MarginContainer/List/SoundChannels/Panel/VBoxContainer/Channels/BSFXS/HSlider
+	
+	volume_slider.min_value = 0.0001
+	volume_slider.max_value = 1
+	volume_slider.step = 0.0001
+	
+	music_slider.min_value = 0.0001
+	music_slider.max_value = 1
+	music_slider.step = 0.0001
+	
+	sfx_slider.min_value = 0.0001
+	sfx_slider.max_value = 1
+	sfx_slider.step = 0.0001
+	
+	bsfx_slider.min_value = 0.0001
+	bsfx_slider.max_value = 1
+	bsfx_slider.step = 0.0001

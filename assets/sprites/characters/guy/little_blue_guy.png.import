@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/blue_guy.png-917b1cfe2d13cdfc352a5312fadf496d.stex"
+path="res://.import/little_blue_guy.png-660e6016ae0d0d03ef9f005fc11a36c5.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/blue_guy.png"
-dest_files=[ "res://.import/blue_guy.png-917b1cfe2d13cdfc352a5312fadf496d.stex" ]
+source_file="res://assets/sprites/characters/guy/little_blue_guy.png"
+dest_files=[ "res://.import/little_blue_guy.png-660e6016ae0d0d03ef9f005fc11a36c5.stex" ]
 
 [params]
 

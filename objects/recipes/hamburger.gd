@@ -2,7 +2,9 @@ extends Sprite
 
 export var price: int = 100 setget, get_price
 
-func add_ingredient(ingredient: Ingredient) -> bool: # TODO REFACTOR -> Código gambiarroso
+# TODO -> Alterar Sprites Atlas
+
+func add_ingredient(ingredient: Ingredient) -> bool: # REFACTOR -> Adicionar lógica via dicionário
 	var current_frame = frame
 	
 	if frame == 0:

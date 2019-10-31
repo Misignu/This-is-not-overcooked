@@ -3,14 +3,12 @@ extends "res://objects/areas/pick_places/work_station.gd"
 export(String, FILE, "*pan.tscn") var pan_path = ""
 var is_fire_danger: bool
 
+onready var alert_player := $FireAlert/AnimationPlayer
+onready var texture_rect := $FireAlert/TextureRect
+
 func _ready():
 	
-	if rotation_degrees >= 90:
-		
-		$ProgressBar/TextureProgress.fill_mode = TextureProgress.FILL_RIGHT_TO_LEFT
-	
 	if pan_path != "":
-		
 		_add_new_pan(pan_path)
 
 # @signals
@@ -21,9 +19,9 @@ func _on_Ingredient_burning_started(firing: bool) -> void:
 		set_is_burning(true)
 		
 	else:
-		$FireAlert/AnimationPlayer.play("fire_alert")
+		alert_player.play("fire_alert")
 	
-	$FireAlert/TextureRect.visible = not firing
+	texture_rect.visible = not firing
 	is_fire_danger = not firing
 
 # @main
@@ -60,13 +58,13 @@ func remove_object() -> PickableObject:
 			
 			if is_fire_danger:
 				
-				$FireAlert/AnimationPlayer.stop()
-				$FireAlert/TextureRect.visible = false
+				alert_player.stop()
+				texture_rect.visible = false
 				current_object.stop_burning()
 			
 			current_object.current_ingredient.disconnect("burning_started", self, "_on_Ingredient_burning_started")
 		
-		$WorkTimer.disconnect("timeout", current_object, "start_buffering")
+		work_timer.disconnect("timeout", current_object, "start_buffering")
 	
 	return .remove_object()
 
@@ -81,18 +79,24 @@ func _add_new_pan(value: String):
 func _insert_pan(pan: PickableObject) -> bool:
 	var can_insert = .insert_object(pan)
 	
-	assert($WorkTimer.connect("timeout", pan, "start_buffering") == OK)
+	assert(work_timer.connect("timeout", pan, "start_buffering") == OK)
 	
 	if can_insert and pan.current_ingredient != null:
 		
 		assert(pan.current_ingredient.connect("burning_started", self, "_on_Ingredient_burning_started") == OK)
-		_start_cooking()
+		
+		if pan.current_ingredient.preparation_state == 0:
+			pan.start_buffering()
+			
+		else:
+			_start_cooking()
 	
 	return can_insert
 
+
 func _start_cooking():
 	
-	if current_object.prepare_ingridient($WorkTimer):
+	if current_object.prepare_ingridient(work_timer):
 		
 		_start_working(
 			current_object.current_ingredient.fry_time - current_object.current_ingredient.preparation_timer_wait_time,
@@ -102,5 +106,5 @@ func _start_cooking():
 
 func _stop_working() -> void:
 	
-	current_object.prepare_stop($WorkTimer)
+	current_object.prepare_stop(work_timer)
 	._stop_working()

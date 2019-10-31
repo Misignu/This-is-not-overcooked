@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/progress_bar.png-3aa790af64291536e6694ebe35943a8d.stex"
+path="res://.import/blue_guy.png-0cc0dbed1cd5531539e01444da95ae02.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/progress_bar.png"
-dest_files=[ "res://.import/progress_bar.png-3aa790af64291536e6694ebe35943a8d.stex" ]
+source_file="res://assets/sprites/characters/guy/blue_guy.png"
+dest_files=[ "res://.import/blue_guy.png-0cc0dbed1cd5531539e01444da95ae02.stex" ]
 
 [params]
 

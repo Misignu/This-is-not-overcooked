@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/guy_blinking.png-da288738199fc970398806bbbd4f5d6c.stex"
+path="res://.import/objects.png-bd456bef5cdf8a26cefbac13b078b089.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/guy_blinking.png"
-dest_files=[ "res://.import/guy_blinking.png-da288738199fc970398806bbbd4f5d6c.stex" ]
+source_file="res://assets/sprites/objects.png"
+dest_files=[ "res://.import/objects.png-bd456bef5cdf8a26cefbac13b078b089.stex" ]
 
 [params]
 

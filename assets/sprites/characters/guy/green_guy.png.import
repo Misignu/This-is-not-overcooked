@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/yellow_guy.png-116b21d8fb73c18bd1306c2df7cf8662.stex"
+path="res://.import/green_guy.png-3d86c7fcfe8a2d43685b6935aaabeb30.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/yellow_guy.png"
-dest_files=[ "res://.import/yellow_guy.png-116b21d8fb73c18bd1306c2df7cf8662.stex" ]
+source_file="res://assets/sprites/characters/guy/green_guy.png"
+dest_files=[ "res://.import/green_guy.png-3d86c7fcfe8a2d43685b6935aaabeb30.stex" ]
 
 [params]
 

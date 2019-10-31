@@ -1,63 +1,58 @@
 extends MarginContainer
 """
-LIda com interação e animação do menu
+Lida com interação e animação do menu
 """
 var can_play
-var current_focused: int = 0
 
-
-func _input(event): # TODO REFACTOR
-	
-	if event.is_action_pressed("player1_move_up"):
-		
-		$VBoxContainer/MenuOptions.get_child(current_focused - 1 if current_focused > 0 else 2).grab_focus()
-	
-	if event.is_action_pressed("player1_move_down"):
-		
-		$VBoxContainer/MenuOptions.get_child(current_focused + 1 if current_focused < 2 else 0).grab_focus()
+onready var select_player := $Select
+onready var menu_options := $VBoxContainer/MenuOptions
+onready var new_game_option := $VBoxContainer/MenuOptions/NewGame
+onready var continue_option := $VBoxContainer/MenuOptions/Continue
+onready var options_option := $VBoxContainer/MenuOptions/Options
+onready var new_game_player := $VBoxContainer/MenuOptions/NewGame/AnimationPlayer
+onready var continue_player := $VBoxContainer/MenuOptions/Continue/AnimationPlayer
+onready var options_player := $VBoxContainer/MenuOptions/Options/AnimationPlayer
 
 # @signals
 func _on_NewGame_focus_entered():
 	
-	$VBoxContainer/MenuOptions/NewGame/AnimationPlayer.play("rainbow")
-	current_focused = 0
+	new_game_player.play("rainbow")
 	
 	if can_play == true:
 		select()
 
 func _on_Continue_focus_entered():
 	
-	$VBoxContainer/MenuOptions/Continue/AnimationPlayer.play("rainbow")
+	continue_player.play("rainbow")
 	select()
-	current_focused = 1
 
 func _on_Options_focus_entered():
 	
-	$VBoxContainer/MenuOptions/Options/AnimationPlayer.play("rainbow")
+	options_player.play("rainbow")
 	select()
-	current_focused = 2
 
 
 func _on_NewGame_focus_exited():
-	$VBoxContainer/MenuOptions/NewGame/AnimationPlayer.play("idle")
+	
+	new_game_player.play("idle")
 	can_play = true
 
 func _on_Continue_focus_exited():
-	$VBoxContainer/MenuOptions/Continue/AnimationPlayer.play("idle")
+	continue_player.play("idle")
 
 func _on_Options_focus_exited():
-	$VBoxContainer/MenuOptions/Options/AnimationPlayer.play("idle")
+	options_player.play("idle")
 
 
 func _on_NewGame_mouse_entered():
-	$VBoxContainer/MenuOptions/NewGame.grab_focus()
+	new_game_option.grab_focus()
 
 func _on_Continue_mouse_entered():
-	$VBoxContainer/MenuOptions/Continue.grab_focus()
+	continue_option.grab_focus()
 
 func _on_Options_mouse_entered():
-	$VBoxContainer/MenuOptions/Options.grab_focus()
+	options_option.grab_focus()
 
 # @main
 func select():
-	$Select.play()
+	select_player.play()

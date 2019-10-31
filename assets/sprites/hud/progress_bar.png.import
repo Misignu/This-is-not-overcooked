@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/purple_guy.png-d9c9455be0e99d141577b221afeabde4.stex"
+path="res://.import/progress_bar.png-49177dc6cf17a83cbfb5800d6ae9792a.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/purple_guy.png"
-dest_files=[ "res://.import/purple_guy.png-d9c9455be0e99d141577b221afeabde4.stex" ]
+source_file="res://assets/sprites/hud/progress_bar.png"
+dest_files=[ "res://.import/progress_bar.png-49177dc6cf17a83cbfb5800d6ae9792a.stex" ]
 
 [params]
 

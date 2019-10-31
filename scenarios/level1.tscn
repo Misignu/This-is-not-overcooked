@@ -114,6 +114,9 @@ position = Vector2( 136, 72 )
 [node name="PickPlace2" parent="SceneObjects/Tabbles" instance=ExtResource( 2 )]
 position = Vector2( 56, 24 )
 
+[node name="PickPlace6" parent="SceneObjects/Tabbles" instance=ExtResource( 2 )]
+position = Vector2( 40, 24 )
+
 [node name="PickPlace24" parent="SceneObjects/Tabbles" instance=ExtResource( 2 )]
 position = Vector2( 72, 120 )
 
@@ -134,9 +137,6 @@ position = Vector2( 184, 72 )
 
 [node name="PickPlace27" parent="SceneObjects/Tabbles" instance=ExtResource( 2 )]
 position = Vector2( 184, 120 )
-
-[node name="PickPlace9" parent="SceneObjects/Tabbles" instance=ExtResource( 2 )]
-position = Vector2( 40, 24 )
 
 [node name="PickPlace20" parent="SceneObjects/Tabbles" instance=ExtResource( 2 )]
 position = Vector2( 40, 120 )
@@ -159,7 +159,6 @@ __meta__ = {
 
 [node name="Box" parent="SceneObjects/Boxes" instance=ExtResource( 3 )]
 position = Vector2( 184, 24 )
-igridient_id = 0
 
 [node name="Box2" parent="SceneObjects/Boxes" instance=ExtResource( 3 )]
 position = Vector2( 200, 24 )
@@ -224,7 +223,7 @@ collision_layer = 2
 collision_mask = 2
 
 [node name="FireExtintor" parent="SceneObjects" instance=ExtResource( 13 )]
-position = Vector2( 215, 73 )
+position = Vector2( 216, 72 )
 
 [node name="Players" type="YSort" parent="."]
 scale = Vector2( 0.5, 0.5 )
@@ -251,7 +250,7 @@ modulate = Color( 0.682353, 0.662745, 0.847059, 0.639216 )
 position = Vector2( 240, -112 )
 scale = Vector2( 6, 6 )
 collision_layer = 0
-controller_index = 3
+controller_index = 4
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2( 0, -3 )
@@ -279,7 +278,6 @@ __meta__ = {
 
 [node name="HUD" parent="." instance=ExtResource( 7 )]
 layer = 2
-order_min_frequency = 10
 order_max_frequency = 45
 clients_min_wait_time = 30
 clients_max_wait_time = 90

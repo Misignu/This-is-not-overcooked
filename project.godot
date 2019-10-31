@@ -28,7 +28,7 @@ _global_script_class_icons={
 
 config/name="This is not overcooked"
 config/description="A game about being better than Gemaplys"
-run/main_scene="res://hud/menus/player_selection.tscn"
+run/main_scene="res://hud/eyecatchers/splash_screen.tscn"
 config/icon="res://icon.png"
 
 [autoload]

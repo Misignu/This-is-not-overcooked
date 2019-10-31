@@ -6,27 +6,25 @@
 [ext_resource path="res://assets/sprites/tileset.png" type="Texture" id=4]
 
 [sub_resource type="StyleBoxFlat" id=1]
-bg_color = Color( 0.392157, 0.392157, 0.392157, 0.392157 )
+bg_color = Color( 0.207843, 0.180392, 0.25098, 1 )
 
 [sub_resource type="GDScript" id=2]
 script/source = "tool
 extends PanelContainer
 
 signal base_color_changed
+signal action_key_pressed
+signal action_key_released
+signal player_input_desattached
 
+const JOIN_THE_PARTY = \"Press Start\\nto join the party\"
+const BOOST_THE_TIMER = \"Hold Action\\nto Boost the Timer\"
 const DISABLED_COLOR = Color(.5, .5, .5)
 
 export var base_color: Color setget set_base_color
+
 var is_enabled: bool setget set_is_enabled
 var player_input_index: int
-
-var available_characters: = [
-	preload(\"res://assets/atlas/green_guy_front.tres\"),
-	preload(\"res://assets/atlas/purple_guy_front.tres\"),
-	preload(\"res://assets/atlas/yellow_guy_front.tres\"),
-	preload(\"res://assets/atlas/red_guy_front.tres\"),
-	preload(\"res://assets/atlas/blue_guy_front.tres\")
-]
 var base_colors: = [
 	Color(\"0bca6a\"),
 	Color(\"780bca\"),
@@ -34,7 +32,14 @@ var base_colors: = [
 	Color(\"ca2a0b\"),
 	Color(\"0b82ca\")
 ]
-onready var default_base_color: Color
+var available_characters: = [
+	preload(\"res://assets/atlas/green_guy_front.tres\"),
+	preload(\"res://assets/atlas/purple_guy_front.tres\"),
+	preload(\"res://assets/atlas/yellow_guy_front.tres\"),
+	preload(\"res://assets/atlas/red_guy_front.tres\"),
+	preload(\"res://assets/atlas/blue_guy_front.tres\")
+]
+
 onready var character_texture_rect: TextureRect = $MarginContainer/VBoxContainer/PanelContainer/HBoxContainer/MarginContainer/TextureRect
 onready var button_right: TextureButton = $MarginContainer/VBoxContainer/PanelContainer/HBoxContainer/CenterContainer/MarginContainer/LeftButton
 onready var button_left: TextureButton = $MarginContainer/VBoxContainer/PanelContainer/HBoxContainer/CenterContainer2/MarginContainer/RightButton
@@ -43,6 +48,9 @@ func _ready() -> void:
 	
 	set_process_input(false)
 	set_is_enabled(false)
+	
+	if Engine.is_editor_hint():
+		set_base_color(base_color)
 
 func _input(event: InputEvent) -> void:
 	
@@ -51,6 +59,17 @@ func _input(event: InputEvent) -> void:
 	
 	if event.is_action_pressed(str(\"player\", player_input_index, \"_move_right\")):
 		select_availlable_character()
+	
+	if event.is_action_pressed(str(\"player\", player_input_index, \"_primary_action\")):
+		emit_signal(\"action_key_pressed\")
+	
+	if event.is_action_released(str(\"player\", player_input_index, \"_primary_action\")):
+		emit_signal(\"action_key_released\")
+	
+	if event.is_action_pressed(str(\"player\", player_input_index, \"_secoundary_action\")):
+		
+		Game.players[get_index()].id = -1
+		emit_signal(\"player_input_desattached\")
 
 # @signals
 func _on_LeftButton_pressed():
@@ -63,51 +82,15 @@ func _on_RightButton_pressed():
 func select_availlable_character(use_next: bool = true):
 	
 	var base = available_characters.find($MarginContainer/VBoxContainer/PanelContainer/HBoxContainer/MarginContainer/TextureRect.texture)
-	var current_texture: AtlasTexture
-	var new_texture: AtlasTexture
-	var counter: int
-	var can_pass: bool
+	var id: int = -1
 	
 	if base == -1:
 		base = 0
 	
-	counter = base
-	
-	while new_texture == null:
-		
-		counter = counter + 1 if use_next else counter -1
-		
-		if counter == base:
-			push_error(\"The availlable_characters number isn't enough to fullfill the current number of players'\")
-			break
-		
-		if counter < 0:
-			counter = available_characters.size() -1
-			
-		elif counter > available_characters.size() -1:
-			counter = 0
-		
-#		breakpoint
-		can_pass = true
-		
-		for player in Game.players:
-			
-			current_texture = available_characters[counter]
-			
-			if not(player.character != current_texture.atlas):
-				can_pass = false
-		
-		if can_pass:
-			
-			new_texture = current_texture
-			
-			if not Engine.is_editor_hint():
-				
-				set_base_color(base_colors[counter])
-			break
-		
-	$MarginContainer/VBoxContainer/PanelContainer/HBoxContainer/MarginContainer/TextureRect.texture = new_texture
-	Game.players[get_index()].character = new_texture.atlas
+	id = _get_availlable_character_id(base, use_next)
+	set_character(id)
+	Game.players[get_index()].character = available_characters[id].atlas
+	Game.players[get_index()].id = id
 
 func atach_player_input(index: int, enable: bool):
 	
@@ -115,17 +98,70 @@ func atach_player_input(index: int, enable: bool):
 	set_process_input(enable)
 	set_is_enabled(enable)
 
+func set_character(id: int):
+	
+	if not Engine.is_editor_hint():
+		
+		set_base_color(base_colors[id])
+		$MarginContainer/VBoxContainer/PanelContainer/HBoxContainer/MarginContainer/TextureRect.texture = available_characters[id]
+
+func _get_availlable_character_id(base: int, use_next: bool) -> int:
+	
+	var id: int = -1
+	var is_availlable: bool
+	var counter: int = base
+	
+	while id == -1: # REFACTOR
+		
+		is_availlable = true
+		counter += (1 if use_next else -1)
+#		counter = _cicle_clamp(0, counter, available_characters.size() - 1)
+		
+		if counter < 0:
+			counter = available_characters.size() -1
+			
+		elif counter > available_characters.size() -1:
+			counter = 0
+		
+		if counter == base:
+			push_error(\"The availlable_characters number isn't enough to fullfill the current number of players'\")
+			break
+		
+		for player in Game.players:
+			
+			if player.id == counter:
+				is_availlable = false
+		
+		if is_availlable:
+			id = counter
+			break
+	
+	return id
+
+# @lib # IF MAY BE USED FOR OTHER SCRIPS, MAKE IT ON A LIB. IF WAS USED IN MORE THEN A CASE IN THESE SCRIPT USE IT
+#func _cicle_clamp(min_value, value, max_value): # WATCH -> Adicionar a uma biblioteca?
+#	var new_value
+#
+#	if value < min_value:
+#		new_value = max_value
+#
+#	elif value > max_value:
+#		new_value = min_value
+#
+#	else:
+#		new_value = value
+#
+#	return new_value
+
 # @setters
 func set_is_enabled(value: bool) -> void:
 	
 	if not Engine.is_editor_hint():
 		
-		if value:
-			select_availlable_character()
-			
-		else:
+		if not value:
 			set_base_color(DISABLED_COLOR)
 		
+		$MarginContainer/VBoxContainer/CenterContainer/Label.text = BOOST_THE_TIMER if value else JOIN_THE_PARTY
 		character_texture_rect.visible = value
 		button_right.visible = value
 		button_left.visible = value
@@ -152,7 +188,7 @@ func _on_Panel_base_color_changed(color: Color):
 	update()
 "
 
-[sub_resource type="StyleBoxFlat" id=14]
+[sub_resource type="StyleBoxFlat" id=5]
 bg_color = Color( 0.0431373, 0.792157, 0.415686, 1 )
 
 [sub_resource type="GDScript" id=6]
@@ -252,7 +288,7 @@ margin_right = 207.0
 margin_bottom = 321.0
 rect_min_size = Vector2( 0, 220 )
 rect_clip_content = true
-custom_styles/panel = SubResource( 14 )
+custom_styles/panel = SubResource( 5 )
 script = SubResource( 6 )
 
 [node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer/PanelContainer"]
@@ -273,7 +309,7 @@ custom_constants/margin_left = 5
 custom_constants/margin_bottom = 5
 
 [node name="LeftButton" type="TextureButton" parent="MarginContainer/VBoxContainer/PanelContainer/HBoxContainer/CenterContainer/MarginContainer"]
-self_modulate = Color( 0.156863, 0.196078, 0.235294, 0.588235 )
+self_modulate = Color( 0.196078, 0.156863, 0.235294, 0.588235 )
 material = SubResource( 7 )
 margin_left = 5.0
 margin_top = 5.0
@@ -319,7 +355,7 @@ custom_constants/margin_left = 5
 custom_constants/margin_bottom = 5
 
 [node name="RightButton" type="TextureButton" parent="MarginContainer/VBoxContainer/PanelContainer/HBoxContainer/CenterContainer2/MarginContainer"]
-self_modulate = Color( 0.156863, 0.196078, 0.235294, 0.588235 )
+self_modulate = Color( 0.196078, 0.156863, 0.235294, 0.588235 )
 material = SubResource( 7 )
 margin_left = 5.0
 margin_top = 5.0

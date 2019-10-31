@@ -1,10 +1,11 @@
-[gd_scene load_steps=19 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://hud/overlays/game_hud.gd" type="Script" id=1]
 [ext_resource path="res://assets/fonts/8-Bit Madness.ttf" type="DynamicFontData" id=2]
 [ext_resource path="res://assets/sprites/tileset.png" type="Texture" id=3]
 [ext_resource path="res://assets/sounds/fxs/Drop Metal Thing-SoundBible.com-401640954.wav" type="AudioStream" id=4]
 [ext_resource path="res://assets/sounds/fxs/Morphine - Loose Strings.wav" type="AudioStream" id=5]
+[ext_resource path="res://hud/components/clock_timer.tscn" type="PackedScene" id=6]
 
 [sub_resource type="GDScript" id=1]
 script/source = "extends Position2D
@@ -22,55 +23,7 @@ font_data = ExtResource( 2 )
 atlas = ExtResource( 3 )
 region = Rect2( 144, 32, 16, 16 )
 
-[sub_resource type="AtlasTexture" id=4]
-atlas = ExtResource( 3 )
-region = Rect2( 144, 80, 16, 16 )
-
-[sub_resource type="AtlasTexture" id=5]
-atlas = ExtResource( 3 )
-region = Rect2( 144, 64, 16, 16 )
-
-[sub_resource type="AtlasTexture" id=6]
-atlas = ExtResource( 3 )
-region = Rect2( 144, 96, 16, 16 )
-
-[sub_resource type="AtlasTexture" id=7]
-atlas = ExtResource( 3 )
-region = Rect2( 144, 112, 16, 16 )
-
-[sub_resource type="AtlasTexture" id=8]
-atlas = ExtResource( 3 )
-region = Rect2( 144, 128, 16, 16 )
-
-[sub_resource type="AtlasTexture" id=9]
-atlas = ExtResource( 3 )
-region = Rect2( 144, 144, 16, 16 )
-
-[sub_resource type="AtlasTexture" id=10]
-atlas = ExtResource( 3 )
-region = Rect2( 144, 160, 16, 16 )
-
-[sub_resource type="AtlasTexture" id=11]
-atlas = ExtResource( 3 )
-region = Rect2( 144, 176, 16, 16 )
-
-[sub_resource type="Animation" id=12]
-length = 4.0
-loop = true
-tracks/0/type = "value"
-tracks/0/path = NodePath(".:texture")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0, 0.5, 1, 1.5, 2, 2.5, 3, 3.5 ),
-"transitions": PoolRealArray( 1, 1, 2, 2, 2, 2, 2, 2 ),
-"update": 1,
-"values": [ SubResource( 5 ), SubResource( 4 ), SubResource( 6 ), SubResource( 7 ), SubResource( 8 ), SubResource( 9 ), SubResource( 10 ), SubResource( 11 ) ]
-}
-
-[sub_resource type="Animation" id=13]
+[sub_resource type="Animation" id=4]
 tracks/0/type = "value"
 tracks/0/path = NodePath("MarginContainer/HBoxContainer/OrderPad:modulate")
 tracks/0/interp = 1
@@ -351,20 +304,7 @@ text = "0"
 align = 2
 valign = 1
 
-[node name="TextureRect" type="TextureRect" parent="CenterContainer/MarginContainer/Countdown"]
-margin_left = 62.0
-margin_right = 100.0
-margin_bottom = 91.0
-hint_tooltip = "This is just a placeholder"
-size_flags_horizontal = 3
-size_flags_vertical = 3
-texture = SubResource( 4 )
-expand = true
-stretch_mode = 6
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="CenterContainer/MarginContainer/Countdown/TextureRect"]
-autoplay = "clock"
-anims/clock = SubResource( 12 )
+[node name="ClockTimer" parent="CenterContainer/MarginContainer/Countdown" instance=ExtResource( 6 )]
 
 [node name="CoinsLossSFX" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 4 )
@@ -384,7 +324,7 @@ one_shot = true
 one_shot = true
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-anims/wrong_recipe = SubResource( 13 )
+anims/wrong_recipe = SubResource( 4 )
 [connection signal="timeout" from="SlideTimer" to="." method="_on_SlideTimer_timeout"]
 [connection signal="timeout" from="NewOrderTimer" to="." method="_on_NewOrderTimer_timeout"]
 [connection signal="timeout" from="LimitTimer" to="." method="_on_LimitTimer_timeout"]

@@ -344,7 +344,12 @@ alignment = 1
 [node name="NewGame" type="ToolButton" parent="MainMenu/VBoxContainer/MenuOptions"]
 margin_right = 770.0
 margin_bottom = 44.0
+rect_rotation = 0.917566
 rect_pivot_offset = Vector2( 577, 37 )
+focus_neighbour_top = NodePath("../Options")
+focus_neighbour_bottom = NodePath("../Continue")
+focus_next = NodePath("../Continue")
+focus_previous = NodePath("../Options")
 mouse_default_cursor_shape = 2
 custom_styles/focus = SubResource( 3 )
 icon = ExtResource( 5 )
@@ -358,6 +363,10 @@ margin_top = 74.0
 margin_right = 770.0
 margin_bottom = 118.0
 rect_pivot_offset = Vector2( 577, 37 )
+focus_neighbour_top = NodePath("../NewGame")
+focus_neighbour_bottom = NodePath("../Options")
+focus_next = NodePath("../Options")
+focus_previous = NodePath("../NewGame")
 mouse_default_cursor_shape = 2
 custom_styles/focus = SubResource( 3 )
 icon = ExtResource( 4 )
@@ -371,6 +380,10 @@ margin_top = 148.0
 margin_right = 770.0
 margin_bottom = 202.0
 rect_pivot_offset = Vector2( 577, 37 )
+focus_neighbour_top = NodePath("../Continue")
+focus_neighbour_bottom = NodePath("../NewGame")
+focus_next = NodePath("../NewGame")
+focus_previous = NodePath("../Continue")
 mouse_default_cursor_shape = 2
 custom_styles/focus = SubResource( 3 )
 icon = ExtResource( 1 )
@@ -395,17 +408,20 @@ anims/in = SubResource( 10 )
 anims/out = SubResource( 11 )
 
 [node name="Options" parent="." instance=ExtResource( 11 )]
-anchor_right = 0.0
-anchor_bottom = 0.0
-margin_left = 419.0
-margin_top = 259.0
-margin_right = 605.0
-margin_bottom = 341.0
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -107.5
+margin_top = -55.0
+margin_right = 107.5
+margin_bottom = 55.0
+rect_min_size = Vector2( 215, 110 )
 
 [node name="PauseBreak" parent="." instance=ExtResource( 10 )]
 
 [node name="ColorRect" parent="PauseBreak/CanvasLayer" index="0"]
-color = Color( 0.113725, 0.172549, 0.0980392, 0 )
+color = Color( 0.482353, 0.639216, 0.447059, 1 )
 
 [node name="Audio" type="Node" parent="."]
 

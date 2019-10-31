@@ -12,6 +12,8 @@
 [ext_resource path="res://objects/areas/pickable_objects/plate.tscn" type="PackedScene" id=10]
 [ext_resource path="res://objects/areas/pickable_objects/ingredients/lettuce.tscn" type="PackedScene" id=11]
 
+
+
 [sub_resource type="GDScript" id=1]
 script/source = "extends \"res://objects/areas/pickable_objects/plate.gd\"
 

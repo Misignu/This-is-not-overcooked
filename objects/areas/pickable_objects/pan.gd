@@ -21,7 +21,7 @@ func _on_BurnBufferTimer_timeout():
 		current_ingredient.start_burning()
 
 # @main
-func transfer_ingredient(area: Area2D) : # TODO REFACTOR -> Código gambiarroso
+func transfer_ingredient(area: Area2D) : # REFACTOR -> Código gambiarroso
 	
 	if current_ingredient != null:
 		
@@ -34,13 +34,13 @@ func transfer_ingredient(area: Area2D) : # TODO REFACTOR -> Código gambiarroso
 func prepare_ingridient(timer: Timer) -> bool:
 	var can_prepare: bool
 	
-	if current_ingredient != null:
+#	if current_ingredient != null: # WATCH
 		
-		if current_ingredient.preparation_state == ingredient_target_state:
-			
-			assert(timer.connect("timeout", self, "_on_Ingredient_prepare_finished", [timer]) == OK)
-			current_ingredient.prepare(current_ingredient.ACTIONS[ingredient_target_state], timer)
-			can_prepare = true
+	if current_ingredient.preparation_state == ingredient_target_state:
+		
+		assert(timer.connect("timeout", self, "_on_Ingredient_prepare_finished", [timer]) == OK)
+		current_ingredient.prepare(current_ingredient.ACTIONS[ingredient_target_state], timer)
+		can_prepare = true
 	
 	return can_prepare
 

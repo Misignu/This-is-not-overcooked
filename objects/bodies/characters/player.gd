@@ -2,10 +2,10 @@ extends "res://objects/bodies/top_down_body.gd"
 """
 Script que recebe inputs que movimentam o personagem e o permitem interagir com outros objetos da cena.
 
-# TODO REFACTOR -> Substituir o modo de verificação de objeto por nomes por tipo duck_type ou groups
+# REFACTOR -> Substituir o modo de verificação de objeto por nomes por tipo duck_type ou groups
 """
 
-export(int, 1, 4) var controller_index = 1 setget set_controller_index# Um setget pode ser usado para alterar o controle in-game após o objeto ter sido instanciado
+export(int, -1, 4) var controller_index = 1 setget set_controller_index# Um setget pode ser usado para alterar o controle in-game após o objeto ter sido instanciado
 
 var is_interacting := false
 var current_object: PickableObject = null setget set_current_object
@@ -22,7 +22,14 @@ export var frame_up: int = 10
 export var frame_down: int = 1
 export var frame_left: int = 4
 export var frame_right: int = 7
-#
+
+onready var sprite := $Sprite
+onready var ray_cast := $RayCast2D
+onready var pickable_object_sprite := $PickableObjectSprite
+onready var node2D := $Node2D
+onready var expressions := $Sprite/Expressions
+onready var animation_player := $AnimationPlayer
+
 #func _ready():
 #	set_controller_index(controller_index)
 
@@ -31,8 +38,8 @@ func _physics_process(_delta) -> void:
 	if not is_interacting:
 		_move(_get_input_axis())
 	
-	if $RayCast2D.is_colliding():
-		_interact($RayCast2D.get_collider()) # WATCH
+	if ray_cast.is_colliding():
+		_interact(ray_cast.get_collider()) # WATCH
 		
 	elif Input.is_action_just_pressed(primary_action):
 		_try_drop()
@@ -52,61 +59,62 @@ func _on_Player_direction_changed(direction: Vector2):
 		
 		Vector2.UP:
 			
-			$PickableObjectSprite.visible = false
-			$RayCast2D.cast_to = Vector2(0, -18)
-			$Node2D.rotation_degrees = 180 # WATCH -> Testando nova feature
+			pickable_object_sprite.visible = false
+			ray_cast.cast_to = Vector2(0, -18)
+			node2D.z_index = 0
+			node2D.rotation_degrees = 0 # WATCH -> Testando nova feature
 			continue
 		
 		Vector2.DOWN:
 			
-			$PickableObjectSprite.position = Vector2(0, 2)
-			$RayCast2D.cast_to = Vector2(0, 18)
-			$Sprite/Expressions.frame = 0
-			$Node2D.rotation_degrees = 0 # WATCH -> Testando nova feature
-			$Node2D.rotation_degrees = 0 # WATCH -> Testando nova feature
+			pickable_object_sprite.position = Vector2(0, 2)
+			ray_cast.cast_to = Vector2(0, 18)
+			expressions.frame = 0
+			node2D.rotation_degrees = 180 # WATCH -> Testando nova feature
 			continue
 		
 		Vector2.LEFT:
 			
-			$PickableObjectSprite.position = Vector2(-8, 0)
-			$RayCast2D.cast_to = Vector2(-16, 0)
-			$Node2D.rotation_degrees = 90 # WATCH -> Testando nova feature
+			pickable_object_sprite.position = Vector2(-8, 0)
+			ray_cast.cast_to = Vector2(-16, 0)
+			node2D.rotation_degrees = -90 # WATCH -> Testando nova feature
 			continue
 		
 		Vector2.RIGHT:
 			
-			$PickableObjectSprite.position = Vector2(8, 0)
-			$RayCast2D.cast_to = Vector2(16, 0)
-			$Node2D.rotation_degrees = -90 # WATCH -> Testando nova feature
+			pickable_object_sprite.position = Vector2(8, 0)
+			ray_cast.cast_to = Vector2(16, 0)
+			node2D.rotation_degrees = 90 # WATCH -> Testando nova feature
 			continue
 		
 		Vector2.DOWN, Vector2.LEFT, Vector2.RIGHT:
 			
-			$PickableObjectSprite.visible = true
+			pickable_object_sprite.visible = true
+			node2D.z_index = 1
 			continue
 		
 		_:
-			$Sprite/Expressions.visible = false
+			expressions.visible = false
 	
-	$Node2D.position = direction * 10 # WATCH -> Testando nova feature
+	node2D.position = direction * 10 # WATCH -> Testando nova feature
 
 func _on_Player_body_movement_stopped() -> void:
-	$AnimationPlayer.play("idle")
+	animation_player.play("idle")
 	
 	match _last_direction:
 		
 		Vector2.UP:
-			$Sprite.frame = frame_up
+			sprite.frame = frame_up
 		
 		Vector2.DOWN:
-			$Sprite.frame = frame_down
-			$Sprite/Expressions.visible = true
+			sprite.frame = frame_down
+			expressions.visible = true
 		
 		Vector2.LEFT:
-			$Sprite.frame = frame_left
+			sprite.frame = frame_left
 		
 		Vector2.RIGHT:
-			$Sprite.frame = frame_right
+			sprite.frame = frame_right
 
 # @override
 func _move(axis: Vector2) -> void:
@@ -142,6 +150,7 @@ func _interact(area: Area2D) -> void:
 				
 				if "FireExtintor" in area.name:
 					_grab_active(area) # WATCH
+					area.input_index = controller_index
 					
 				else:
 					_grab(area) # WATCH
@@ -169,7 +178,7 @@ func _try_drop() -> void:
 		
 	elif current_active != null: # WATCH -> Testing new feature
 		
-		$Node2D.remove_child(current_active)
+		node2D.remove_child(current_active)
 		current_active.origin.add_child(current_active)
 		current_active.drop(global_position + (_last_direction * 10))
 		current_active = null
@@ -180,16 +189,16 @@ func _walk_animation_play(direction):
 	match direction:
 		
 		Vector2.UP:
-			$AnimationPlayer.play("walk_up")
+			animation_player.play("walk_up")
 		
 		Vector2.DOWN:
-			$AnimationPlayer.play("walk_down")
+			animation_player.play("walk_down")
 		
 		Vector2.LEFT:
-			$AnimationPlayer.play("walk_left")
+			animation_player.play("walk_left")
 		
 		Vector2.RIGHT:
-			$AnimationPlayer.play("walk_right")
+			animation_player.play("walk_right")
 
 func _grab(area: Area2D) -> void:
 	
@@ -205,24 +214,24 @@ func _grab(area: Area2D) -> void:
 # DEBBUG
 func _grab_active(area: PickableObject):
 	
-	$Node2D.add_child(area.grab())
-	current_active = $Node2D.get_child(0)
+	node2D.add_child(area.grab())
+	current_active = node2D.get_child(0)
 
 func _drop_active(area: Area2D): 
-	var active = $Node2D.get_child(0)
+	var active = node2D.get_child(0)
 	
-	$Node2D.remove_child(active)
+	node2D.remove_child(active)
 	
 	if area.insert_object(active):
 		current_active = null
 		
 	else:
-		$Node2D.add_child(active)
+		node2D.add_child(active)
 
 
 func _drop(area: Area2D) -> void:
 	
-	if ("Pan" in current_object.name) and ("PickPlace" in area.name) and (area.current_object != null) and ("Plate" in area.current_object.name): # TODO REFACTOR -> Código gambiarroso
+	if ("Pan" in current_object.name) and ("PickPlace" in area.name) and (area.current_object != null) and ("Plate" in area.current_object.name): # REFACTOR -> Código gambiarroso
 		
 		current_object.transfer_ingredient(area)
 		
@@ -282,12 +291,12 @@ func set_current_object(object: PickableObject) -> void:
 	
 	if object == null:
 		
-		$PickableObjectSprite.texture = null
+		pickable_object_sprite.texture = null
 		
 	else:
 		
 		object.visible = false
-		$PickableObjectSprite.texture = object.get_node('Sprite').texture
+		pickable_object_sprite.texture = object.get_node('Sprite').texture
 		object.get_node("CollisionShape2D").disabled = true
 	
 	current_object = object

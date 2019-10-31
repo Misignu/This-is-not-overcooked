@@ -14,6 +14,9 @@ var is_sliding: bool
 var order = preload("res://hud/overlays/order.tscn")
 var references := Array()
 
+onready var clock_player := $CenterContainer/MarginContainer/Countdown/ClockTimer/AnimationPlayer
+onready var limit_timer := $LimitTimer
+
 func _ready():
 	randomize()
 	
@@ -21,13 +24,14 @@ func _ready():
 		
 		assert(Game.connect("coins_changed", self, "_on_Game_coins_changed") == OK)
 		Game.coins = level_coins
-		$LimitTimer.start(limit_time)
+		limit_timer.start(limit_time)
+		clock_player.play("clock")
 		call_deferred("_update_references")
 		call_deferred("_add_new_order")
 
 func _process(_delta):
 	
-	$CenterContainer/MarginContainer/Countdown/Label.text = int($LimitTimer.time_left) as String
+	$CenterContainer/MarginContainer/Countdown/Label.text = int(limit_timer.time_left) as String
 
 # @signals
 func _on_Game_coins_changed(value: int, loss: float) -> void:

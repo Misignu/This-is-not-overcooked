@@ -1,5 +1,5 @@
 """
-General Singleton that Pack some Classes that deals with some UI behaviors
+General-Purpose Script that Pack some Classes that deals with some UI behaviors
 """
 
 class Audio extends Node:
@@ -12,11 +12,9 @@ class Audio extends Node:
 	const VOLUME_STEP = 10
 	
 	func increase_volume(channel: int = AudioServer.get_bus_index("Master")):
-		
 		set_volume(AudioServer.get_bus_volume_db(channel)  + VOLUME_STEP, channel)
 	
 	func decrease_volume(channel: int = AudioServer.get_bus_index("Master")):
-		
 		set_volume(AudioServer.get_bus_volume_db(channel)  - VOLUME_STEP, channel)
 	
 	func set_volume(value: float, channel: int = AudioServer.get_bus_index("Master")) -> void:
@@ -24,7 +22,7 @@ class Audio extends Node:
 		var is_muted := AudioServer.is_bus_mute(channel)
 		var mute := is_muted
 		
-		if value < -80:
+		if value <= -80:
 			
 			if not is_muted:
 				mute = true
@@ -33,8 +31,6 @@ class Audio extends Node:
 			
 			AudioServer.set_bus_volume_db(channel, value)
 #			print(str(AudioServer.get_bus_name(channel), " Volume %", (value * 100) / 80))
-			
-			print("Volume ", value)
 			emit_signal("volume_changed", channel, value)
 			
 			if is_muted:
@@ -47,7 +43,7 @@ class Audio extends Node:
 	func mute_toggle(channel: int = AudioServer.get_bus_index("Master")):
 		var value = not AudioServer.is_bus_mute(channel)
 		
-		print("Mute was togled to: ", value)
+		print(str("Mute was togled to: ", value, " in channel: ", channel))
 		AudioServer.set_bus_mute(channel, value)
 		emit_signal("mute_toggled", channel, value)
 

@@ -1,4 +1,4 @@
-[gd_scene load_steps=37 format=2]
+[gd_scene load_steps=38 format=2]
 
 [ext_resource path="res://assets/tilesets/general.tres" type="TileSet" id=1]
 [ext_resource path="res://objects/areas/pick_place.tscn" type="PackedScene" id=2]
@@ -8,17 +8,18 @@
 [ext_resource path="res://objects/bodies/characters/players/guy.tscn" type="PackedScene" id=6]
 [ext_resource path="res://hud/overlays/game_hud.tscn" type="PackedScene" id=7]
 [ext_resource path="res://hud/overlays/pause_break.tscn" type="PackedScene" id=8]
-[ext_resource path="res://assets/sprites/yellow_guy.png" type="Texture" id=9]
+[ext_resource path="res://assets/sprites/characters/guy/yellow_guy.png" type="Texture" id=9]
 [ext_resource path="res://objects/bodies/characters/player.tscn" type="PackedScene" id=10]
 [ext_resource path="res://objects/areas/pick_places/treadmill.tscn" type="PackedScene" id=11]
 [ext_resource path="res://objects/areas/pickable_objects/plate.tscn" type="PackedScene" id=12]
 [ext_resource path="res://objects/areas/pickable_objects/fire_extintor.tscn" type="PackedScene" id=13]
 [ext_resource path="res://assets/sounds/musics/Overcooked music - Levels 1-1 to 2-4.ogg" type="AudioStream" id=14]
-[ext_resource path="res://assets/sprites/red_guy.png" type="Texture" id=15]
+[ext_resource path="res://assets/sprites/characters/guy/red_guy.png" type="Texture" id=15]
 [ext_resource path="res://objects/areas/pick_places/dirt_plates_table.tscn" type="PackedScene" id=16]
-[ext_resource path="res://assets/sprites/purple_guy.png" type="Texture" id=17]
+[ext_resource path="res://assets/sprites/characters/guy/purple_guy.png" type="Texture" id=17]
 [ext_resource path="res://objects/areas/pick_places/work_stations/cut_place.tscn" type="PackedScene" id=18]
 [ext_resource path="res://objects/areas/pick_places/work_stations/sink.tscn" type="PackedScene" id=19]
+[ext_resource path="res://objects/bodies/characters/players/little_guy.tscn" type="PackedScene" id=20]
 
 [sub_resource type="Animation" id=1]
 resource_name = "idle"
@@ -363,6 +364,9 @@ position = Vector2( 136, 72 )
 [node name="PickPlace2" parent="SceneObjects/Tabbles" instance=ExtResource( 2 )]
 position = Vector2( 56, 24 )
 
+[node name="PickPlace6" parent="SceneObjects/Tabbles" instance=ExtResource( 2 )]
+position = Vector2( 40, 24 )
+
 [node name="PickPlace24" parent="SceneObjects/Tabbles" instance=ExtResource( 2 )]
 position = Vector2( 72, 120 )
 
@@ -383,9 +387,6 @@ position = Vector2( 184, 72 )
 
 [node name="PickPlace27" parent="SceneObjects/Tabbles" instance=ExtResource( 2 )]
 position = Vector2( 184, 120 )
-
-[node name="PickPlace9" parent="SceneObjects/Tabbles" instance=ExtResource( 2 )]
-position = Vector2( 40, 24 )
 
 [node name="PickPlace20" parent="SceneObjects/Tabbles" instance=ExtResource( 2 )]
 position = Vector2( 40, 120 )
@@ -408,7 +409,6 @@ __meta__ = {
 
 [node name="Box" parent="SceneObjects/Boxes" instance=ExtResource( 3 )]
 position = Vector2( 184, 24 )
-igridient_id = 0
 
 [node name="Box2" parent="SceneObjects/Boxes" instance=ExtResource( 3 )]
 position = Vector2( 200, 24 )
@@ -473,17 +473,17 @@ collision_layer = 2
 collision_mask = 2
 
 [node name="FireExtintor" parent="SceneObjects" instance=ExtResource( 13 )]
-position = Vector2( 215, 73 )
+position = Vector2( 216, 72 )
 
 [node name="Players" type="YSort" parent="."]
 scale = Vector2( 0.5, 0.5 )
 z_index = 2
 
 [node name="Player1" parent="Players" instance=ExtResource( 6 )]
-position = Vector2( 144, 100 )
+position = Vector2( 128, 100 )
 
 [node name="Player2" parent="Players" instance=ExtResource( 6 )]
-position = Vector2( 176, 204 )
+position = Vector2( 160, 204 )
 controller_index = 2
 
 [node name="Sprite" parent="Players/Player2" index="0"]
@@ -497,7 +497,7 @@ anims/walk_right = SubResource( 4 )
 anims/walk_up = SubResource( 5 )
 
 [node name="Player3" parent="Players" instance=ExtResource( 6 )]
-position = Vector2( 272, 100 )
+position = Vector2( 232, 100 )
 controller_index = 3
 
 [node name="Sprite" parent="Players/Player3" index="0"]
@@ -511,7 +511,7 @@ anims/walk_right = SubResource( 9 )
 anims/walk_up = SubResource( 10 )
 
 [node name="Player4" parent="Players" instance=ExtResource( 6 )]
-position = Vector2( 304, 204 )
+position = Vector2( 268, 204 )
 controller_index = 4
 
 [node name="Sprite" parent="Players/Player4" index="0"]
@@ -531,6 +531,10 @@ position = Vector2( 240, -112 )
 scale = Vector2( 6, 6 )
 collision_layer = 0
 controller_index = 3
+
+[node name="Player" parent="Players" instance=ExtResource( 20 )]
+position = Vector2( 388, 100 )
+controller_index = -1
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2( 0, -3 )
@@ -558,7 +562,6 @@ __meta__ = {
 
 [node name="HUD" parent="." instance=ExtResource( 7 )]
 layer = 2
-order_min_frequency = 10
 order_max_frequency = 45
 clients_min_wait_time = 30
 clients_max_wait_time = 90

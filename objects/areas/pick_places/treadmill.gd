@@ -6,6 +6,9 @@ signal plate_returned
 export(float, 60) var return_time: float = 10
 var cached_plates := Array()
 
+onready var tween := $Tween
+onready var deliver_sine_sfx := $DeliverSineSFX
+
 func _on_plate_return_Timer_timeout(timer: Timer):
 	
 	emit_signal("plate_returned", cached_plates.back())
@@ -21,7 +24,7 @@ func _on_Tween_tween_completed(plate: PickableObject, _key): # TODO: Implement I
 	_create_and_run_timer()
 
 # @main
-func insert_object(object: PickableObject) -> bool: # TODO REFACTOR -> Código gambiarroso
+func insert_object(object: PickableObject) -> bool: # REFACTOR -> Código gambiarroso
 	var can_insert = false
 	
 	if "Plate" in object.name:
@@ -36,9 +39,9 @@ func insert_object(object: PickableObject) -> bool: # TODO REFACTOR -> Código g
 
 func _delivery_animation(plate: PickableObject):
 	
-	$Tween.interpolate_property(plate, "modulate", Color(1, 1, 1, 1), Color(1, 1, 1, 0), 2, Tween.TRANS_CUBIC, Tween.EASE_IN_OUT)
-	$AudioStreamPlayer.play()
-	$Tween.start()
+	tween.interpolate_property(plate, "modulate", Color(1, 1, 1, 1), Color(1, 1, 1, 0), 2, Tween.TRANS_CUBIC, Tween.EASE_IN_OUT)
+	deliver_sine_sfx.play()
+	tween.start()
 	emit_signal("recipe_delived", plate.current_recipe)
 
 func _create_and_run_timer():

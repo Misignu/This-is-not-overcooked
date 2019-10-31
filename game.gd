@@ -100,12 +100,22 @@ func get_igredient_data(ingredients_id: int) -> Ingredient:
 	return ingredients[ingredients_id]
 
 # @setters
-func set_players(value):
-#
-#	for player in value:
-#		print("Player device: ", player.device)
+func set_players(new_array: Array):
 	
-	players = value
+	var player: Player
+	
+	for i in new_array.size(): # Re-organize the array based in if a device is atached
+		player = new_array[i]
+		
+		if not player.is_device_atached():
+		
+			new_array.remove(i)
+			new_array.push_back(player)
+#
+#	for player in new_array:
+#		print("Player id: ", player.id)
+	
+	players = new_array
 
 func set_coins(value: int) -> void:
 	
@@ -118,15 +128,22 @@ func set_coins(value: int) -> void:
 
 class Player:
 	
-	var device: int = 0 setget set_device
-	var character: StreamTexture setget set_character
+	var id: int = -1 setget set_id
+	var device: int = 0
+	var character: StreamTexture
+	
+	func clear():
+		
+		device = 0
+		id = -1
+		character = null
+	
+	func set_id(value):
+		
+		if value < 0:
+			clear()
+		
+		id = value
 	
 	func is_device_atached() -> bool:
 		return device != 0
-	
-	# @setters
-	func set_device(value: int) -> void:
-		device = value
-	
-	func set_character(value: StreamTexture) -> void:
-		character = value

@@ -2,7 +2,7 @@
 
 [ext_resource path="res://objects/areas/pick_places/work_station.tscn" type="PackedScene" id=1]
 [ext_resource path="res://objects/areas/pick_places/work_stations/sink.gd" type="Script" id=2]
-[ext_resource path="res://assets/sprites/tileset.png" type="Texture" id=3]
+[ext_resource path="res://assets/sprites/objects.png" type="Texture" id=3]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 16, 8 )
@@ -16,4 +16,4 @@ shape = SubResource( 1 )
 [node name="Sprite" parent="." index="1"]
 texture = ExtResource( 3 )
 region_enabled = true
-region_rect = Rect2( 80, 32, 32, 16 )
+region_rect = Rect2( 32, 0, 32, 16 )

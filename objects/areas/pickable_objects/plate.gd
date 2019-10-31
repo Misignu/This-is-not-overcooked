@@ -2,7 +2,7 @@ extends "res://objects/areas/pickable_objects/kitchenware.gd"
 """
 Plate lida com a insersão de ingredientes em uma receita.
 
-# TODO REFACTOR -> Esse script está num estado wet, com diversas verificações. Ele pode ser melhorado com a implementação de um sistema de receitas. Mas como esse projeto foi criado apenas casualmente, não houve necessidade para tal
+# REFACTOR -> Esse script está num estado wet, com diversas verificações. Ele pode ser melhorado com a implementação de um sistema de receitas. Mas como esse projeto foi criado apenas casualmente, não houve necessidade para tal
 """
 const CLEANING_TIME = 6
 
@@ -14,6 +14,7 @@ var hamburger = preload("res://objects/recipes/hamburger.tscn")
 var cleaning_time_left: float = CLEANING_TIME
 
 onready var ingredient_sprite: Sprite = $Sprite/IngredientSprite
+onready var tween := $Tween
 
 func _on_Tween_tween_completed(_object, _key) -> void:
 	
@@ -71,18 +72,18 @@ func set_current_recipe(value) -> void:
 
 func start_cleaning() -> void:
 	
-	$Tween.interpolate_property(
+	tween.interpolate_property(
 		ingredient_sprite, "modulate",
 		Color(1, 1, 1, cleaning_time_left / CLEANING_TIME), 
 		Color(1, 1, 1, 0), 
 		cleaning_time_left, 
 		Tween.TRANS_LINEAR, Tween.EASE_IN_OUT
 	)
-	$Tween.start()
+	tween.start()
 
 func stop_cleaning(time_left: float) -> void:
 	
-	$Tween.stop(ingredient_sprite)
+	tween.stop(ingredient_sprite)
 	cleaning_time_left = time_left
 
 # @setters
@@ -90,6 +91,7 @@ func set_is_clean(value) -> void:
 	
 	if value:
 		ingredient_sprite.texture = null
+		
 	else:
 		ingredient_sprite.texture = dirt_texture
 		ingredient_sprite.vframes = 1
