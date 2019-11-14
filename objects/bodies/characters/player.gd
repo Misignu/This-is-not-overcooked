@@ -39,7 +39,7 @@ func _physics_process(_delta) -> void:
 		_move(_get_input_axis())
 	
 	if ray_cast.is_colliding():
-		_interact(ray_cast.get_collider()) # WATCH
+		_interact(ray_cast.get_collider())
 		
 	elif Input.is_action_just_pressed(primary_action):
 		_try_drop()
@@ -61,7 +61,8 @@ func _on_Player_direction_changed(direction: Vector2):
 			
 			pickable_object_sprite.visible = false
 			ray_cast.cast_to = Vector2(0, -18)
-			node2D.z_index = 0
+			node2D.z_index = -1
+			node2D.show_behind_parent = true
 			node2D.rotation_degrees = 0 # WATCH -> Testando nova feature
 			continue
 		
@@ -91,6 +92,7 @@ func _on_Player_direction_changed(direction: Vector2):
 			
 			pickable_object_sprite.visible = true
 			node2D.z_index = 1
+			node2D.show_behind_parent = false
 			continue
 		
 		_:
@@ -153,13 +155,13 @@ func _interact(area: Area2D) -> void:
 					area.input_index = controller_index
 					
 				else:
-					_grab(area) # WATCH
+					_grab(area)
 #
 #			else:
 #				_drop_active(area)
 		
 		if Input.is_action_just_pressed(secoundary_action) and not is_interacting:
-			_fire_action(area) # WATCH
+			_fire_action(area)
 		
 		if Input.is_action_just_released(secoundary_action) and is_interacting:
 			_stop_action(area)
@@ -167,7 +169,7 @@ func _interact(area: Area2D) -> void:
 	else:
 		
 		if Input.is_action_just_pressed(primary_action):
-			_drop(area) # WATCH
+			_drop(area)
 
 func _try_drop() -> void:
 	
@@ -176,7 +178,7 @@ func _try_drop() -> void:
 		current_object.drop(global_position + (_last_direction * 10)) 
 		set_current_object(null)
 		
-	elif current_active != null: # WATCH -> Testing new feature
+	elif current_active != null: # WATCH -> Testando nova feature
 		
 		node2D.remove_child(current_active)
 		current_active.origin.add_child(current_active)
@@ -237,7 +239,7 @@ func _drop(area: Area2D) -> void:
 		
 	elif area.has_method("insert_object"):
 		
-		if area.insert_object(current_object): # WATCH
+		if area.insert_object(current_object):
 			set_current_object(null)
 		
 	elif area.has_method("insert_ingredient") and current_object is Ingredient:
@@ -249,7 +251,7 @@ func _fire_action(area: Area2D):
 	
 	if area.has_method("cut_ingridient"):
 		
-		if area.cut_ingridient(): # WATCH
+		if area.cut_ingridient():
 			is_interacting = true
 		
 	elif area.has_method("wash_plate"):

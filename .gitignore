@@ -1,23 +1,33 @@
 # image
-*.png
 *.ase
 *.aseprite
+*.bmp
+*.gif
+*.png
+*.psd
 # fonts
-*.ttf
 *.otf
+*.ttf
 # sounds
 *.mp3
-*.wav
 *.ogg
+*.wav
 # video
+*.ogv
 *.webm
+# spreadsheets
+.xlsm
+.xlsx
+
+!*.import
 
 .bin
-.import
-.vscode
-addons
-_.gd
-
+# <- Releases
 .old
+.vscode
+# <- Sem essa linha as suas configurações entrarão em colapso com as minhas
+addons 
+# <- Verificar a possibilidade de usar sub-modules com o git
 
-!*.png.import
+.import/*
+# <- confira: https://docs.godotengine.org/en/3.0/getting_started/workflow/assets/import_process.html#files-generated */

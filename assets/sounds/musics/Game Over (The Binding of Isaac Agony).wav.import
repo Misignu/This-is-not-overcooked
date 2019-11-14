@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/Game Over (The Binding of Isaac Agony).wav-4a7ff5800caefee32549fd78af7829cd.sample"
+
+[deps]
+
+source_file="res://assets/sounds/musics/Game Over (The Binding of Isaac Agony).wav"
+dest_files=[ "res://.import/Game Over (The Binding of Isaac Agony).wav-4a7ff5800caefee32549fd78af7829cd.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=true
+edit/normalize=true
+edit/loop=false
+compress/mode=0

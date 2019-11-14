@@ -12,7 +12,7 @@ enum ingredients_ids {
 }
 
 const devices = [-2, -1, 1, 2, 3]
-const ingredients = { # WATCH -> Verificar a possibilidade de usá-los como classes globais
+const ingredients = {
 	ingredients_ids.BREAD: preload("res://objects/areas/pickable_objects/ingredients/bread.tscn"),
 	ingredients_ids.MEAT: preload("res://objects/areas/pickable_objects/ingredients/meat.tscn"),
 	ingredients_ids.LETTUCE: preload("res://objects/areas/pickable_objects/ingredients/lettuce.tscn")
@@ -32,6 +32,7 @@ func _ready():
 	pause_mode = Node.PAUSE_MODE_PROCESS
 	get_tree().get_root().set_transparent_background(true)
 	assert(Input.connect("joy_connection_changed", self, "_on_joy_connection_changed") == OK)
+	print(OS.get_locale())
 
 func _input(event: InputEvent) -> void:
 	
@@ -121,7 +122,7 @@ func set_coins(value: int) -> void:
 	
 	if value <= 0:
 		
-		assert(get_tree().change_scene("res://hud/eyecatchers/game_over.tscn") == OK)
+		assert(get_tree().change_scene("res://ui/eyecatchers/game_over.tscn") == OK)
 	
 	emit_signal("coins_changed", value, value < coins)
 	coins = value

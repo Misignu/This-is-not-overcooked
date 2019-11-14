@@ -52,6 +52,12 @@ class Video extends Audio:
 	General Singleton Class Deals with Video
 	"""
 	signal fullscreen_mode_changed
+	onready var language := TranslationServer.get_locale() setget set_language, get_language
+	
+	func set_language(value: String):
+		
+		TranslationServer.set_locale(value)
+		language = value
 	
 	func set_transparency_mode(value := false):
 		
@@ -63,3 +69,7 @@ class Video extends Audio:
 		
 		OS.window_fullscreen = mode
 		emit_signal("fullscreen_mode_changed")
+	
+	# @getters
+	func get_language() -> String:
+		return language

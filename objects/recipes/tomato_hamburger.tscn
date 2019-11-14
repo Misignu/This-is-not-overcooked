@@ -1,0 +1,7 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://objects/recipe.tscn" type="PackedScene" id=1]
+[ext_resource path="res://objects/recipes/tomato_hamburger.gd" type="Script" id=2]
+
+[node name="TomatoHamburger" index="0" instance=ExtResource( 1 )]
+script = ExtResource( 2 )

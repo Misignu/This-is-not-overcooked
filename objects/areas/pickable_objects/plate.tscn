@@ -12,7 +12,7 @@ region = Rect2( 16, 16, 16, 16 )
 atlas = ExtResource( 3 )
 region = Rect2( 0, 16, 16, 16 )
 
-[node name="Plate" index="0" instance=ExtResource( 1 )]
+[node name="Plate" instance=ExtResource( 1 )]
 script = ExtResource( 2 )
 use_pick_place = true
 dirt_texture = SubResource( 1 )

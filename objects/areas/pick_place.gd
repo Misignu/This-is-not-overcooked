@@ -14,17 +14,19 @@ onready var scan := $Scan
 onready var fire_timer := $FireTimer
 onready var fire_bsfx := $FireBSFX2D
 
+func _ready() -> void:
+	fire_particles.process_material = fire_particles.process_material.duplicate(true) # REFACTOR -> Optimazation
+
 # @signals
-func _on_FireExtintor_extintor_started(): # TODO -> Optimization
+func _on_FireExtintor_extintor_started(): # REFACTOR -> Optimization
 	var duration: float = BANISH_FIRE_TIME * fire_intensity
 	
 	fire_tween.stop(fire_particles, "process_material:scale")
-	fire_particles.process_material = fire_particles.process_material.duplicate(true) # WATCH -> Be Careful! This can Leak Processing 
 	fire_tween.interpolate_property(self, "fire_intensity", fire_intensity, 0, duration, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
 	fire_tween.interpolate_property(fire_particles, "process_material:scale", fire_particles.process_material.scale, 0, duration, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
 	fire_tween.start()
 
-func _on_FireExtintor_extintor_finished(): # TODO -> Optimization
+func _on_FireExtintor_extintor_finished(): # REFACTOR -> Optimization
 	var duration: float = BANISH_FIRE_TIME * (1.0 - fire_intensity)
 	
 	fire_tween.stop(self, "fire_intensity")
@@ -44,7 +46,7 @@ func _on_FireTween_tween_completed(object, key):
 		set_is_burning(false)
 
 # @main
-func insert_object(object: PickableObject) -> bool: # WATCH -> Aparentemente resolvido
+func insert_object(object: PickableObject) -> bool:
 	var can_insert: bool = false
 	
 	if current_object == null:

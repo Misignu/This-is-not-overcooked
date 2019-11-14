@@ -19,7 +19,7 @@ onready var tween := $Tween
 func _on_Tween_tween_completed(_object, _key) -> void:
 	
 	set_is_clean(true)
-	ingredient_sprite.modulate = Color(1, 1, 1, 1) # WATCH -> Repeated statemant @ treadmil?
+	ingredient_sprite.modulate = Color(1, 1, 1, 1)
 	current_recipe = null
 	current_ingredient = null
 	cleaning_time_left = CLEANING_TIME
@@ -37,7 +37,7 @@ func insert_ingredient(ingredient: Ingredient) -> bool:
 				
 				if "Bread" in ingredient.name:
 					
-					current_recipe = hamburger.instance() # WATCH -> Is this the beste way to do it?
+					current_recipe = hamburger.instance() # REFACTOR -> Is this the beste way to do it?
 					ingredient_sprite.replace_by(current_recipe)
 					ingredient_sprite = current_recipe
 					

@@ -1,0 +1,34 @@
+﻿id,en,pt_BR,es
+GAME_NAME,This is not Overcooked,Isto não é overcooked,Esto no és overcooked
+JOIN_THE_PARTY,[center]Press [color=#0bca6a]START[/color][/center]\n[center]to join[/center]\n[center]the party[/center],[center]Pressione\n[center][color=#0bca6a]START [/color][/center]para se[/center]\n[center]juntar a equipe[/center],[center]Pulse [color=#0bca6a]START[/color][/center]\n[center]para unirse[/center]\n[center]al equipo[/center]
+BOOST,[center]Hold [color=#{color}]ACTION[/color][/center]\n[center]to boost[/center]\n[center]the timer[/center],[center]Segure\n[color=#{color}]ACTION[/color][/center]\n[center]para acelerar[/center]\n[center]o contador[/center],[center]Pressione\n[color=#{color}]ACTION[/color][/center]\n[center] para acelearar[/center]\n[center]o contador[/center]
+VICTORY,Victory!,Vitória!,Victoria!
+SAD_END,Went bankrupt!,Seu restaurante\nFaliu!,¡Tu restaurante\nFaliu!
+CHALENGED,Will you give up?,Vai disistir?,¿Vas a rendirte?
+CHARACTER_SELECTION,Chararacter selection,Selecao de personagem,Seleccion de personajes
+YEP,Yep,Sim,Si
+NOPE,Nope,Nem,No
+YEP_REASON1,Hard as Hell!,É muita pressão vey!,¡Muy difícil!
+YEP_REASON2,"Oh god, Yes",Jisuiz mi zauva,"¡Oh, por Dios, sí!"
+YEP_REASON3,I will take a break...,Vou dar um tempinho...,Voy a tomarme un descanso...
+YEP_REASON4,Harden than Dark Souls!!!,Mais difícil que Dark Souls!!!,Más duro que el Dark Souls!!!
+NOPE_REASON1,Who do you think I am?,Quem você pensa que eu sou?,¿Quién crees que soy?
+NOPE_REASON2,Are you challenging me?,Vai encarar?,¿Vas a enfrentarme?
+NOPE_REASON3,Just over my dead body!,Só por cima do meu cadaver!,¡Justo encima de mi cadáver!
+NOPE_REASON4,Get that garbage out of here!,Xalabaias!,¡Vamos!
+LEVEL,Level,Nivel,Nivel
+FULLSCREEN,Fullscreen,Tela Cheia,Pantalla completa
+VOLUME,Volume,Volume,Volumen
+CHANNELS,Channels,Canais,Canales
+MUSIC,Music,Música,Música
+SFXS,Sound FX,Efeitos,Efectos
+ENVIRONMENT,Environment,Ambiente,Ambiente
+NEW_GAME,New Game,Novo jogo,Nuevo juego
+CONTINUE,Continue,Continuar,Continuar
+OPTIONS,Options,Opções,Opciones
+VOLUME_TIP,Volume can be decreased with F2 and increased with F3,"Atalhos: aumentar F2, diminuir F3","Accesos directos: Aumentar F2, Disminuir F3"
+PT_BR,Portuguese,Português,Portugués
+EN,English,Inglês,Inglés
+ES,Spanish,Espanhol,Español
+LANGUAGE,Language,Linguagem,Lengua
+,,,

@@ -16,7 +16,6 @@ Igredients possuem uma série de tipos de preparo. Seus métodos reduzem esses t
 	O tempo de fritura será o tempo de preparo vezes um modificador (FRY_TIME_MODIFIER).
 	O tempo de cozimento é igual ao tempo de preparo (preparation_time) sem modificações.
 """
-# TODO -> CHANGE Fried Frames SPRITE ATLAS
 
 signal burning_started
 
@@ -26,7 +25,7 @@ const COOKABLE = 4
 const ACTIONS = {CUTTABLE: "cut", FRIABLE: "fry"}
 const CUT_TIME = 3.0
 
-export(int, FLAGS, "cuttable", "friable", "cookable") var preparation_type  # TODO op -> Implementar cook. Como esse é um protótipo não há necessidade
+export(int, FLAGS, "cuttable", "friable", "cookable") var preparation_type # TODO optional -> Implementar cooking. Como esse é um protótipo não há necessidade
 export(float, 1.0, 60.0, .5) var preparation_time: float = 2.0
 
 export(Texture) var ingredient_label: Texture setget, get_ingredient_label

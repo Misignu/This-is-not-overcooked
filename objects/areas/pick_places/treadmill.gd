@@ -16,7 +16,7 @@ func _on_plate_return_Timer_timeout(timer: Timer):
 	timer.disconnect("timeout", self, "_on_plate_return_Timer_timeout")
 	timer.queue_free()
 
-func _on_Tween_tween_completed(plate: PickableObject, _key): # TODO: Implement Individual timer
+func _on_Tween_tween_completed(plate: PickableObject, _key):
 	
 	current_object = null
 	plate.current_recipe = null

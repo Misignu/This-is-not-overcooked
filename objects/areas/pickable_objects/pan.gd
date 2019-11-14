@@ -34,7 +34,7 @@ func transfer_ingredient(area: Area2D) : # REFACTOR -> Código gambiarroso
 func prepare_ingridient(timer: Timer) -> bool:
 	var can_prepare: bool
 	
-#	if current_ingredient != null: # WATCH
+#	if current_ingredient != null: # TODO -> Verificar a segurança/ necessidade dessa verificação
 		
 	if current_ingredient.preparation_state == ingredient_target_state:
 		
