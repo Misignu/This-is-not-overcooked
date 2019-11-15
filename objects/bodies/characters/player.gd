@@ -1,15 +1,51 @@
 extends "res://objects/bodies/top_down_body.gd"
 """
-Script que recebe inputs que movimentam o personagem e o permitem interagir com outros objetos da cena.
+Corpo top_down que recebe inputs para movimentar-se e interagir com outros objetos.
 
-# REFACTOR -> Substituir o modo de verificação de objeto por nomes por tipo duck_type ou groups
+@notes
+	# REFACTOR -> Substituir o modo de verificação de objeto por nomes por tipo duck_type ou groups
+	
+	shift_visibility:
+	-> Altera a visibilidade de player, desativando suas colisões
+	
+	_move()
+	-> Movimenta o corpo e altera a animação.
+	
+	_get_input_axis()
+	-> Captura um input e retorna uma direção de movimento.
+	
+	_interact()
+	-> Captura um input e tenta alguma interação com o colisor.
+	
+	_try_drop()
+	-> Verifica se área colisora pode receber um objeto, se ela não existir o objeto será despejado na posição mais próxima
+	
+	_walk_animation_play()
+	-> Altera a animação conforme a direção passada.
+	
+	_grab()
+	-> Adiciona um objeto do colisor, ou o próprio colisor como o current_object.
+	
+	_grab_active()
+	-> Adiciona um objeto do colisor, ou o próprio colisor como o current_active.
+	
+	_drop_active()
+	-> Despeja o current_active na área/ posição mais próxima.
+	
+	_drop()
+	-> Despeja o current_object na área/ posição mais próxima.
+	
+	_fire_action()
+	-> Inicia uma interação com o colisor.
+	
+	_stop_action()
+	-> Interrompe uma interação com o colisor.
 """
 
 export(int, -1, 4) var controller_index = 1 setget set_controller_index# Um setget pode ser usado para alterar o controle in-game após o objeto ter sido instanciado
 
 var is_interacting := false
 var current_object: PickableObject = null setget set_current_object
-var current_active: PickableObject = null # DEBUG -> Adding new Feature
 
 var up: String
 var down: String
@@ -26,12 +62,9 @@ export var frame_right: int = 7
 onready var sprite := $Sprite
 onready var ray_cast := $RayCast2D
 onready var pickable_object_sprite := $PickableObjectSprite
-onready var node2D := $Node2D
+onready var pos_grabbed_object := $GrabbedObject
 onready var expressions := $Sprite/Expressions
 onready var animation_player := $AnimationPlayer
-
-#func _ready():
-#	set_controller_index(controller_index)
 
 func _physics_process(_delta) -> void:
 	
@@ -44,13 +77,13 @@ func _physics_process(_delta) -> void:
 	elif Input.is_action_just_pressed(primary_action):
 		_try_drop()
 	
-	if current_active != null:
+	if pos_grabbed_object.get_child_count() == 1:
 		
 		if Input.is_action_just_pressed(secoundary_action):
-			current_active.start() # WATCH
+			pos_grabbed_object.get_child(0).start() # WATCH
 			
 		elif Input.is_action_just_released(secoundary_action):
-			current_active.stop() # WATCH
+			pos_grabbed_object.get_child(0).stop() # WATCH
 
 # @signals
 func _on_Player_direction_changed(direction: Vector2):
@@ -61,9 +94,9 @@ func _on_Player_direction_changed(direction: Vector2):
 			
 			pickable_object_sprite.visible = false
 			ray_cast.cast_to = Vector2(0, -18)
-			node2D.z_index = -1
-			node2D.show_behind_parent = true
-			node2D.rotation_degrees = 0 # WATCH -> Testando nova feature
+			pos_grabbed_object.z_index = -1
+			pos_grabbed_object.show_behind_parent = true
+			pos_grabbed_object.rotation_degrees = 0 # WATCH -> Testando nova feature
 			continue
 		
 		Vector2.DOWN:
@@ -71,34 +104,34 @@ func _on_Player_direction_changed(direction: Vector2):
 			pickable_object_sprite.position = Vector2(0, 2)
 			ray_cast.cast_to = Vector2(0, 18)
 			expressions.frame = 0
-			node2D.rotation_degrees = 180 # WATCH -> Testando nova feature
+			pos_grabbed_object.rotation_degrees = 180 # WATCH -> Testando nova feature
 			continue
 		
 		Vector2.LEFT:
 			
 			pickable_object_sprite.position = Vector2(-8, 0)
 			ray_cast.cast_to = Vector2(-16, 0)
-			node2D.rotation_degrees = -90 # WATCH -> Testando nova feature
+			pos_grabbed_object.rotation_degrees = -90 # WATCH -> Testando nova feature
 			continue
 		
 		Vector2.RIGHT:
 			
 			pickable_object_sprite.position = Vector2(8, 0)
 			ray_cast.cast_to = Vector2(16, 0)
-			node2D.rotation_degrees = 90 # WATCH -> Testando nova feature
+			pos_grabbed_object.rotation_degrees = 90 # WATCH -> Testando nova feature
 			continue
 		
 		Vector2.DOWN, Vector2.LEFT, Vector2.RIGHT:
 			
 			pickable_object_sprite.visible = true
-			node2D.z_index = 1
-			node2D.show_behind_parent = false
+			pos_grabbed_object.z_index = 1
+			pos_grabbed_object.show_behind_parent = false
 			continue
 		
 		_:
 			expressions.visible = false
 	
-	node2D.position = direction * 10 # WATCH -> Testando nova feature
+	pos_grabbed_object.position = direction * 10 # WATCH -> Testando nova feature
 
 func _on_Player_body_movement_stopped() -> void:
 	animation_player.play("idle")
@@ -148,11 +181,15 @@ func _interact(area: Area2D) -> void:
 		
 		if Input.is_action_just_pressed(primary_action):
 			
-			if current_active == null: # WATCH -> Testando nova feature
+			if pos_grabbed_object.get_child_count() == 1:
 				
-				if "FireExtintor" in area.name:
-					_grab_active(area) # WATCH
-					area.input_index = controller_index
+				_drop_object(area)
+				
+			else:
+				
+				if testing_slow_adding(area.name): # WATCH -> Testando nova feature
+					
+					_grab_object(area)
 					
 				else:
 					_grab(area)
@@ -169,24 +206,36 @@ func _interact(area: Area2D) -> void:
 	else:
 		
 		if Input.is_action_just_pressed(primary_action):
+			
 			_drop(area)
 
+
+static func testing_slow_adding(name: String) -> bool:
+	var response: bool
+	
+	if "FireExtintor" in name:
+		response = true
+	
+	return response
+
+
 func _try_drop() -> void:
+	var object: PickableObject
 	
 	if current_object != null:
 		
 		current_object.drop(global_position + (_last_direction * 10)) 
 		set_current_object(null)
 		
-	elif current_active != null: # WATCH -> Testando nova feature
+	elif pos_grabbed_object.get_child_count() == 1: # WATCH -> Testando nova feature
 		
-		node2D.remove_child(current_active)
-		current_active.origin.add_child(current_active)
-		current_active.drop(global_position + (_last_direction * 10))
-		current_active = null
+		object = pos_grabbed_object.get_child(0)
+		pos_grabbed_object.remove_child(object)
+		object.origin.add_child(object)
+		object.drop(global_position + (_last_direction * 10))
 
 
-func _walk_animation_play(direction):
+func _walk_animation_play(direction: Vector2) -> void:
 	
 	match direction:
 		
@@ -213,23 +262,31 @@ func _grab(area: Area2D) -> void:
 		
 		set_current_object(area.grab())
 
-# DEBBUG
-func _grab_active(area: PickableObject):
+func _grab_object(area: Area2D):
+	var object: PickableObject
 	
-	node2D.add_child(area.grab())
-	current_active = node2D.get_child(0)
-
-func _drop_active(area: Area2D): 
-	var active = node2D.get_child(0)
-	
-	node2D.remove_child(active)
-	
-	if area.insert_object(active):
-		current_active = null
+	if area.has_method("remove_object"):
 		
-	else:
-		node2D.add_child(active)
+		if not area.is_burning:
+			object = area.remove_object()
+		
+	elif area.has_method("grab"):
+		
+		object = area.grab()
+	
+	if "FireExtintor" in area.name:
+		object.input_index = controller_index
+	
+	if object != null:
+		pos_grabbed_object.add_child(object)
 
+func _drop_object(area: Area2D): 
+	var object: PickableObject = pos_grabbed_object.get_child(0)
+	
+	pos_grabbed_object.remove_child(pos_grabbed_object.get_child(0))
+	
+	if not area.insert_object(object):
+		pos_grabbed_object.add_child(object)
 
 func _drop(area: Area2D) -> void:
 	

@@ -74,7 +74,7 @@ tracks/0/keys = {
 "values": [ 20.0, -20.0, 20.0 ]
 }
 
-[node name="FireExtintor" index="0" instance=ExtResource( 1 )]
+[node name="FireExtintor" instance=ExtResource( 1 )]
 script = ExtResource( 3 )
 
 [node name="Sprite" parent="." index="1"]
@@ -82,8 +82,8 @@ texture = SubResource( 1 )
 
 [node name="GasRange" type="Area2D" parent="." index="2"]
 position = Vector2( 0, -8 )
-collision_layer = 4096
-collision_mask = 4096
+collision_layer = 4
+collision_mask = 4
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="GasRange" index="0"]
 shape = SubResource( 2 )

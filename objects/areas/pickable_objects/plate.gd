@@ -2,6 +2,7 @@ extends "res://objects/areas/pickable_objects/kitchenware.gd"
 """
 Plate lida com a insersão de ingredientes em uma receita.
 
+# TODO -> Impedir que ingredientes queimados sejam inseridos
 # REFACTOR -> Esse script está num estado wet, com diversas verificações. Ele pode ser melhorado com a implementação de um sistema de receitas. Mas como esse projeto foi criado apenas casualmente, não houve necessidade para tal
 """
 const CLEANING_TIME = 6

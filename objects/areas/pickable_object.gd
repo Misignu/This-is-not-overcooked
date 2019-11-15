@@ -2,6 +2,7 @@ extends Area2D
 class_name PickableObject
 
 export var use_pick_place: bool = false
+onready var origin := get_parent() setget, get_origin
 
 func _ready():
 	
@@ -23,3 +24,7 @@ func drop(pos) -> void:
 	visible = true
 	$CollisionShape2D.disabled = false
 	position = pos - (get_parent().global_position)
+
+# @getters
+func get_origin() -> Node:
+	return origin
