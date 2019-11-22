@@ -1,0 +1,23 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://src/objects/areas/pick_places/delivery_point.tscn" type="PackedScene" id=1]
+[ext_resource path="res://src/objects/areas/pick_places/delivery_points/treadmill.gd" type="Script" id=2]
+[ext_resource path="res://assets/sounds/fxs/Reception Bell Chime Sound Effect.wav" type="AudioStream" id=3]
+[ext_resource path="res://assets/sprites/objects.png" type="Texture" id=4]
+
+
+[sub_resource type="AtlasTexture" id=1]
+atlas = ExtResource( 4 )
+region = Rect2( 16, 0, 16, 16 )
+
+[node name="Treadmill" instance=ExtResource( 1 )]
+script = ExtResource( 2 )
+
+[node name="Sprite" parent="." index="1"]
+texture = SubResource( 1 )
+
+[node name="DeliverSineSFX" type="AudioStreamPlayer" parent="." index="5"]
+stream = ExtResource( 3 )
+volume_db = 5.0
+bus = "SFXS"
+[connection signal="tween_completed" from="Tween" to="." method="_on_Tween_tween_completed"]

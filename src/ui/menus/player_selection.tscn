@@ -1,0 +1,311 @@
+[gd_scene load_steps=15 format=2]
+
+[ext_resource path="res://assets/fonts/8-Bit Madness.ttf" type="DynamicFontData" id=1]
+[ext_resource path="res://src/ui/components/clock_timer.tscn" type="PackedScene" id=2]
+[ext_resource path="res://src/ui/menus/player_selection.gd" type="Script" id=3]
+[ext_resource path="res://src/ui/menus/panels/selection.tscn" type="PackedScene" id=4]
+[ext_resource path="res://assets/atlas/yellow_guy_front.tres" type="Texture" id=5]
+[ext_resource path="res://assets/atlas/purple_guy_front.tres" type="Texture" id=6]
+[ext_resource path="res://assets/atlas/blue_guy_front.tres" type="Texture" id=7]
+
+[sub_resource type="StyleBoxFlat" id=1]
+bg_color = Color( 0.207843, 0.180392, 0.25098, 1 )
+
+[sub_resource type="DynamicFont" id=2]
+size = 46
+font_data = ExtResource( 1 )
+
+[sub_resource type="DynamicFont" id=3]
+size = 60
+font_data = ExtResource( 1 )
+
+[sub_resource type="StyleBoxFlat" id=4]
+bg_color = Color( 0.0431373, 0.792157, 0.415686, 1 )
+
+[sub_resource type="StyleBoxFlat" id=5]
+bg_color = Color( 0.470588, 0.0431373, 0.792157, 1 )
+
+[sub_resource type="StyleBoxFlat" id=6]
+bg_color = Color( 0.0431373, 0.509804, 0.792157, 1 )
+
+[sub_resource type="StyleBoxFlat" id=7]
+bg_color = Color( 0.792157, 0.780392, 0.0431373, 1 )
+
+[node name="PlayerSelection" type="ColorRect"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color( 0.137255, 0.101961, 0.180392, 1 )
+script = ExtResource( 3 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_constants/margin_right = 15
+custom_constants/margin_top = 15
+custom_constants/margin_left = 15
+custom_constants/margin_bottom = 15
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+margin_left = 15.0
+margin_top = 15.0
+margin_right = 1010.0
+margin_bottom = 561.0
+
+[node name="Header" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+margin_right = 995.0
+margin_bottom = 75.0
+alignment = 1
+
+[node name="TitlePanel" type="PanelContainer" parent="MarginContainer/VBoxContainer/Header"]
+margin_right = 429.0
+margin_bottom = 75.0
+size_flags_horizontal = 3
+custom_styles/panel = SubResource( 1 )
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer/Header/TitlePanel"]
+margin_right = 429.0
+margin_bottom = 75.0
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/Header/TitlePanel/HBoxContainer"]
+margin_right = 429.0
+margin_bottom = 75.0
+size_flags_horizontal = 3
+size_flags_vertical = 7
+custom_fonts/font = SubResource( 2 )
+text = "CHARACTER_SELECTION"
+valign = 1
+
+[node name="TimerPanel" type="PanelContainer" parent="MarginContainer/VBoxContainer/Header"]
+margin_left = 433.0
+margin_right = 567.0
+margin_bottom = 75.0
+size_flags_horizontal = 5
+size_flags_vertical = 5
+custom_styles/panel = SubResource( 1 )
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer/Header/TimerPanel"]
+margin_right = 134.0
+margin_bottom = 75.0
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/Header/TimerPanel/HBoxContainer"]
+margin_top = 16.0
+margin_right = 55.0
+margin_bottom = 58.0
+rect_min_size = Vector2( 55, 0 )
+custom_fonts/font = SubResource( 3 )
+text = "10"
+align = 2
+
+[node name="ClockTimer" parent="MarginContainer/VBoxContainer/Header/TimerPanel/HBoxContainer" instance=ExtResource( 2 )]
+margin_left = 59.0
+margin_right = 134.0
+margin_bottom = 75.0
+rect_min_size = Vector2( 75, 75 )
+
+[node name="InfoPanel" type="PanelContainer" parent="MarginContainer/VBoxContainer/Header"]
+margin_left = 571.0
+margin_right = 995.0
+margin_bottom = 75.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_styles/panel = SubResource( 1 )
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/Header/InfoPanel"]
+margin_top = 21.0
+margin_right = 424.0
+margin_bottom = 53.0
+custom_fonts/font = SubResource( 2 )
+text = "LEVEL 1"
+align = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+margin_top = 79.0
+margin_right = 995.0
+margin_bottom = 546.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_constants/separation = 5
+
+[node name="Panel1" parent="MarginContainer/VBoxContainer/HBoxContainer" instance=ExtResource( 4 )]
+margin_right = 245.0
+margin_bottom = 467.0
+
+[node name="MarginContainer" parent="MarginContainer/VBoxContainer/HBoxContainer/Panel1" index="0"]
+margin_bottom = 467.0
+
+[node name="VBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer/Panel1/MarginContainer" index="0"]
+margin_bottom = 452.0
+
+[node name="PanelContainer" parent="MarginContainer/VBoxContainer/HBoxContainer/Panel1/MarginContainer/VBoxContainer" index="1"]
+custom_styles/panel = SubResource( 4 )
+
+[node name="LeftButton" parent="MarginContainer/VBoxContainer/HBoxContainer/Panel1/MarginContainer/VBoxContainer/PanelContainer/HBoxContainer/CenterContainer/MarginContainer" index="0"]
+modulate = Color( 0.0431373, 0.792157, 0.415686, 1 )
+
+[node name="RightButton" parent="MarginContainer/VBoxContainer/HBoxContainer/Panel1/MarginContainer/VBoxContainer/PanelContainer/HBoxContainer/CenterContainer2/MarginContainer" index="0"]
+modulate = Color( 0.0431373, 0.792157, 0.415686, 1 )
+
+[node name="CenterContainer" parent="MarginContainer/VBoxContainer/HBoxContainer/Panel1/MarginContainer/VBoxContainer" index="2"]
+margin_bottom = 437.0
+
+[node name="Label" parent="MarginContainer/VBoxContainer/HBoxContainer/Panel1/MarginContainer/VBoxContainer/CenterContainer" index="0"]
+margin_top = 16.0
+margin_bottom = 96.0
+bbcode_text = "[center]Press [color=#0bca6a]START[/color][/center]
+[center]to join[/center]
+[center]the party[/center]"
+text = "Press START
+to join
+the party"
+
+[node name="Panel2" parent="MarginContainer/VBoxContainer/HBoxContainer" instance=ExtResource( 4 )]
+margin_left = 250.0
+margin_right = 495.0
+margin_bottom = 467.0
+base_color = Color( 0.470588, 0.0431373, 0.792157, 1 )
+
+[node name="MarginContainer" parent="MarginContainer/VBoxContainer/HBoxContainer/Panel2" index="0"]
+margin_bottom = 467.0
+
+[node name="VBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer/Panel2/MarginContainer" index="0"]
+margin_bottom = 452.0
+
+[node name="Label" parent="MarginContainer/VBoxContainer/HBoxContainer/Panel2/MarginContainer/VBoxContainer" index="0"]
+custom_colors/font_color = Color( 0.470588, 0.0431373, 0.792157, 1 )
+text = "P2"
+
+[node name="PanelContainer" parent="MarginContainer/VBoxContainer/HBoxContainer/Panel2/MarginContainer/VBoxContainer" index="1"]
+custom_styles/panel = SubResource( 5 )
+
+[node name="LeftButton" parent="MarginContainer/VBoxContainer/HBoxContainer/Panel2/MarginContainer/VBoxContainer/PanelContainer/HBoxContainer/CenterContainer/MarginContainer" index="0"]
+modulate = Color( 0.470588, 0.0431373, 0.792157, 1 )
+
+[node name="TextureRect" parent="MarginContainer/VBoxContainer/HBoxContainer/Panel2/MarginContainer/VBoxContainer/PanelContainer/HBoxContainer/MarginContainer" index="0"]
+texture = ExtResource( 6 )
+
+[node name="RightButton" parent="MarginContainer/VBoxContainer/HBoxContainer/Panel2/MarginContainer/VBoxContainer/PanelContainer/HBoxContainer/CenterContainer2/MarginContainer" index="0"]
+modulate = Color( 0.470588, 0.0431373, 0.792157, 1 )
+
+[node name="CenterContainer" parent="MarginContainer/VBoxContainer/HBoxContainer/Panel2/MarginContainer/VBoxContainer" index="2"]
+margin_bottom = 437.0
+
+[node name="Label" parent="MarginContainer/VBoxContainer/HBoxContainer/Panel2/MarginContainer/VBoxContainer/CenterContainer" index="0"]
+margin_top = 16.0
+margin_bottom = 96.0
+bbcode_text = "[center]Press [color=#0bca6a]START[/color][/center]
+[center]to join[/center]
+[center]the party[/center]"
+text = "Press START
+to join
+the party"
+
+[node name="Panel3" parent="MarginContainer/VBoxContainer/HBoxContainer" instance=ExtResource( 4 )]
+margin_left = 500.0
+margin_right = 745.0
+margin_bottom = 467.0
+base_color = Color( 0.0431373, 0.509804, 0.792157, 1 )
+
+[node name="MarginContainer" parent="MarginContainer/VBoxContainer/HBoxContainer/Panel3" index="0"]
+margin_bottom = 467.0
+
+[node name="VBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer/Panel3/MarginContainer" index="0"]
+margin_bottom = 452.0
+
+[node name="Label" parent="MarginContainer/VBoxContainer/HBoxContainer/Panel3/MarginContainer/VBoxContainer" index="0"]
+custom_colors/font_color = Color( 0.0431373, 0.509804, 0.792157, 1 )
+text = "P3"
+
+[node name="PanelContainer" parent="MarginContainer/VBoxContainer/HBoxContainer/Panel3/MarginContainer/VBoxContainer" index="1"]
+custom_styles/panel = SubResource( 6 )
+
+[node name="LeftButton" parent="MarginContainer/VBoxContainer/HBoxContainer/Panel3/MarginContainer/VBoxContainer/PanelContainer/HBoxContainer/CenterContainer/MarginContainer" index="0"]
+modulate = Color( 0.792157, 0.780392, 0.0431373, 1 )
+
+[node name="TextureRect" parent="MarginContainer/VBoxContainer/HBoxContainer/Panel3/MarginContainer/VBoxContainer/PanelContainer/HBoxContainer/MarginContainer" index="0"]
+texture = ExtResource( 7 )
+
+[node name="RightButton" parent="MarginContainer/VBoxContainer/HBoxContainer/Panel3/MarginContainer/VBoxContainer/PanelContainer/HBoxContainer/CenterContainer2/MarginContainer" index="0"]
+modulate = Color( 0.792157, 0.780392, 0.0431373, 1 )
+
+[node name="CenterContainer" parent="MarginContainer/VBoxContainer/HBoxContainer/Panel3/MarginContainer/VBoxContainer" index="2"]
+margin_bottom = 437.0
+
+[node name="Label" parent="MarginContainer/VBoxContainer/HBoxContainer/Panel3/MarginContainer/VBoxContainer/CenterContainer" index="0"]
+margin_top = 16.0
+margin_bottom = 96.0
+bbcode_text = "[center]Press [color=#0bca6a]START[/color][/center]
+[center]to join[/center]
+[center]the party[/center]"
+text = "Press START
+to join
+the party"
+
+[node name="Panel4" parent="MarginContainer/VBoxContainer/HBoxContainer" instance=ExtResource( 4 )]
+margin_left = 750.0
+margin_right = 995.0
+margin_bottom = 467.0
+base_color = Color( 0.792157, 0.780392, 0.0431373, 1 )
+
+[node name="MarginContainer" parent="MarginContainer/VBoxContainer/HBoxContainer/Panel4" index="0"]
+margin_bottom = 467.0
+
+[node name="VBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer/Panel4/MarginContainer" index="0"]
+margin_bottom = 452.0
+
+[node name="Label" parent="MarginContainer/VBoxContainer/HBoxContainer/Panel4/MarginContainer/VBoxContainer" index="0"]
+custom_colors/font_color = Color( 0.792157, 0.780392, 0.0431373, 1 )
+text = "P4"
+
+[node name="PanelContainer" parent="MarginContainer/VBoxContainer/HBoxContainer/Panel4/MarginContainer/VBoxContainer" index="1"]
+custom_styles/panel = SubResource( 7 )
+
+[node name="LeftButton" parent="MarginContainer/VBoxContainer/HBoxContainer/Panel4/MarginContainer/VBoxContainer/PanelContainer/HBoxContainer/CenterContainer/MarginContainer" index="0"]
+modulate = Color( 0.792157, 0.164706, 0.0431373, 1 )
+
+[node name="TextureRect" parent="MarginContainer/VBoxContainer/HBoxContainer/Panel4/MarginContainer/VBoxContainer/PanelContainer/HBoxContainer/MarginContainer" index="0"]
+texture = ExtResource( 5 )
+
+[node name="RightButton" parent="MarginContainer/VBoxContainer/HBoxContainer/Panel4/MarginContainer/VBoxContainer/PanelContainer/HBoxContainer/CenterContainer2/MarginContainer" index="0"]
+modulate = Color( 0.792157, 0.164706, 0.0431373, 1 )
+
+[node name="CenterContainer" parent="MarginContainer/VBoxContainer/HBoxContainer/Panel4/MarginContainer/VBoxContainer" index="2"]
+margin_bottom = 437.0
+
+[node name="Label" parent="MarginContainer/VBoxContainer/HBoxContainer/Panel4/MarginContainer/VBoxContainer/CenterContainer" index="0"]
+margin_top = 16.0
+margin_bottom = 96.0
+bbcode_text = "[center]Press [color=#0bca6a]START[/color][/center]
+[center]to join[/center]
+[center]the party[/center]"
+text = "Press START
+to join
+the party"
+
+[node name="Tween" type="Tween" parent="."]
+[connection signal="action_key_pressed" from="MarginContainer/VBoxContainer/HBoxContainer/Panel1" to="." method="_on_Panel_action_key_pressed"]
+[connection signal="action_key_released" from="MarginContainer/VBoxContainer/HBoxContainer/Panel1" to="." method="_on_Panel_action_key_released"]
+[connection signal="player_input_desattached" from="MarginContainer/VBoxContainer/HBoxContainer/Panel1" to="." method="_on_Panel_player_input_desattached"]
+[connection signal="action_key_pressed" from="MarginContainer/VBoxContainer/HBoxContainer/Panel2" to="." method="_on_Panel_action_key_pressed"]
+[connection signal="action_key_released" from="MarginContainer/VBoxContainer/HBoxContainer/Panel2" to="." method="_on_Panel_action_key_released"]
+[connection signal="player_input_desattached" from="MarginContainer/VBoxContainer/HBoxContainer/Panel2" to="." method="_on_Panel_player_input_desattached"]
+[connection signal="action_key_pressed" from="MarginContainer/VBoxContainer/HBoxContainer/Panel3" to="." method="_on_Panel_action_key_pressed"]
+[connection signal="action_key_released" from="MarginContainer/VBoxContainer/HBoxContainer/Panel3" to="." method="_on_Panel_action_key_released"]
+[connection signal="player_input_desattached" from="MarginContainer/VBoxContainer/HBoxContainer/Panel3" to="." method="_on_Panel_player_input_desattached"]
+[connection signal="action_key_pressed" from="MarginContainer/VBoxContainer/HBoxContainer/Panel4" to="." method="_on_Panel_action_key_pressed"]
+[connection signal="action_key_released" from="MarginContainer/VBoxContainer/HBoxContainer/Panel4" to="." method="_on_Panel_action_key_released"]
+[connection signal="player_input_desattached" from="MarginContainer/VBoxContainer/HBoxContainer/Panel4" to="." method="_on_Panel_player_input_desattached"]
+[connection signal="tween_completed" from="Tween" to="." method="_on_Tween_tween_completed"]
+
+[editable path="MarginContainer/VBoxContainer/HBoxContainer/Panel1"]
+
+[editable path="MarginContainer/VBoxContainer/HBoxContainer/Panel2"]
+
+[editable path="MarginContainer/VBoxContainer/HBoxContainer/Panel3"]
+
+[editable path="MarginContainer/VBoxContainer/HBoxContainer/Panel4"]

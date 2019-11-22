@@ -12,12 +12,12 @@ _global_script_classes=[ {
 "base": "PickableObject",
 "class": "Ingredient",
 "language": "GDScript",
-"path": "res://objects/areas/pickable_objects/ingredient.gd"
+"path": "res://src/objects/areas/pickable_objects/ingredient.gd"
 }, {
 "base": "Area2D",
 "class": "PickableObject",
 "language": "GDScript",
-"path": "res://objects/areas/pickable_object.gd"
+"path": "res://src/objects/areas/pickable_object.gd"
 } ]
 _global_script_class_icons={
 "Ingredient": "",
@@ -28,12 +28,12 @@ _global_script_class_icons={
 
 config/name="This is not overcooked"
 config/description="A game about being better than Gemaplys"
-run/main_scene="res://ui/eyecatchers/splash_screen.tscn"
+run/main_scene="res://src/ui/eyecatchers/splash_screen.tscn"
 config/icon="res://icon.png"
 
 [autoload]
 
-Game="*res://game.gd"
+Game="*res://src/autoload/game.gd"
 
 [display]
 
@@ -329,6 +329,10 @@ player-2_start={
 [locale]
 
 translations=PoolStringArray( "res://assets/localizations/global.en.translation", "res://assets/localizations/global.es.translation", "res://assets/localizations/global.pt_BR.translation" )
+
+[logging]
+
+file_logging/enable_file_logging=true
 
 [rendering]
 

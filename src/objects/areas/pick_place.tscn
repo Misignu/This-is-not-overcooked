@@ -1,0 +1,33 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://src/objects/areas/pick_place.gd" type="Script" id=1]
+[ext_resource path="res://src/objects/fire_particles.tscn" type="PackedScene" id=2]
+
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 8, 8 )
+
+[node name="PickPlace" type="Area2D"]
+collision_layer = 2
+collision_mask = 0
+script = ExtResource( 1 )
+__meta__ = {
+"_editor_description_": "Area where the player can interact with to add or remove objects in the right spot."
+}
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+modulate = Color( 1, 1, 1, 0.392157 )
+shape = SubResource( 1 )
+__meta__ = {
+"_editor_description_": ""
+}
+
+[node name="CurrentObject" type="Position2D" parent="."]
+__meta__ = {
+"_gizmo_extents_": 2.0
+}
+
+[node name="FireParticles" parent="." instance=ExtResource( 2 )]
+emitting = false
+[connection signal="fire_finished" from="FireParticles" to="." method="_on_FireParticles_fire_finished"]
+[connection signal="fire_started" from="FireParticles" to="." method="_on_FireParticles_fire_started"]

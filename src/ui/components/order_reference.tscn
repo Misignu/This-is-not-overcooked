@@ -1,0 +1,33 @@
+[gd_scene load_steps=2 format=2]
+
+[sub_resource type="GDScript" id=1]
+script/source = "extends Position2D
+
+var stack_id: int setget set_stack_id
+
+func set_stack_id(value: int) -> void:
+	stack_id = value"
+
+[node name="OrderReference" type="CenterContainer"]
+margin_right = 100.0
+margin_bottom = 91.0
+rect_min_size = Vector2( 100, 91 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ReferenceRect" type="ReferenceRect" parent="."]
+margin_right = 100.0
+margin_bottom = 91.0
+rect_min_size = Vector2( 100, 91 )
+size_flags_horizontal = 3
+size_flags_vertical = 3
+border_color = Color( 1, 0, 0, 0.5 )
+
+[node name="Reference" type="Node2D" parent="."]
+
+[node name="Position2D" type="Position2D" parent="Reference"]
+position = Vector2( 0, -1 )
+script = SubResource( 1 )
+
+[node name="Tween" type="Tween" parent="Reference"]

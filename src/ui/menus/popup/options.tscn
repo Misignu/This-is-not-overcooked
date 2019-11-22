@@ -1,0 +1,470 @@
+[gd_scene load_steps=11 format=2]
+
+[ext_resource path="res://assets/sprites/hud/hud.png" type="Texture" id=1]
+[ext_resource path="res://src/ui/menus/popup/options.gd" type="Script" id=2]
+[ext_resource path="res://assets/fonts/8-Bit Madness.ttf" type="DynamicFontData" id=3]
+
+[sub_resource type="DynamicFont" id=1]
+font_data = ExtResource( 3 )
+
+[sub_resource type="GDScript" id=2]
+script/source = "extends PopupMenu
+
+signal language_changed
+
+const LANGUAGES = [
+	\"pt_BR\",
+	\"en\",
+	\"es\"
+]
+
+func _ready() -> void:
+	
+	set_process(false)
+	_on_PopupMenu_language_changed()
+
+func _process(_delta) -> void:
+	var trigger: Button = get_parent().get_parent()
+	
+	rect_global_position = trigger.rect_global_position + Vector2(0, trigger.rect_size.y)
+
+func _on_PopupMenu_about_to_show() -> void:
+	set_process(true)
+
+func _on_PopupMenu_popup_hide() -> void:
+	set_process(false)
+
+func _on_LanguageButton_pressed() -> void:
+	
+	if visible:
+		visible = false
+		
+	else:
+		popup()
+		grab_focus()
+
+func _on_PopupMenu_id_focused(id: int) -> void:
+	
+	get_parent().get_parent().text = tr(LANGUAGES[id].to_upper())
+
+func _on_PopupMenu_id_pressed(id: int) -> void:
+	
+	Game.set_language(LANGUAGES[id])
+	emit_signal(\"language_changed\")
+
+func _on_PopupMenu_language_changed() -> void:
+	get_parent().get_parent().text = tr(Game.language.to_upper())
+"
+
+[sub_resource type="AtlasTexture" id=3]
+atlas = ExtResource( 1 )
+region = Rect2( 96, 16, 16, 16 )
+
+[sub_resource type="AtlasTexture" id=4]
+atlas = ExtResource( 1 )
+region = Rect2( 80, 16, 16, 16 )
+
+[sub_resource type="GDScript" id=5]
+script/source = "extends Control
+
+export var spacing := 10
+
+func _draw() -> void: # WATCH -> Understand code and REFACTOR to optimize it
+	var last_end_achor := Vector2.ZERO
+
+	for child in get_children():
+		
+		child.rect_position = last_end_achor
+		last_end_achor.y = child.rect_position.y + child.rect_size.y 
+		last_end_achor.y += spacing
+
+	rect_min_size.y = last_end_achor.y # to work with ScrollContainer
+"
+
+[sub_resource type="GDScript" id=6]
+script/source = "extends Panel
+
+\"\"\"
+	# REFACTOR -> Otimizar código do script para funcionar nos momentos certos sem a necessidade de usar _process()
+\"\"\"
+
+signal panel_eclodded
+signal panel_inclodded
+
+var is_expanded: bool setget set_is_expanded
+var is_echo_nulled: bool # REFACTOR
+var last_rect_size = Vector2.ZERO
+
+onready var size = $VBoxContainer.rect_size
+
+func expand() -> void:
+	
+	if not is_echo_nulled:
+		set_is_expanded(!is_expanded)
+	
+	is_echo_nulled = false
+
+func _process(_delta: float) -> void:
+	
+	#snap to end
+	if abs(rect_size.y-rect_min_size.y) < 1:
+		rect_size.y = rect_min_size.y
+	
+	#resize to target size
+	if is_expanded:
+		rect_size.y = lerp(rect_size.y, size.y, 0.1)
+	
+	else:
+		rect_size.y = lerp(rect_size.y, rect_min_size.y, 0.1)
+	
+	#update layout
+	if last_rect_size != rect_size:
+		
+		get_parent().update()
+		last_rect_size = rect_size
+
+# @signals
+func _on_show_focus_entered() -> void:
+	
+	set_is_expanded(!is_expanded)
+	is_echo_nulled = true
+
+
+# @setters
+func set_is_expanded(value: bool) -> void:
+	
+	if value:
+		
+		emit_signal(\"panel_eclodded\")
+		
+		if value != is_expanded:
+			assert($VBoxContainer/show.connect(\"focus_entered\", self, \"_on_show_focus_entered\") == OK)
+		
+	else:
+		emit_signal(\"panel_inclodded\")
+		
+		if value != is_expanded:
+			$VBoxContainer/show.disconnect(\"focus_entered\", self, \"_on_show_focus_entered\")
+	
+	is_echo_nulled = false
+	is_expanded = value
+"
+
+[sub_resource type="AtlasTexture" id=7]
+atlas = ExtResource( 1 )
+region = Rect2( 32, 16, 16, 16 )
+
+[node name="Options" type="WindowDialog"]
+anchor_right = 0.22493
+anchor_bottom = 0.151333
+margin_right = -0.328308
+margin_bottom = 29.2002
+rect_min_size = Vector2( 240, 126 )
+window_title = "OPTIONS"
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+rect_min_size = Vector2( 240, 126 )
+custom_constants/margin_right = 5
+custom_constants/margin_top = 5
+custom_constants/margin_left = 5
+custom_constants/margin_bottom = 5
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ScrollContainer" type="ScrollContainer" parent="MarginContainer"]
+margin_left = 5.0
+margin_top = 5.0
+margin_right = 237.0
+margin_bottom = 121.0
+rect_min_size = Vector2( 220, 116 )
+scroll_horizontal_enabled = false
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/ScrollContainer"]
+margin_right = 220.0
+margin_bottom = 116.0
+rect_min_size = Vector2( 220, 116 )
+custom_constants/margin_right = 5
+custom_constants/margin_top = 5
+custom_constants/margin_left = 5
+custom_constants/margin_bottom = 5
+
+[node name="List" type="VBoxContainer" parent="MarginContainer/ScrollContainer/MarginContainer"]
+margin_left = 5.0
+margin_top = 5.0
+margin_right = 215.0
+margin_bottom = 111.0
+rect_min_size = Vector2( 210, 106 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="FullScreen" type="HBoxContainer" parent="MarginContainer/ScrollContainer/MarginContainer/List"]
+margin_right = 210.0
+margin_bottom = 24.0
+
+[node name="CheckBox" type="CheckBox" parent="MarginContainer/ScrollContainer/MarginContainer/List/FullScreen"]
+margin_right = 106.0
+margin_bottom = 24.0
+hint_tooltip = "Press F11 to Toggle Fullscreen"
+focus_neighbour_top = NodePath("../../SoundChannels/Panel/VBoxContainer/show")
+focus_neighbour_bottom = NodePath("../../HBoxContainer/LanguageButton")
+focus_next = NodePath("../../HBoxContainer/LanguageButton")
+focus_previous = NodePath("../../SoundChannels/Panel/VBoxContainer/show")
+focus_mode = 1
+size_flags_horizontal = 0
+enabled_focus_mode = 1
+text = "FULLSCREEN"
+flat = true
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/ScrollContainer/MarginContainer/List"]
+margin_top = 28.0
+margin_right = 210.0
+margin_bottom = 52.0
+rect_min_size = Vector2( 210, 24 )
+
+[node name="Label" type="Label" parent="MarginContainer/ScrollContainer/MarginContainer/List/HBoxContainer"]
+margin_right = 124.0
+margin_bottom = 24.0
+rect_min_size = Vector2( 124, 24 )
+size_flags_horizontal = 0
+size_flags_vertical = 0
+text = "LANGUAGE"
+valign = 1
+
+[node name="LanguageButton" type="Button" parent="MarginContainer/ScrollContainer/MarginContainer/List/HBoxContainer"]
+margin_left = 128.0
+margin_right = 198.0
+margin_bottom = 24.0
+rect_min_size = Vector2( 70, 24 )
+rect_clip_content = true
+focus_neighbour_top = NodePath("../../FullScreen/CheckBox")
+focus_neighbour_bottom = NodePath("../../Volume/HSlider")
+focus_next = NodePath("../../Volume/Mute")
+focus_previous = NodePath("../../FullScreen/CheckBox")
+size_flags_horizontal = 0
+size_flags_vertical = 0
+custom_fonts/font = SubResource( 1 )
+
+[node name="CanvasLayer" type="CanvasLayer" parent="MarginContainer/ScrollContainer/MarginContainer/List/HBoxContainer/LanguageButton"]
+layer = 2
+
+[node name="PopupMenu" type="PopupMenu" parent="MarginContainer/ScrollContainer/MarginContainer/List/HBoxContainer/LanguageButton/CanvasLayer"]
+margin_left = 136.0
+margin_top = 62.0
+margin_right = 211.0
+margin_bottom = 132.0
+items = [ "Pt_Br", null, 0, false, false, 0, 0, null, "", false, "En", null, 0, false, false, 1, 0, null, "", false, "Es", null, 0, false, false, 2, 0, null, "", false ]
+script = SubResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Volume" type="HBoxContainer" parent="MarginContainer/ScrollContainer/MarginContainer/List"]
+margin_top = 56.0
+margin_right = 210.0
+margin_bottom = 80.0
+rect_min_size = Vector2( 210, 24 )
+
+[node name="Mute" type="CheckBox" parent="MarginContainer/ScrollContainer/MarginContainer/List/Volume"]
+margin_right = 124.0
+margin_bottom = 24.0
+rect_min_size = Vector2( 124, 24 )
+focus_neighbour_top = NodePath("../../HBoxContainer/LanguageButton")
+focus_neighbour_right = NodePath("../HSlider")
+focus_neighbour_bottom = NodePath("../../SoundChannels/Panel/VBoxContainer/show")
+focus_next = NodePath("../HSlider")
+focus_previous = NodePath("../../HBoxContainer/LanguageButton")
+custom_icons/checked = SubResource( 3 )
+custom_icons/unchecked = SubResource( 4 )
+text = "VOLUME"
+
+[node name="HSlider" type="HSlider" parent="MarginContainer/ScrollContainer/MarginContainer/List/Volume"]
+margin_left = 128.0
+margin_right = 203.0
+margin_bottom = 24.0
+rect_min_size = Vector2( 75, 24 )
+hint_tooltip = "VOLUME_TIP"
+focus_neighbour_top = NodePath("../../HBoxContainer/LanguageButton")
+focus_neighbour_bottom = NodePath("../../SoundChannels/Panel/VBoxContainer/show")
+focus_next = NodePath("../../SoundChannels/Panel/VBoxContainer/show")
+focus_previous = NodePath("../Mute")
+min_value = 0.0001
+max_value = 1.0
+step = 0.0001
+value = 1.0
+tick_count = 10
+ticks_on_borders = true
+
+[node name="SoundChannels" type="Control" parent="MarginContainer/ScrollContainer/MarginContainer/List"]
+margin_top = 84.0
+margin_right = 210.0
+margin_bottom = 106.0
+rect_min_size = Vector2( 210, 22 )
+size_flags_horizontal = 0
+size_flags_vertical = 0
+script = SubResource( 5 )
+
+[node name="Panel" type="Panel" parent="MarginContainer/ScrollContainer/MarginContainer/List/SoundChannels"]
+anchor_right = 1.0
+margin_right = -5.0
+margin_bottom = 116.0
+rect_min_size = Vector2( 205, 22 )
+rect_clip_content = true
+size_flags_horizontal = 0
+size_flags_vertical = 0
+script = SubResource( 6 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/ScrollContainer/MarginContainer/List/SoundChannels/Panel"]
+anchor_right = 1.0
+margin_right = -2.0
+margin_bottom = 116.0
+rect_min_size = Vector2( 205, 116 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="show" type="Button" parent="MarginContainer/ScrollContainer/MarginContainer/List/SoundChannels/Panel/VBoxContainer"]
+margin_right = 204.0
+margin_bottom = 22.0
+rect_min_size = Vector2( 204, 22 )
+focus_neighbour_top = NodePath("../../../../Volume/HSlider")
+focus_neighbour_bottom = NodePath("../../../../FullScreen/CheckBox")
+focus_next = NodePath("../../../../FullScreen/CheckBox")
+focus_previous = NodePath("../../../../Volume/HSlider")
+size_flags_horizontal = 0
+size_flags_vertical = 0
+text = "CHANNELS"
+icon = SubResource( 7 )
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/ScrollContainer/MarginContainer/List/SoundChannels/Panel/VBoxContainer"]
+margin_top = 26.0
+margin_right = 205.0
+margin_bottom = 116.0
+rect_min_size = Vector2( 205, 90 )
+custom_constants/margin_right = 5
+custom_constants/margin_top = 5
+custom_constants/margin_left = 5
+custom_constants/margin_bottom = 5
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Channels" type="VBoxContainer" parent="MarginContainer/ScrollContainer/MarginContainer/List/SoundChannels/Panel/VBoxContainer/MarginContainer"]
+margin_left = 5.0
+margin_top = 5.0
+margin_right = 200.0
+margin_bottom = 85.0
+rect_min_size = Vector2( 194, 80 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Music" type="HBoxContainer" parent="MarginContainer/ScrollContainer/MarginContainer/List/SoundChannels/Panel/VBoxContainer/MarginContainer/Channels"]
+margin_right = 195.0
+margin_bottom = 24.0
+
+[node name="Mute" type="CheckBox" parent="MarginContainer/ScrollContainer/MarginContainer/List/SoundChannels/Panel/VBoxContainer/MarginContainer/Channels/Music"]
+margin_right = 124.0
+margin_bottom = 24.0
+rect_min_size = Vector2( 124, 24 )
+rect_clip_content = true
+focus_neighbour_top = NodePath("../../../../show")
+focus_previous = NodePath("../../../../show")
+custom_icons/checked = SubResource( 3 )
+custom_icons/unchecked = SubResource( 4 )
+text = "MUSIC"
+
+[node name="HSlider" type="HSlider" parent="MarginContainer/ScrollContainer/MarginContainer/List/SoundChannels/Panel/VBoxContainer/MarginContainer/Channels/Music"]
+margin_left = 128.0
+margin_right = 193.0
+margin_bottom = 24.0
+rect_min_size = Vector2( 65, 24 )
+focus_neighbour_top = NodePath("../../../../show")
+min_value = 0.0001
+max_value = 1.0
+step = 0.0001
+value = 1.0
+tick_count = 10
+ticks_on_borders = true
+
+[node name="SFXS" type="HBoxContainer" parent="MarginContainer/ScrollContainer/MarginContainer/List/SoundChannels/Panel/VBoxContainer/MarginContainer/Channels"]
+margin_top = 28.0
+margin_right = 195.0
+margin_bottom = 52.0
+
+[node name="Mute" type="CheckBox" parent="MarginContainer/ScrollContainer/MarginContainer/List/SoundChannels/Panel/VBoxContainer/MarginContainer/Channels/SFXS"]
+margin_right = 124.0
+margin_bottom = 24.0
+rect_min_size = Vector2( 124, 24 )
+rect_clip_content = true
+custom_icons/checked = SubResource( 3 )
+custom_icons/unchecked = SubResource( 4 )
+text = "SFXS"
+
+[node name="HSlider" type="HSlider" parent="MarginContainer/ScrollContainer/MarginContainer/List/SoundChannels/Panel/VBoxContainer/MarginContainer/Channels/SFXS"]
+margin_left = 128.0
+margin_right = 193.0
+margin_bottom = 24.0
+rect_min_size = Vector2( 65, 24 )
+max_value = 1.0
+step = 0.0
+value = 1.0
+tick_count = 10
+ticks_on_borders = true
+
+[node name="BSFXS" type="HBoxContainer" parent="MarginContainer/ScrollContainer/MarginContainer/List/SoundChannels/Panel/VBoxContainer/MarginContainer/Channels"]
+margin_top = 56.0
+margin_right = 195.0
+margin_bottom = 80.0
+
+[node name="Mute" type="CheckBox" parent="MarginContainer/ScrollContainer/MarginContainer/List/SoundChannels/Panel/VBoxContainer/MarginContainer/Channels/BSFXS"]
+margin_right = 124.0
+margin_bottom = 24.0
+rect_min_size = Vector2( 124, 24 )
+rect_clip_content = true
+custom_icons/checked = SubResource( 3 )
+custom_icons/unchecked = SubResource( 4 )
+text = "ENVIRONMENT"
+
+[node name="HSlider" type="HSlider" parent="MarginContainer/ScrollContainer/MarginContainer/List/SoundChannels/Panel/VBoxContainer/MarginContainer/Channels/BSFXS"]
+margin_left = 128.0
+margin_right = 193.0
+margin_bottom = 24.0
+rect_min_size = Vector2( 65, 24 )
+focus_next = NodePath("../../../../../../../FullScreen/CheckBox")
+max_value = 1.0
+step = 0.0
+value = 1.0
+tick_count = 10
+ticks_on_borders = true
+
+[node name="Tween" type="Tween" parent="."]
+[connection signal="focus_entered" from="MarginContainer/ScrollContainer/MarginContainer/List/FullScreen/CheckBox" to="." method="_on_FullScreen_focus_entered"]
+[connection signal="toggled" from="MarginContainer/ScrollContainer/MarginContainer/List/FullScreen/CheckBox" to="." method="_on_FullScreen_toggled"]
+[connection signal="pressed" from="MarginContainer/ScrollContainer/MarginContainer/List/HBoxContainer/LanguageButton" to="MarginContainer/ScrollContainer/MarginContainer/List/HBoxContainer/LanguageButton/CanvasLayer/PopupMenu" method="_on_LanguageButton_pressed"]
+[connection signal="about_to_show" from="MarginContainer/ScrollContainer/MarginContainer/List/HBoxContainer/LanguageButton/CanvasLayer/PopupMenu" to="MarginContainer/ScrollContainer/MarginContainer/List/HBoxContainer/LanguageButton/CanvasLayer/PopupMenu" method="_on_PopupMenu_about_to_show"]
+[connection signal="id_focused" from="MarginContainer/ScrollContainer/MarginContainer/List/HBoxContainer/LanguageButton/CanvasLayer/PopupMenu" to="MarginContainer/ScrollContainer/MarginContainer/List/HBoxContainer/LanguageButton/CanvasLayer/PopupMenu" method="_on_PopupMenu_id_focused"]
+[connection signal="id_pressed" from="MarginContainer/ScrollContainer/MarginContainer/List/HBoxContainer/LanguageButton/CanvasLayer/PopupMenu" to="MarginContainer/ScrollContainer/MarginContainer/List/HBoxContainer/LanguageButton/CanvasLayer/PopupMenu" method="_on_PopupMenu_id_pressed"]
+[connection signal="language_changed" from="MarginContainer/ScrollContainer/MarginContainer/List/HBoxContainer/LanguageButton/CanvasLayer/PopupMenu" to="MarginContainer/ScrollContainer/MarginContainer/List/HBoxContainer/LanguageButton/CanvasLayer/PopupMenu" method="_on_PopupMenu_language_changed"]
+[connection signal="popup_hide" from="MarginContainer/ScrollContainer/MarginContainer/List/HBoxContainer/LanguageButton/CanvasLayer/PopupMenu" to="MarginContainer/ScrollContainer/MarginContainer/List/HBoxContainer/LanguageButton/CanvasLayer/PopupMenu" method="_on_PopupMenu_popup_hide"]
+[connection signal="toggled" from="MarginContainer/ScrollContainer/MarginContainer/List/Volume/Mute" to="." method="_on_Mute_toggled" binds= [ "Master" ]]
+[connection signal="value_changed" from="MarginContainer/ScrollContainer/MarginContainer/List/Volume/HSlider" to="." method="_on_HSlider_value_changed" binds= [ "Master" ]]
+[connection signal="panel_eclodded" from="MarginContainer/ScrollContainer/MarginContainer/List/SoundChannels/Panel" to="." method="_on_Panel_panel_eclodded"]
+[connection signal="panel_inclodded" from="MarginContainer/ScrollContainer/MarginContainer/List/SoundChannels/Panel" to="." method="_on_Panel_panel_inclodded"]
+[connection signal="pressed" from="MarginContainer/ScrollContainer/MarginContainer/List/SoundChannels/Panel/VBoxContainer/show" to="MarginContainer/ScrollContainer/MarginContainer/List/SoundChannels/Panel" method="expand"]
+[connection signal="toggled" from="MarginContainer/ScrollContainer/MarginContainer/List/SoundChannels/Panel/VBoxContainer/MarginContainer/Channels/Music/Mute" to="." method="_on_Mute_toggled" binds= [ "Music" ]]
+[connection signal="value_changed" from="MarginContainer/ScrollContainer/MarginContainer/List/SoundChannels/Panel/VBoxContainer/MarginContainer/Channels/Music/HSlider" to="." method="_on_HSlider_value_changed" binds= [ "Music" ]]
+[connection signal="toggled" from="MarginContainer/ScrollContainer/MarginContainer/List/SoundChannels/Panel/VBoxContainer/MarginContainer/Channels/SFXS/Mute" to="." method="_on_Mute_toggled" binds= [ "SFXS" ]]
+[connection signal="value_changed" from="MarginContainer/ScrollContainer/MarginContainer/List/SoundChannels/Panel/VBoxContainer/MarginContainer/Channels/SFXS/HSlider" to="." method="_on_HSlider_value_changed" binds= [ "SFXS" ]]
+[connection signal="toggled" from="MarginContainer/ScrollContainer/MarginContainer/List/SoundChannels/Panel/VBoxContainer/MarginContainer/Channels/BSFXS/Mute" to="." method="_on_Mute_toggled" binds= [ "BSFXS" ]]
+[connection signal="value_changed" from="MarginContainer/ScrollContainer/MarginContainer/List/SoundChannels/Panel/VBoxContainer/MarginContainer/Channels/BSFXS/HSlider" to="." method="_on_HSlider_value_changed" binds= [ "BSFXS" ]]

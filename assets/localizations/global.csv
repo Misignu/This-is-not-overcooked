@@ -31,4 +31,5 @@ PT_BR,Portuguese,Português,Portugués
 EN,English,Inglês,Inglés
 ES,Spanish,Espanhol,Español
 LANGUAGE,Language,Linguagem,Lengua
-,,,
+QUIT_TITLE,Quit Game,Sair do jogo,Salir del juego
+QUIT_MESSAGE,Do you want to quit now?,Você já vai embora?,¿Ya te vas?

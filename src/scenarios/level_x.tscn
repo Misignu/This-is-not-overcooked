@@ -1,0 +1,309 @@
+[gd_scene load_steps=19 format=2]
+
+[ext_resource path="res://assets/tilesets/walls_and_floors.tres" type="TileSet" id=1]
+[ext_resource path="res://src/objects/areas/pick_places/work_stations/cut_place.tscn" type="PackedScene" id=2]
+[ext_resource path="res://src/objects/areas/pick_places/box.tscn" type="PackedScene" id=3]
+[ext_resource path="res://src/objects/areas/pick_places/work_stations/stove.tscn" type="PackedScene" id=4]
+[ext_resource path="res://src/objects/areas/pick_places/lock_pick.tscn" type="PackedScene" id=5]
+[ext_resource path="res://src/objects/areas/pick_place.tscn" type="PackedScene" id=6]
+[ext_resource path="res://src/ui/hud/game_hud.tscn" type="PackedScene" id=7]
+[ext_resource path="res://src/ui/hud/pause_break.tscn" type="PackedScene" id=8]
+[ext_resource path="res://assets/sounds/musics/Overcooked music - Levels 1-1 to 2-4.ogg" type="AudioStream" id=9]
+[ext_resource path="res://src/objects/areas/pick_places/delivery_points/trash.tscn" type="PackedScene" id=10]
+[ext_resource path="res://src/objects/areas/pick_places/return_station.tscn" type="PackedScene" id=11]
+[ext_resource path="res://src/objects/areas/pickable_objects/plate.tscn" type="PackedScene" id=12]
+[ext_resource path="res://src/objects/areas/pickable_objects/fire_extintor.tscn" type="PackedScene" id=13]
+[ext_resource path="res://src/objects/areas/pick_places/delivery_points/treadmill.tscn" type="PackedScene" id=14]
+[ext_resource path="res://src/objects/areas/pick_places/work_stations/sink.tscn" type="PackedScene" id=15]
+[ext_resource path="res://src/objects/bodies/characters/players/guy.tscn" type="PackedScene" id=16]
+[ext_resource path="res://assets/tilesets/kitchen.tres" type="TileSet" id=21]
+
+[sub_resource type="GDScript" id=1]
+script/source = "extends Node
+
+func _ready() -> void:
+	
+	var player: Game.Player
+	var character: KinematicBody2D
+	var away_counter: int = 0
+	
+	for i in range(4):
+		
+		player = Game.players[i]
+		character = $Scene/Players.get_child(i)
+		
+		if  player.is_device_atached():
+			
+			character.get_node(\"Sprite\").texture = Game.players[i].character
+			character.set_controller_index(player.device)
+			
+		else:
+			character.shift_visibility(false)
+			away_counter += 1
+	
+	if away_counter == 4:
+		
+		character = $Scene/Players.get_child(0)
+		character.shift_visibility(true)
+		character.set_controller_index(-1)
+"
+
+[node name="Level" type="Node"]
+pause_mode = 1
+script = SubResource( 1 )
+
+[node name="Scene" type="CanvasLayer" parent="."]
+scale = Vector2( 4, 4 )
+transform = Transform2D( 4, 0, 0, 4, 0, 0 )
+
+[node name="TileMap" type="Node2D" parent="Scene"]
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="BG" type="ColorRect" parent="Scene/TileMap"]
+margin_top = -3.0
+margin_right = 256.0
+margin_bottom = 152.0
+color = Color( 0.227451, 0.223529, 0.298039, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Floor" type="TileMap" parent="Scene/TileMap"]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 16, 16 )
+format = 1
+tile_data = PoolIntArray( 0, 1, 0, 1, 2, 0, 2, 2, 0, 3, 2, 0, 4, 2, 0, 5, 2, 0, 6, 2, 0, 7, 2, 0, 8, 2, 0, 9, 2, 0, 10, 2, 0, 11, 2, 0, 12, 2, 0, 13, 2, 0, 14, 2, 0, 15, -1610612735, 0, 65536, -1073741822, 0, 65537, 0, 0, 65538, 0, 0, 65539, 0, 0, 65540, 0, 0, 65541, 0, 0, 65542, 0, 0, 65543, 0, 0, 65544, 0, 0, 65545, 0, 0, 65546, 0, 0, 65547, 0, 0, 65548, 0, 0, 65549, 0, 0, 65550, 0, 0, 65551, -1610612734, 0, 131072, -1073741822, 0, 131073, 0, 0, 131074, 0, 0, 131075, 0, 0, 131076, 0, 0, 131077, 0, 0, 131078, 0, 0, 131079, 0, 0, 131080, 0, 0, 131081, 0, 0, 131082, 0, 0, 131083, 0, 0, 131084, 0, 0, 131085, 0, 0, 131086, 0, 0, 131087, -1610612734, 0, 196608, -1073741822, 0, 196609, 0, 0, 196610, 0, 0, 196611, 0, 0, 196612, 0, 0, 196613, 0, 0, 196614, 0, 0, 196615, 0, 0, 196616, 0, 0, 196617, 0, 0, 196618, 0, 0, 196619, 0, 0, 196620, 0, 0, 196621, 0, 0, 196622, 0, 0, 196623, -1610612734, 0, 262144, -1073741822, 0, 262145, 0, 0, 262146, 0, 0, 262147, 0, 0, 262148, 0, 0, 262149, 0, 0, 262150, 0, 0, 262151, 0, 0, 262152, 0, 0, 262153, 0, 0, 262154, 0, 0, 262155, 0, 0, 262156, 0, 0, 262157, 0, 0, 262158, 0, 0, 262159, -1610612734, 0, 327680, -1073741822, 0, 327681, 0, 0, 327682, 0, 0, 327683, 0, 0, 327684, 0, 0, 327685, 0, 0, 327686, 0, 0, 327687, 0, 0, 327688, 0, 0, 327689, 0, 0, 327690, 0, 0, 327691, 0, 0, 327692, 0, 0, 327693, 0, 0, 327694, 0, 0, 327695, -1610612734, 0, 393216, -1073741822, 0, 393217, 0, 0, 393218, 0, 0, 393219, 0, 0, 393220, 0, 0, 393221, 0, 0, 393222, 0, 0, 393223, 0, 0, 393224, 0, 0, 393225, 0, 0, 393226, 0, 0, 393227, 0, 0, 393228, 0, 0, 393229, 0, 0, 393230, 0, 0, 393231, -1610612734, 0, 458752, -1073741822, 0, 458753, 0, 0, 458754, 0, 0, 458755, 0, 0, 458756, 0, 0, 458757, 0, 0, 458758, 0, 0, 458759, 0, 0, 458760, 0, 0, 458761, 0, 0, 458762, 0, 0, 458763, 0, 0, 458764, 0, 0, 458765, 0, 0, 458766, 0, 0, 458767, -1610612734, 0, 524288, -1073741823, 0, 524289, 1610612738, 0, 524290, 1610612738, 0, 524291, 1610612738, 0, 524292, 1610612738, 0, 524293, 1610612738, 0, 524294, 1610612738, 0, 524295, 1610612738, 0, 524296, 1610612738, 0, 524297, 1610612738, 0, 524298, 1610612738, 0, 524299, 1610612738, 0, 524300, 1610612738, 0, 524301, 1610612738, 0, 524302, 1610612738, 0, 524303, 1610612737, 0 )
+
+[node name="FG" type="TileMap" parent="Scene/TileMap"]
+tile_set = ExtResource( 21 )
+cell_size = Vector2( 16, 16 )
+format = 1
+tile_data = PoolIntArray( 65537, 1, 0, 65538, 1, 0, 65539, 2, 0, 65540, 1, 0, 65541, 1, 0, 65542, 1, 0, 65543, 2, 0, 65544, 2, 0, 65545, 1, 0, 65546, 1, 0, 65547, 2, 0, 65548, 2, 0, 65549, 2, 0, 65550, 2, 0, 262145, 0, 0, 262147, 1, 0, 262148, 1, 0, 262149, 1, 0, 262150, 2, 0, 262151, 1, 0, 262152, 1, 0, 262153, 2, 0, 262154, 1, 0, 262155, 3, 0, 393217, 15, 0, 458753, 17, 0, 458755, 19, 0, 458756, 19, 0, 458757, 19, 0, 458758, 19, 0, 458759, 19, 0, 458760, 19, 0, 458761, 19, 0, 458762, 19, 0, 458763, 19, 0, 458764, 19, 0, 458765, 19, 0, 458766, 19, 0 )
+
+[node name="SceneObjects" type="Node2D" parent="Scene"]
+z_index = 1
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="Tabbles" type="Node2D" parent="Scene/SceneObjects"]
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="PickPlace1" parent="Scene/SceneObjects/Tabbles" instance=ExtResource( 6 )]
+position = Vector2( 24, 24 )
+
+[node name="PickPlace2" parent="Scene/SceneObjects/Tabbles" instance=ExtResource( 6 )]
+position = Vector2( 40, 24 )
+
+[node name="PickPlace3" parent="Scene/SceneObjects/Tabbles" instance=ExtResource( 6 )]
+position = Vector2( 56, 24 )
+
+[node name="PickPlace4" parent="Scene/SceneObjects/Tabbles" instance=ExtResource( 6 )]
+position = Vector2( 88, 24 )
+
+[node name="PickPlace5" parent="Scene/SceneObjects/Tabbles" instance=ExtResource( 6 )]
+position = Vector2( 72, 72 )
+
+[node name="PickPlace6" parent="Scene/SceneObjects/Tabbles" instance=ExtResource( 6 )]
+position = Vector2( 120, 24 )
+
+[node name="PickPlace7" parent="Scene/SceneObjects/Tabbles" instance=ExtResource( 6 )]
+position = Vector2( 104, 24 )
+
+[node name="PickPlace8" parent="Scene/SceneObjects/Tabbles" instance=ExtResource( 6 )]
+position = Vector2( 24, 72 )
+
+[node name="PickPlace9" parent="Scene/SceneObjects/Tabbles" instance=ExtResource( 6 )]
+position = Vector2( 120, 72 )
+
+[node name="PickPlace10" parent="Scene/SceneObjects/Tabbles" instance=ExtResource( 6 )]
+position = Vector2( 136, 72 )
+
+[node name="PickPlace11" parent="Scene/SceneObjects/Tabbles" instance=ExtResource( 6 )]
+position = Vector2( 88, 72 )
+
+[node name="PickPlace12" parent="Scene/SceneObjects/Tabbles" instance=ExtResource( 6 )]
+position = Vector2( 56, 72 )
+
+[node name="PickPlace14" parent="Scene/SceneObjects/Tabbles" instance=ExtResource( 6 )]
+position = Vector2( 24, 120 )
+
+[node name="PickPlace15" parent="Scene/SceneObjects/Tabbles" instance=ExtResource( 6 )]
+position = Vector2( 120, 120 )
+
+[node name="PickPlace16" parent="Scene/SceneObjects/Tabbles" instance=ExtResource( 6 )]
+position = Vector2( 104, 120 )
+
+[node name="PickPlace17" parent="Scene/SceneObjects/Tabbles" instance=ExtResource( 6 )]
+position = Vector2( 184, 24 )
+
+[node name="PickPlace18" parent="Scene/SceneObjects/Tabbles" instance=ExtResource( 6 )]
+position = Vector2( 72, 120 )
+
+[node name="PickPlace19" parent="Scene/SceneObjects/Tabbles" instance=ExtResource( 6 )]
+position = Vector2( 56, 120 )
+
+[node name="PickPlace20" parent="Scene/SceneObjects/Tabbles" instance=ExtResource( 6 )]
+position = Vector2( 40, 120 )
+
+[node name="PickPlace21" parent="Scene/SceneObjects/Tabbles" instance=ExtResource( 6 )]
+position = Vector2( 136, 120 )
+
+[node name="PickPlace22" parent="Scene/SceneObjects/Tabbles" instance=ExtResource( 6 )]
+position = Vector2( 168, 120 )
+
+[node name="PickPlace23" parent="Scene/SceneObjects/Tabbles" instance=ExtResource( 6 )]
+position = Vector2( 184, 120 )
+
+[node name="PickPlace24" parent="Scene/SceneObjects/Tabbles" instance=ExtResource( 6 )]
+position = Vector2( 200, 120 )
+
+[node name="PickPlace25" parent="Scene/SceneObjects/Tabbles" instance=ExtResource( 6 )]
+position = Vector2( 152, 72 )
+
+[node name="PickPlace26" parent="Scene/SceneObjects/Tabbles" instance=ExtResource( 6 )]
+position = Vector2( 184, 72 )
+
+[node name="PickPlace27" parent="Scene/SceneObjects/Tabbles" instance=ExtResource( 6 )]
+position = Vector2( 152, 24 )
+
+[node name="PickPlace28" parent="Scene/SceneObjects/Tabbles" instance=ExtResource( 6 )]
+position = Vector2( 168, 24 )
+
+[node name="Limits" type="Node2D" parent="Scene/SceneObjects"]
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="LockPick1" parent="Scene/SceneObjects/Limits" instance=ExtResource( 5 )]
+position = Vector2( 21, 32 )
+
+[node name="LockPick2" parent="Scene/SceneObjects/Limits" instance=ExtResource( 5 )]
+position = Vector2( 235, 30 )
+
+[node name="Boxes" type="Node2D" parent="Scene/SceneObjects"]
+
+[node name="Box1" parent="Scene/SceneObjects/Boxes" instance=ExtResource( 3 )]
+position = Vector2( 200, 24 )
+
+[node name="Box2" parent="Scene/SceneObjects/Boxes" instance=ExtResource( 3 )]
+position = Vector2( 216, 24 )
+igridient_id = 2
+
+[node name="Box3" parent="Scene/SceneObjects/Boxes" instance=ExtResource( 3 )]
+position = Vector2( 232, 24 )
+igridient_id = 1
+
+[node name="Cutters" type="Node2D" parent="Scene/SceneObjects"]
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="CutPlace1" parent="Scene/SceneObjects/Cutters" instance=ExtResource( 2 )]
+position = Vector2( 88, 120 )
+rotation = 3.14159
+
+[node name="CutPlace2" parent="Scene/SceneObjects/Cutters" instance=ExtResource( 2 )]
+position = Vector2( 152, 120 )
+rotation = 3.14159
+
+[node name="Stoves" type="Node2D" parent="Scene/SceneObjects"]
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="Stove1" parent="Scene/SceneObjects/Stoves" instance=ExtResource( 4 )]
+position = Vector2( 72, 24 )
+pan_path = "res://src/objects/areas/pickable_objects/pans/frying_pan.tscn"
+
+[node name="Stove2" parent="Scene/SceneObjects/Stoves" instance=ExtResource( 4 )]
+position = Vector2( 136, 24 )
+pan_path = "res://src/objects/areas/pickable_objects/pans/frying_pan.tscn"
+
+[node name="Plates" type="Node2D" parent="Scene/SceneObjects"]
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="Plate1" parent="Scene/SceneObjects/Plates" instance=ExtResource( 12 )]
+position = Vector2( 167, 72 )
+collision_mask = 2
+
+[node name="Plate2" parent="Scene/SceneObjects/Plates" instance=ExtResource( 12 )]
+position = Vector2( 103, 72 )
+collision_mask = 2
+
+[node name="Plate3" parent="Scene/SceneObjects/Plates" instance=ExtResource( 12 )]
+position = Vector2( 39, 72 )
+collision_mask = 2
+
+[node name="FireExtintor" parent="Scene/SceneObjects" instance=ExtResource( 13 )]
+position = Vector2( 232, 104 )
+monitoring = true
+collision_mask = 2
+
+[node name="Trash" parent="Scene/SceneObjects" instance=ExtResource( 10 )]
+position = Vector2( 231, 72 )
+
+[node name="Treadmill" parent="Scene/SceneObjects" instance=ExtResource( 14 )]
+position = Vector2( 24, 88 )
+rotation = -1.5708
+
+[node name="DirtPlatesTable" parent="Scene/SceneObjects" instance=ExtResource( 11 )]
+position = Vector2( 24, 104 )
+rotation = -1.5708
+
+[node name="Sink" parent="Scene/SceneObjects" instance=ExtResource( 15 )]
+position = Vector2( 224, 120 )
+rotation = 3.14159
+
+[node name="Players" type="YSort" parent="Scene"]
+scale = Vector2( 0.5, 0.5 )
+z_index = 2
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="Player1" parent="Scene/Players" instance=ExtResource( 16 )]
+position = Vector2( 178, 100 )
+
+[node name="Player2" parent="Scene/Players" instance=ExtResource( 16 )]
+position = Vector2( 146, 195 )
+
+[node name="Player3" parent="Scene/Players" instance=ExtResource( 16 )]
+position = Vector2( 325, 100 )
+
+[node name="Player4" parent="Scene/Players" instance=ExtResource( 16 )]
+position = Vector2( 292, 195 )
+
+[node name="Camera2D" type="Camera2D" parent="Scene"]
+anchor_mode = 0
+current = true
+zoom = Vector2( 0.25, 0.25 )
+limit_smoothed = true
+editor_draw_screen = false
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="HUD" parent="." instance=ExtResource( 7 )]
+layer = 2
+order_max_frequency = 45
+clients_min_wait_time = 30
+clients_max_wait_time = 90
+limit_time = 240
+level_coins = 100
+
+[node name="PauseBreak" parent="." instance=ExtResource( 8 )]
+
+[node name="Music" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 9 )
+autoplay = true
+bus = "Music"
+[connection signal="object_delivered" from="Scene/SceneObjects/Trash" to="Scene/SceneObjects/DirtPlatesTable" method="_on_Trash_object_delivered"]
+[connection signal="object_delivered" from="Scene/SceneObjects/Treadmill" to="Scene/SceneObjects/DirtPlatesTable" method="_on_Treadmill_object_delivered"]
+[connection signal="recipe_delived" from="Scene/SceneObjects/Treadmill" to="HUD" method="_on_Treadmill_recipe_delived"]
