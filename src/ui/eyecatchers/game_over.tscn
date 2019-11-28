@@ -1,8 +1,7 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://src/ui/eyecatchers/game_over.gd" type="Script" id=1]
 [ext_resource path="res://assets/fonts/Comfortaa-Bold.ttf" type="DynamicFontData" id=2]
-[ext_resource path="res://assets/sounds/musics/Game Over (The Binding of Isaac Agony).wav" type="AudioStream" id=3]
 
 [sub_resource type="DynamicFont" id=1]
 size = 100
@@ -179,7 +178,6 @@ autoplay = "in"
 anims/in = SubResource( 5 )
 
 [node name="SFX" type="AudioStreamPlayer" parent="."]
-stream = ExtResource( 3 )
 [connection signal="focus_entered" from="CenterContainer/TristeFim/Desafiado/Options/Yep" to="." method="_on_Yep_focus_entered"]
 [connection signal="mouse_entered" from="CenterContainer/TristeFim/Desafiado/Options/Yep" to="." method="_on_Yep_mouse_entered"]
 [connection signal="pressed" from="CenterContainer/TristeFim/Desafiado/Options/Yep" to="." method="_on_Yep_pressed"]

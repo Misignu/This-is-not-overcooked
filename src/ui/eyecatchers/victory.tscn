@@ -1,8 +1,7 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://src/ui/eyecatchers/victory.gd" type="Script" id=1]
 [ext_resource path="res://assets/fonts/Comfortaa-Bold.ttf" type="DynamicFontData" id=2]
-[ext_resource path="res://assets/sounds/musics/Victory (Ocarina of time medal-get-fanfare).wav" type="AudioStream" id=3]
 
 [sub_resource type="Animation" id=1]
 resource_name = "iris"
@@ -84,6 +83,5 @@ __meta__ = {
 }
 
 [node name="SFX" type="AudioStreamPlayer" parent="."]
-stream = ExtResource( 3 )
 autoplay = true
 [connection signal="animation_finished" from="Animation" to="." method="_on_Animation_animation_finished"]

@@ -2,7 +2,7 @@
 
 [ext_resource path="res://assets/sprites/hud/hud.png" type="Texture" id=1]
 [ext_resource path="res://src/ui/menus/popup/options.gd" type="Script" id=2]
-[ext_resource path="res://assets/fonts/8-Bit Madness.ttf" type="DynamicFontData" id=3]
+[ext_resource path="res://assets/fonts/Cave-Story.ttf" type="DynamicFontData" id=3]
 
 [sub_resource type="DynamicFont" id=1]
 font_data = ExtResource( 3 )
@@ -181,7 +181,7 @@ __meta__ = {
 [node name="ScrollContainer" type="ScrollContainer" parent="MarginContainer"]
 margin_left = 5.0
 margin_top = 5.0
-margin_right = 237.0
+margin_right = 235.0
 margin_bottom = 121.0
 rect_min_size = Vector2( 220, 116 )
 scroll_horizontal_enabled = false

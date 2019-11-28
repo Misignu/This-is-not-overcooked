@@ -27,7 +27,7 @@ _global_script_class_icons={
 [application]
 
 config/name="This is not overcooked"
-config/description="A game about being better than Gemaplys"
+config/description="Just a \"overcooked-like\" prototype."
 run/main_scene="res://src/ui/eyecatchers/splash_screen.tscn"
 config/icon="res://icon.png"
 

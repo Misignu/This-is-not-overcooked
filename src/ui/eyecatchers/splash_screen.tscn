@@ -1,8 +1,7 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://src/ui/eyecatchers/splash_screen.gd" type="Script" id=1]
 [ext_resource path="res://assets/sprites/ludart-logo_2-generation_v.0.png" type="Texture" id=2]
-[ext_resource path="res://assets/videos/hello_world_1080p.webm" type="VideoStream" id=3]
 [ext_resource path="res://src/ui/menus/title_screen.tscn" type="PackedScene" id=4]
 
 [sub_resource type="Animation" id=1]
@@ -95,7 +94,6 @@ margin_left = -60.0
 margin_right = -60.0
 margin_bottom = -0.192017
 rect_scale = Vector2( 0.6, 0.6 )
-stream = ExtResource( 3 )
 autoplay = true
 expand = false
 bus = "Music"

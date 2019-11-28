@@ -1,8 +1,8 @@
 [gd_scene load_steps=17 format=2]
 
-[ext_resource path="res://assets/fonts/8-Bit Madness.ttf" type="DynamicFontData" id=1]
 [ext_resource path="res://assets/atlas/green_guy_front.tres" type="Texture" id=2]
 [ext_resource path="res://assets/sprites/hud/hud.png" type="Texture" id=3]
+[ext_resource path="res://assets/fonts/Cave-Story.ttf" type="DynamicFontData" id=4]
 
 [sub_resource type="StyleBoxFlat" id=1]
 bg_color = Color( 0.207843, 0.180392, 0.25098, 1 )
@@ -162,7 +162,7 @@ func set_base_color(value: Color):
 
 [sub_resource type="DynamicFont" id=3]
 size = 140
-font_data = ExtResource( 1 )
+font_data = ExtResource( 4 )
 
 [sub_resource type="GDScript" id=4]
 script/source = "tool
@@ -213,7 +213,7 @@ region = Rect2( 64, 16, 16, 16 )
 
 [sub_resource type="DynamicFont" id=12]
 size = 32
-font_data = ExtResource( 1 )
+font_data = ExtResource( 4 )
 
 [sub_resource type="GDScript" id=13]
 script/source = "tool
@@ -258,7 +258,7 @@ margin_bottom = 555.0
 
 [node name="Label" type="Label" parent="MarginContainer/VBoxContainer"]
 margin_right = 215.0
-margin_bottom = 97.0
+margin_bottom = 88.0
 custom_fonts/font = SubResource( 3 )
 custom_colors/font_color = Color( 0.0431373, 0.792157, 0.415686, 1 )
 text = "P1"
@@ -269,9 +269,9 @@ __meta__ = {
 }
 
 [node name="PanelContainer" type="PanelContainer" parent="MarginContainer/VBoxContainer"]
-margin_top = 101.0
+margin_top = 92.0
 margin_right = 215.0
-margin_bottom = 321.0
+margin_bottom = 312.0
 rect_min_size = Vector2( 0, 220 )
 rect_clip_content = true
 custom_styles/panel = SubResource( 5 )
@@ -353,27 +353,29 @@ texture_normal = SubResource( 10 )
 texture_pressed = SubResource( 11 )
 
 [node name="CenterContainer" type="CenterContainer" parent="MarginContainer/VBoxContainer"]
-margin_top = 325.0
+margin_top = 316.0
 margin_right = 215.0
 margin_bottom = 540.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="Label" type="RichTextLabel" parent="MarginContainer/VBoxContainer/CenterContainer"]
-margin_top = 67.0
+margin_top = 72.0
 margin_right = 215.0
-margin_bottom = 147.0
+margin_bottom = 152.0
 rect_min_size = Vector2( 215, 80 )
 rect_pivot_offset = Vector2( 412, 83 )
 custom_fonts/normal_font = SubResource( 12 )
 bbcode_enabled = true
-bbcode_text = "[center]Segure [color=#{color}]ACTION[/color][/center][/font] [center]para acelerar[/center]
-[center]o contador[/center]"
-text = "Segure ACTION[/font] para acelerar
-o contador"
+bbcode_text = "[center]Press [color=#0bca6a]START[/color][/center]
+[center]to join[/center]
+[center]the party[/center]"
+text = "Press START
+to join
+the party"
 script = SubResource( 13 )
+[connection signal="base_color_changed" from="." to="MarginContainer/VBoxContainer/CenterContainer/Label" method="_on_Panel_base_color_changed"]
 [connection signal="base_color_changed" from="." to="MarginContainer/VBoxContainer/Label" method="_on_Panel_base_color_changed"]
 [connection signal="base_color_changed" from="." to="MarginContainer/VBoxContainer/PanelContainer" method="_on_Panel_base_color_changed"]
-[connection signal="base_color_changed" from="." to="MarginContainer/VBoxContainer/CenterContainer/Label" method="_on_Panel_base_color_changed"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/PanelContainer/HBoxContainer/CenterContainer/MarginContainer/LeftButton" to="." method="_on_LeftButton_pressed"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/PanelContainer/HBoxContainer/CenterContainer2/MarginContainer/RightButton" to="." method="_on_RightButton_pressed"]

@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=2]
+[gd_scene load_steps=18 format=2]
 
 [ext_resource path="res://assets/tilesets/walls_and_floors.tres" type="TileSet" id=1]
 [ext_resource path="res://src/objects/areas/pick_places/work_stations/cut_place.tscn" type="PackedScene" id=2]
@@ -8,7 +8,6 @@
 [ext_resource path="res://src/objects/areas/pick_place.tscn" type="PackedScene" id=6]
 [ext_resource path="res://src/ui/hud/game_hud.tscn" type="PackedScene" id=7]
 [ext_resource path="res://src/ui/hud/pause_break.tscn" type="PackedScene" id=8]
-[ext_resource path="res://assets/sounds/musics/Overcooked music - Levels 1-1 to 2-4.ogg" type="AudioStream" id=9]
 [ext_resource path="res://src/objects/areas/pick_places/delivery_points/trash.tscn" type="PackedScene" id=10]
 [ext_resource path="res://src/objects/areas/pick_places/return_station.tscn" type="PackedScene" id=11]
 [ext_resource path="res://src/objects/areas/pickable_objects/plate.tscn" type="PackedScene" id=12]
@@ -189,6 +188,7 @@ position = Vector2( 235, 30 )
 
 [node name="Box1" parent="Scene/SceneObjects/Boxes" instance=ExtResource( 3 )]
 position = Vector2( 200, 24 )
+igridient_id = 0
 
 [node name="Box2" parent="Scene/SceneObjects/Boxes" instance=ExtResource( 3 )]
 position = Vector2( 216, 24 )
@@ -301,7 +301,6 @@ level_coins = 100
 [node name="PauseBreak" parent="." instance=ExtResource( 8 )]
 
 [node name="Music" type="AudioStreamPlayer" parent="."]
-stream = ExtResource( 9 )
 autoplay = true
 bus = "Music"
 [connection signal="object_delivered" from="Scene/SceneObjects/Trash" to="Scene/SceneObjects/DirtPlatesTable" method="_on_Trash_object_delivered"]

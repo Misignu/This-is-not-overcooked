@@ -1,20 +1,20 @@
-# image
-*.ase
-*.aseprite
-*.bmp
-*.gif
-*.png
-*.psd
-# fonts
-*.otf
-*.ttf
-# sounds
-*.mp3
-*.ogg
-*.wav
+# # image
+# *.ase
+# # *.aseprite
+# *.bmp
+# *.gif
+# *.png
+# *.psd
+# # fonts
+# *.otf
+# *.ttf
+# # sounds
+# *.mp3
+# *.ogg
+# *.wav
 # video
-*.ogv
-*.webm
+# *.ogv
+# *.webm
 # spreadsheets
 .xlsm
 .xlsx
@@ -31,3 +31,14 @@ addons
 
 .import/*
 # <- confira: https://docs.godotengine.org/en/3.0/getting_started/workflow/assets/import_process.html#files-generated */
+
+
+assets/videos/*
+assets/sounds/fxs/*
+assets/sounds/musics/*
+
+!assets/sounds/fxs/AreYouReady_Martian.*
+!assets/sounds/fxs/beep_short.*
+!assets/sounds/fxs/LookInYourPromptPlease_Martian.*
+!assets/sounds/fxs/Morphine - Loose Strings*
+!assets/sounds/fxs/Select 3 (Blub).*
